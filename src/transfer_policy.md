@@ -49,6 +49,39 @@ per *type*. This means that the `TransferRequest` for a "Phone" is different
 from the `TransferRequest` for a "Car". This allows to enforce different rules
 for different types of items.
 
+```Move
+/// An example of a module on Sui which sells "Phones".
+module commerce::merchant {
+    use sui::transfer_policy::{Self, TransferRequest};
+
+    /// A single "Phone" - a Sui Object.
+    struct Phone has key, store { /* ... */ }
+
+    /// A price of a single "Phone".
+    const PHONE_PRICE: u64 = 10_000_000_000;
+
+    /// Some merchant ID (usually represented by a Sui Object)
+    const MERCHANT_ID: address = 0xBEEF;
+
+    /// The merchant is selling phones, the buyer only pays to the merchant the
+    /// price of the phone, and the tax is paid separately and directly to the
+    /// tax authority.
+    public fun buy_phone(/* pass a coin */): (Phone, TransferRequest<Phone>) {
+
+        let phone = Phone { /* ... */ };
+
+        // Generate new `TransferRequest` for the `Phone` object, specify the
+        // ID of the `Phone` object, the price of the `Phone` and the ID of the
+        // merchant.
+        let request = transfer_policy::new_request<Phone>(
+            object::id(&phone),
+            PHONE_PRICE,
+            object::id_from_address(MERCHANT_ID),
+        );
+
+        (phone, request)
+    }
+}
+```
+
 ---
-
-
