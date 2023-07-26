@@ -152,62 +152,42 @@
 <code>transfer_policy</code> is a library located in the Sui Framework; it allows creating
 a non-discardable message - called <code>TransferRequest</code> - and the destination for
 this message - <code>TransferPolicy</code>.</p>
-<p>Imagine a tax system implementation on Sui: multiple merchants process payments
-and buyers need to pay &quot;VAT&quot;.</p>
-<!-- In the blockchain environment it is extremely hard
-to enforce such a policy and make it generic enough to be used by multiple apps. -->
-<!-- because the buyer usually can just ignore it. Unless
-the tools they use for trading enforce it at the moment of purchase (or lock the
-purchased asset until the tax is paid).
- -->
+<hr />
+<p>Imagine a tax system implementation: multiple merchants process payments and
+buyers need to pay &quot;VAT&quot;. The tax is calculated based on the price of the
+purchased item, and different categories of items have different tax rates.</p>
+<p>To create a system like this without extra overhead on the merchants' side (the
+buyer pays the tax directly) we could issue a &quot;receipt&quot; for each purchase which
+would contain the information about the item type and the price paid. The buyer
+would then need to pay the tax based on the receipt.</p>
+<p>Move language has a primitive which allows to create a non-discardable message
+called &quot;Hot Potato&quot;. Once created, the Hot Potato can only be consumed by a
+specific module (or object), and if it is not consumed, the transaction will
+fail.</p>
+<hr />
 <p>The <code>TransferRequest</code> struct and the matching <code>TransferPolicy</code> object address
 this problem. If a merchant creates a <code>TransferRequest</code> upon each purchase, and
 the <code>TransferPolicy</code> is configured to enforce the tax policy, the buyer will not
 be able to finalize the purchase the item until the tax is paid.</p>
 <p>This is a strong guarantee, because the <code>TransferRequest</code> is a non-discardable
-struct (so-called &quot;Hot Potato&quot;) and unless it finds &quot;its home&quot;, the transaction
-will fail. The <code>TransferPolicy</code> is the &quot;home&quot; for the <code>TransferRequest</code> and it
-can be configured to define the rules for the <code>TransferRequest</code> to be accepted.</p>
+struct - &quot;Hot Potato&quot; - and unless it finds &quot;its home&quot;, the transaction won't
+succeed. The <code>TransferPolicy</code> is the &quot;home&quot; for the <code>TransferRequest</code> and it
+can be configured by the authority to require certain conditions to be met for
+the <code>TransferRequest</code> to be accepted.</p>
+<hr />
 <p>Because the system is designed for commerce, the <code>TransferRequest</code> has the most
-commonly used fields, such as:</p>
+commonly used fields, all of which are set at creation and can't be changed,
+such as:</p>
 <ul>
 <li><code>paid</code> (the amount of SUI paid for the item)</li>
 <li><code>item</code> (the ID of the item being transferred)</li>
-<li><code>from</code> (the ID of the Kiosk / Source the item is being sold from)</li>
+<li><code>from</code> (the ID of the source the item is being sold from)</li>
 </ul>
 <p>Additionally, thanks to the Move's type system, the <code>TransferRequest</code> is issued
 per <em>type</em>. This means that the <code>TransferRequest</code> for a &quot;Phone&quot; is different
 from the <code>TransferRequest</code> for a &quot;Car&quot;. This allows to enforce different rules
 for different types of items.</p>
-<!-- - `receipts` (a list of receipts collected by the buyer, which can be
-used to verify that all of the rules were followed). -->
-<!--
-It's a pair of a hot-potato and an object which can consume it.
-
-```Move
-module sui::transfer_policy {
-
-    // ...
-
-    /// A "Hot Potato" forcing the buyer to get a transfer permission
-    /// from the item type (`T`) owner on purchase attempt.
-    struct TransferRequest<phantom T> {
-        /// The ID of the transferred item. Although the `T` has no
-        /// constraints, the main use case for this module is to work
-        /// with Objects.
-        item: ID,
-        /// Amount of SUI paid for the item. Can be used to
-        /// calculate the fee / transfer policy enforcement.
-        paid: u64,
-        /// The ID of the Kiosk / Safe the object is being sold from.
-        /// Can be used by the TransferPolicy implementors.
-        from: ID,
-        /// Collected Receipts. Used to verify that all of the rules
-        /// were followed and `TransferRequest` can be confirmed.
-        receipts: VecSet<TypeName>
-    }
-}
-``` -->
+<hr />
 
                     </main>
 
