@@ -191,6 +191,39 @@ such as:</p>
 per <em>type</em>. This means that the <code>TransferRequest</code> for a &quot;Phone&quot; is different
 from the <code>TransferRequest</code> for a &quot;Car&quot;. This allows to enforce different rules
 for different types of items.</p>
+<pre><code class="language-Move">/// An example of a module on Sui which sells &quot;Phones&quot;.
+module commerce::merchant {
+    use sui::transfer_policy::{Self, TransferRequest};
+
+    /// A single &quot;Phone&quot; - a Sui Object.
+    struct Phone has key, store { /* ... */ }
+
+    /// A price of a single &quot;Phone&quot;.
+    const PHONE_PRICE: u64 = 10_000_000_000;
+
+    /// Some merchant ID (usually represented by a Sui Object)
+    const MERCHANT_ID: address = 0xBEEF;
+
+    /// The merchant is selling phones, the buyer only pays to the merchant the
+    /// price of the phone, and the tax is paid separately and directly to the
+    /// tax authority.
+    public fun buy_phone(/* pass a coin */): (Phone, TransferRequest&lt;Phone&gt;) {
+
+        let phone = Phone { /* ... */ };
+
+        // Generate new `TransferRequest` for the `Phone` object, specify the
+        // ID of the `Phone` object, the price of the `Phone` and the ID of the
+        // merchant.
+        let request = transfer_policy::new_request&lt;Phone&gt;(
+            object::id(&amp;phone),
+            PHONE_PRICE,
+            object::id_from_address(MERCHANT_ID),
+        );
+
+        (phone, request)
+    }
+}
+</code></pre>
 <hr />
 
                     </main>
