@@ -1,4 +1,15 @@
 # Summary
 
 - [What is Sui Kiosk](./what_is_sui_kiosk.md)
+- [Overview](./overview.md)
+    - [Philosophy](./philosophy.md)
+    - [Guarantees](./guarantees.md)
+    - [Roles](./README.md)
+        - [Kiosk Owner (Seller)](./roles/kiosk_owner.md)
+        - [Creator](./roles/creator.md)
+        - [Buyer](./roles/buyer.md)
 - [Transfer Policy](./transfer_policy.md)
+- [Kiosk](./kiosk/README.md)
+    - [Default Flow](./kiosk/default_flow.md)
+    - [Custom functionality with PurchaseCap](./kiosk/purchase_cap.md)
+    - [PurchaseCap tricks](./kiosk/purchase_cap_tricks.md)
