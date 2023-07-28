@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="what_is_sui_kiosk.html"><strong aria-hidden="true">1.</strong> What is Sui Kiosk</a></li><li class="chapter-item expanded "><a href="transfer_policy.html"><strong aria-hidden="true">2.</strong> Transfer Policy</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="what_is_sui_kiosk.html"><strong aria-hidden="true">1.</strong> What is Sui Kiosk</a></li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">2.</strong> Overview</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="philosophy.html"><strong aria-hidden="true">2.1.</strong> Philosophy</a></li><li class="chapter-item expanded "><a href="guarantees.html"><strong aria-hidden="true">2.2.</strong> Guarantees</a></li><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">2.3.</strong> Roles</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="roles/kiosk_owner.html"><strong aria-hidden="true">2.3.1.</strong> Kiosk Owner (Seller)</a></li><li class="chapter-item expanded "><a href="roles/creator.html"><strong aria-hidden="true">2.3.2.</strong> Creator</a></li><li class="chapter-item expanded "><a href="roles/buyer.html"><strong aria-hidden="true">2.3.3.</strong> Buyer</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="transfer_policy.html"><strong aria-hidden="true">3.</strong> Transfer Policy</a></li><li class="chapter-item expanded "><a href="kiosk/index.html"><strong aria-hidden="true">4.</strong> Kiosk</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="kiosk/default_flow.html"><strong aria-hidden="true">4.1.</strong> Default Flow</a></li><li class="chapter-item expanded "><a href="kiosk/purchase_cap.html"><strong aria-hidden="true">4.2.</strong> Custom functionality with PurchaseCap</a></li><li class="chapter-item expanded "><a href="kiosk/purchase_cap_tricks.html"><strong aria-hidden="true">4.3.</strong> PurchaseCap tricks</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -151,24 +151,40 @@
                     <main>
                         <h1><a class="header" href="#what-is-sui-kiosk" id="what-is-sui-kiosk">What is Sui Kiosk</a></h1>
 <p>Kiosk is type defined in the <code>kiosk</code> module in the <a href="https://github.com/MystenLabs/sui/tree/main/crates/sui-framework/packages/sui-framework">Sui Framework</a> package. </p>
+<h1><a class="header" href="#overview" id="overview">Overview</a></h1>
+<h1><a class="header" href="#philosophy" id="philosophy">Philosophy</a></h1>
+<h1><a class="header" href="#guarantees" id="guarantees">Guarantees</a></h1>
+<h1><a class="header" href="#roles" id="roles">Roles</a></h1>
+<h1><a class="header" href="#kiosk-owner-seller" id="kiosk-owner-seller">Kiosk Owner (Seller)</a></h1>
+<h1><a class="header" href="#creator" id="creator">Creator</a></h1>
+<h1><a class="header" href="#buyer" id="buyer">Buyer</a></h1>
 <h1><a class="header" href="#transfer-policy" id="transfer-policy">Transfer Policy</a></h1>
 <p>To understand the Kiosk we first need to go through the Transfer Policy.
 <code>transfer_policy</code> is a library located in the Sui Framework; it allows creating
 a non-discardable message - called <code>TransferRequest</code> - and the destination for
 this message - <code>TransferPolicy</code>.</p>
-<hr />
+<h2><a class="header" href="#introduction" id="introduction">Introduction</a></h2>
 <p>Imagine a tax system implementation: multiple merchants process payments and
-buyers need to pay &quot;VAT&quot;. The tax is calculated based on the price of the
-purchased item, and different categories of items have different tax rates.</p>
+buyers need to pay &quot;<a href="https://en.wikipedia.org/wiki/Value-added_tax">VAT</a>&quot;. The
+tax is calculated based on the price of the purchased item, and different
+categories of items have different tax rates.</p>
+<blockquote>
+<p>In most of the countries, the VAT is first collected by the merchant. The
+merchant must keep track of the tax paid for each item and pay the collected
+taxes to the tax authority in the end of the period.</p>
+</blockquote>
 <p>To create a system like this without extra overhead on the merchants' side (the
 buyer pays the tax directly) we could issue a &quot;receipt&quot; for each purchase which
 would contain the information about the item type and the price paid. The buyer
-would then need to pay the tax based on the receipt.</p>
-<p>Move language has a primitive which allows to create a non-discardable message
-called &quot;Hot Potato&quot;. Once created, the Hot Potato can only be consumed by a
-specific module (or object), and if it is not consumed, the transaction will
-fail.</p>
-<hr />
+would then need to pay the VAT directly to the tax authority based on the
+receipt.</p>
+<p>Move language has a primitive which allows creating a non-discardable message
+called &quot;<a href="https://examples.sui.io/patterns/hot-potato.html">Hot Potato</a>&quot;. Once
+created, the Hot Potato can only be consumed by a specific module (or object),
+and if it is not consumed, the transaction will fail.</p>
+<p>Applied to this scenario, the &quot;receipt&quot; would be a Hot Potato, forcing the buyer
+to do something with it - pay the tax - before the transaction can be finalized.</p>
+<h2><a class="header" href="#transfer-request" id="transfer-request">Transfer Request</a></h2>
 <p>The <code>TransferRequest</code> struct and the matching <code>TransferPolicy</code> object address
 this problem. If a merchant creates a <code>TransferRequest</code> upon each purchase, and
 the <code>TransferPolicy</code> is configured to enforce the tax policy, the buyer will not
@@ -178,7 +194,6 @@ struct - &quot;Hot Potato&quot; - and unless it finds &quot;its home&quot;, the 
 succeed. The <code>TransferPolicy</code> is the &quot;home&quot; for the <code>TransferRequest</code> and it
 can be configured by the authority to require certain conditions to be met for
 the <code>TransferRequest</code> to be accepted.</p>
-<hr />
 <p>Because the system is designed for commerce, the <code>TransferRequest</code> has the most
 commonly used fields, all of which are set at creation and can't be changed,
 such as:</p>
@@ -191,9 +206,13 @@ such as:</p>
 per <em>type</em>. This means that the <code>TransferRequest</code> for a &quot;Phone&quot; is different
 from the <code>TransferRequest</code> for a &quot;Car&quot;. This allows to enforce different rules
 for different types of items.</p>
+<h2><a class="header" href="#example-merchant" id="example-merchant">Example: Merchant</a></h2>
+<p>A module implementing the merchant logic for the &quot;Phone&quot; type could look like
+this:</p>
 <pre><code class="language-Move">/// An example of a module on Sui which sells &quot;Phones&quot;.
 module commerce::merchant {
     use sui::transfer_policy::{Self, TransferRequest};
+    use tax::vat::VAT;
 
     /// A single &quot;Phone&quot; - a Sui Object.
     struct Phone has key, store { /* ... */ }
@@ -206,15 +225,16 @@ module commerce::merchant {
 
     /// The merchant is selling phones, the buyer only pays to the merchant the
     /// price of the phone, and the tax is paid separately and directly to the
-    /// tax authority.
-    public fun buy_phone(/* pass a coin */): (Phone, TransferRequest&lt;Phone&gt;) {
+    /// tax authority. `VAT` type is imported and can only be resolved by the
+    /// authority defining this type.
+    public fun buy_phone(/* pass a coin */): (Phone, TransferRequest&lt;VAT&gt;) {
 
         let phone = Phone { /* ... */ };
 
-        // Generate new `TransferRequest` for the `Phone` object, specify the
-        // ID of the `Phone` object, the price of the `Phone` and the ID of the
+        // Generate new `TransferRequest` for the `VAT` type, specify the ID
+        // of the `Phone` object, the price of the `Phone` and the ID of the
         // merchant.
-        let request = transfer_policy::new_request&lt;Phone&gt;(
+        let request = transfer_policy::new_request&lt;VAT&gt;(
             object::id(&amp;phone),
             PHONE_PRICE,
             object::id_from_address(MERCHANT_ID),
@@ -224,7 +244,47 @@ module commerce::merchant {
     }
 }
 </code></pre>
-<hr />
+<h2><a class="header" href="#transfer-policy-1" id="transfer-policy-1">Transfer Policy</a></h2>
+<p>A <code>TransferRequest</code> can only be matched in a <code>TransferPolicy</code> object. The match
+happens based on the type of the <code>TransferRequest</code> and the <code>TransferPolicy</code>. If
+the <code>TransferRequest</code> is for the &quot;Phone&quot; type, it can only be matched by the
+<code>TransferPolicy</code> for the &quot;Phone&quot; type.</p>
+<blockquote>
+<p>In the example above the <code>TransferRequest</code> is for the &quot;VAT&quot; type, so it can
+only be matched by the <code>TransferPolicy</code> for the &quot;VAT&quot; type.</p>
+</blockquote>
+<p><code>TransferPolicy&lt;T&gt;</code> is a Sui Object which can be created for any type by the
+<a href="https://examples.sui.io/basics/publisher.html">Publisher</a> of this type.</p>
+<pre><code class="language-Move">/// An example of a TransferPolicy setup. Better be done via PTBs and not as a
+/// published module. The code below is for illustration purposes only.
+module tax::vat {
+    use sui::tx_context::{sender, TxContext};
+    use sui::transfer_policy::{Self, TransferPolicy};
+
+    /// The authority defines the `VAT` type. It is never initialized and only
+    /// used to create and resolve `TransferRequest`s.
+    struct VAT has drop {}
+
+    /// The publisher creates and shares a `TransferPolicy` for the `VAT` type.
+    public fun create_policy(pub: &amp;Publisher, ctx: &amp;mut TxContext) {
+        let (policy, policy_cap) = transfer_policy::new_policy&lt;VAT&gt;(pub, ctx);
+
+        sui::transfer::public_share_object(policy);
+        sui::transfer::public_transfer(policy_cap, sender(ctx));
+    }
+
+    /// Can be called directly in the `TransferPolicy` module; does not need a
+    /// custom implementation. This code is for illustration purposes only.
+    public fun confirm_request(
+        policy: &amp;TransferPolicy&lt;VAT&gt;, request: TransferRequest&lt;VAT&gt;
+    ) {
+        transfer_policy::confirm_request&lt;VAT&gt;(policy, request);
+    }
+}
+
+</code></pre>
+<h1><a class="header" href="#kiosk" id="kiosk">Kiosk</a></h1>
+<h1><a class="header" href="#purchasecap-tricks" id="purchasecap-tricks">PurchaseCap tricks</a></h1>
 
                     </main>
 
