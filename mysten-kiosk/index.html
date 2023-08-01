@@ -148,6 +148,48 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#mysten-kiosk" id="mysten-kiosk">Mysten Kiosk</a></h1>
+<p>Kiosk is a flexible base for building commerce-related applications on top of it. And as such it's
+not providing any specifics in the implementation. However, we offer a set of extensions and rules
+which cover the most common use cases.</p>
+<p>Mysten Kiosk package contains rules and extensions and aims to be a swiss-army knife for onchain
+commerce. The package is being developed and upgraded regularly to make sure there's a solution for
+most of the common use cases.</p>
+<h2><a class="header" href="#repository-and-code" id="repository-and-code">Repository and Code</a></h2>
+<p>Code is located in the <a href="https://github.com/MystenLabs/apps">MystenLabs/apps</a> repository. It features
+the sources and instructions on how to add them to your project on both <code>mainnet</code> and <code>testnet</code>
+environments.</p>
+<h2><a class="header" href="#extensions" id="extensions">Extensions</a></h2>
+<ul>
+<li><a href="./extensions/personal-kiosk.html">Personal Kiosk Extension</a> makes the Kiosk non-transferrable and locks it to
+the owner. This allows creators to check whether their assets are traded in a user-owned Kiosk or
+whether it's a custom Kiosk-based solution (which may allow Kiosk trading - a way to escape policy
+enforcement).</li>
+</ul>
+<h2><a class="header" href="#rules" id="rules">Rules</a></h2>
+<ul>
+<li>
+<p><a href="./rules/royalty-rule.html">Royalty Rule</a> allows creators to set a royalty fee for every trade of their
+assets. The fee is paid to the creator on every trade. Not only does it add a percentage-based fee
+to the trade, but it also allows setting a <code>min_price</code> - a minimum fee paid for the asset (for
+trades below a certain threshold).</p>
+</li>
+<li>
+<p><a href="./rules/kiosk_lock_rule.html">Kiosk Lock Rule</a> allows creators to <a href="../kiosk/locking.html">lock</a> their
+assets in a Kiosk disabling the <a href="../kiosk/place-and-take.html">&quot;take&quot; operation</a>.</p>
+</li>
+<li>
+<p><a href="./rules/personal-kiosk.html">Personal Kiosk Rule</a> allows creators to enable trades only between personal
+Kiosks. Enforces the <a href="./extensions/personal-kiosk.html">Personal Kiosk Extension</a> on the buyer's side.</p>
+</li>
+<li>
+<p><a href="./rules/floor-price-rule.html">Floor Price Rule</a> allows creators to set a minimum price for their assets
+in a Kiosk. The rule enforces the minimum price setting on the seller's side.</p>
+</li>
+</ul>
+<h2><a class="header" href="#sdk" id="sdk">SDK</a></h2>
+<p>Mysten Kiosk package is fully supported by the
+<a href="https://www.npmjs.com/package/@mysten/kiosk">Kiosk SDK @mysten/kiosk</a>, which provides handy
+functions to perform actions in a Kiosk and resolve <code>TransferRequest</code>s.</p>
 
                     </main>
 

@@ -159,7 +159,7 @@ are:</p>
 <ol>
 <li>
 <p>Every trade operation in the <a href="./kiosk/README.html">Kiosk</a> requires a
-<a href="./transfer_policy/README.html">TransferPolicy</a> resolution giving creators control over how their
+<a href="./transfer-policy/README.html">TransferPolicy</a> resolution giving creators control over how their
 assets are traded.</p>
 </li>
 <li>
@@ -609,8 +609,8 @@ the extension developer.</p>
 <h2><a class="header" href="#uid-access-via-the-uid_mut" id="uid-access-via-the-uid_mut">UID access via the <code>uid_mut</code></a></h2>
 <p>Kiosk, like any object on Sui, has an <code>id: UID</code> field, which allows this object to not just be
 uniquely identified but also carry custom dynamic fields and dynamic object fields. The Kiosk itself
-is built around dynamic fields and features like <a href="kiosk-extensions/../kiosk/take_and_place.html">place</a> and
-<a href="kiosk-extensions/../kiosk/list_and_purchase.html">list</a> are built around dynamic object fields.</p>
+is built around dynamic fields and features like <a href="kiosk-extensions/../kiosk/take-and-place.html">place</a> and
+<a href="kiosk-extensions/../kiosk/list-and-purchase.html">list</a> are built around dynamic object fields.</p>
 <h3><a class="header" href="#the-uid_mut_as_owner-function" id="the-uid_mut_as_owner-function">The <code>uid_mut_as_owner</code> function</a></h3>
 <p>Kiosk can carry additional dynamic fields and dynamic object fields. The <code>uid_mut_as_owner</code> function
 allows the Kiosk Owner to mutably access the <code>UID</code> of the <code>Kiosk</code> object and use it to add or remove
@@ -638,9 +638,51 @@ KioskOwnerCap is a capability that makes the bearer the owner of the Kiosk. It a
 <h1><a class="header" href="#custom-event-handlers-in-extensions" id="custom-event-handlers-in-extensions">Custom Event handlers in Extensions</a></h1>
 <h1><a class="header" href="#demo-applications" id="demo-applications">Demo Applications</a></h1>
 <h1><a class="header" href="#mysten-kiosk" id="mysten-kiosk">Mysten Kiosk</a></h1>
-<h1><a class="header" href="#extensions-1" id="extensions-1">Extensions</a></h1>
+<p>Kiosk is a flexible base for building commerce-related applications on top of it. And as such it's
+not providing any specifics in the implementation. However, we offer a set of extensions and rules
+which cover the most common use cases.</p>
+<p>Mysten Kiosk package contains rules and extensions and aims to be a swiss-army knife for onchain
+commerce. The package is being developed and upgraded regularly to make sure there's a solution for
+most of the common use cases.</p>
+<h2><a class="header" href="#repository-and-code" id="repository-and-code">Repository and Code</a></h2>
+<p>Code is located in the <a href="https://github.com/MystenLabs/apps">MystenLabs/apps</a> repository. It features
+the sources and instructions on how to add them to your project on both <code>mainnet</code> and <code>testnet</code>
+environments.</p>
+<h2><a class="header" href="#extensions-1" id="extensions-1">Extensions</a></h2>
+<ul>
+<li><a href="mysten-kiosk/./extensions/personal-kiosk.html">Personal Kiosk Extension</a> makes the Kiosk non-transferrable and locks it to
+the owner. This allows creators to check whether their assets are traded in a user-owned Kiosk or
+whether it's a custom Kiosk-based solution (which may allow Kiosk trading - a way to escape policy
+enforcement).</li>
+</ul>
+<h2><a class="header" href="#rules-1" id="rules-1">Rules</a></h2>
+<ul>
+<li>
+<p><a href="mysten-kiosk/./rules/royalty-rule.html">Royalty Rule</a> allows creators to set a royalty fee for every trade of their
+assets. The fee is paid to the creator on every trade. Not only does it add a percentage-based fee
+to the trade, but it also allows setting a <code>min_price</code> - a minimum fee paid for the asset (for
+trades below a certain threshold).</p>
+</li>
+<li>
+<p><a href="mysten-kiosk/./rules/kiosk_lock_rule.html">Kiosk Lock Rule</a> allows creators to <a href="mysten-kiosk/../kiosk/locking.html">lock</a> their
+assets in a Kiosk disabling the <a href="mysten-kiosk/../kiosk/place-and-take.html">&quot;take&quot; operation</a>.</p>
+</li>
+<li>
+<p><a href="mysten-kiosk/./rules/personal-kiosk.html">Personal Kiosk Rule</a> allows creators to enable trades only between personal
+Kiosks. Enforces the <a href="mysten-kiosk/./extensions/personal-kiosk.html">Personal Kiosk Extension</a> on the buyer's side.</p>
+</li>
+<li>
+<p><a href="mysten-kiosk/./rules/floor-price-rule.html">Floor Price Rule</a> allows creators to set a minimum price for their assets
+in a Kiosk. The rule enforces the minimum price setting on the seller's side.</p>
+</li>
+</ul>
+<h2><a class="header" href="#sdk" id="sdk">SDK</a></h2>
+<p>Mysten Kiosk package is fully supported by the
+<a href="https://www.npmjs.com/package/@mysten/kiosk">Kiosk SDK @mysten/kiosk</a>, which provides handy
+functions to perform actions in a Kiosk and resolve <code>TransferRequest</code>s.</p>
+<h1><a class="header" href="#extensions-2" id="extensions-2">Extensions</a></h1>
 <h1><a class="header" href="#personal-kiosk" id="personal-kiosk">Personal Kiosk</a></h1>
-<h1><a class="header" href="#rules-1" id="rules-1">Rules</a></h1>
+<h1><a class="header" href="#rules-2" id="rules-2">Rules</a></h1>
 <h1><a class="header" href="#royalty-rule" id="royalty-rule">Royalty Rule</a></h1>
 <h1><a class="header" href="#kiosk-lock-rule" id="kiosk-lock-rule">Kiosk Lock Rule</a></h1>
 <h1><a class="header" href="#personal-kiosk-rule" id="personal-kiosk-rule">Personal Kiosk Rule</a></h1>
