@@ -4,7 +4,7 @@ The system comes with a set of guarantees that are enforced by the smart contrac
 are:
 
 1. Every trade operation in the [Kiosk](./kiosk/README.md) requires a
-[TransferPolicy](./transfer_policy/README.md) resolution giving creators control over how their
+[TransferPolicy](./transfer-policy/README.md) resolution giving creators control over how their
 assets are traded.
 
 2. "True Ownership" - Kiosk Owner is the only party that can take, list, borrow and modify assets in

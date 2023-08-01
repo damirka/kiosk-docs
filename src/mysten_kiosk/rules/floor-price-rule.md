@@ -1,1 +1,0 @@
-# Floor Price Rule
