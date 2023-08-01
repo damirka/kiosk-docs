@@ -137,6 +137,11 @@ module tax::vat {
     ) {
         transfer_policy::confirm_request<VAT>(policy, request);
     }
-}
 
+    /// Using the OTW (VAT), create the Publisher object and transfer it to the
+    /// transaction sender.
+    fun init(otw: VAT, ctx: &mut TxContext) {
+        sui::package::claim_and_keep(otw, ctx);
+    }
+}
 ```

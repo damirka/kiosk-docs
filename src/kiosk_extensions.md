@@ -1,3 +1,0 @@
-# Kiosk Extensions
-
-
