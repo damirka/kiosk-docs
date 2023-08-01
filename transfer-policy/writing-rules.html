@@ -1,0 +1,425 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Writing Rules - Sui Kiosk</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../what-is-sui-kiosk.html"><strong aria-hidden="true">1.</strong> What is Sui Kiosk</a></li><li class="chapter-item expanded "><a href="../overview.html"><strong aria-hidden="true">2.</strong> Overview</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../philosophy.html"><strong aria-hidden="true">2.1.</strong> Philosophy</a></li><li class="chapter-item expanded "><a href="../guarantees.html"><strong aria-hidden="true">2.2.</strong> Guarantees</a></li><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">2.3.</strong> Roles</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../roles/kiosk-owner.html"><strong aria-hidden="true">2.3.1.</strong> Kiosk Owner (Seller)</a></li><li class="chapter-item expanded "><a href="../roles/creator.html"><strong aria-hidden="true">2.3.2.</strong> Creator</a></li><li class="chapter-item expanded "><a href="../roles/buyer.html"><strong aria-hidden="true">2.3.3.</strong> Buyer</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../transfer-policy/index.html"><strong aria-hidden="true">3.</strong> Transfer Policy</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../transfer-policy/rules.html"><strong aria-hidden="true">3.1.</strong> Rules</a></li><li class="chapter-item expanded "><a href="../transfer-policy/writing-rules.html" class="active"><strong aria-hidden="true">3.2.</strong> Writing Rules</a></li><li class="chapter-item expanded "><a href="../transfer-policy/multiple-transfer-policies.html"><strong aria-hidden="true">3.3.</strong> Multiple Transfer Policies</a></li></ol></li><li class="chapter-item expanded "><a href="../kiosk/index.html"><strong aria-hidden="true">4.</strong> Kiosk</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../kiosk/place-and-take.html"><strong aria-hidden="true">4.1.</strong> Place and Take</a></li><li class="chapter-item expanded "><a href="../kiosk/locking.html"><strong aria-hidden="true">4.2.</strong> Locking</a></li><li class="chapter-item expanded "><a href="../kiosk/list-and-purchase.html"><strong aria-hidden="true">4.3.</strong> List and Purchase</a></li><li class="chapter-item expanded "><a href="../kiosk/borrowing.html"><strong aria-hidden="true">4.4.</strong> Borrowing</a></li><li class="chapter-item expanded "><a href="../kiosk/withdrawing-profits.html"><strong aria-hidden="true">4.5.</strong> Withdrawing Profits</a></li><li class="chapter-item expanded "><a href="../kiosk/purchase-cap.html"><strong aria-hidden="true">4.6.</strong> Custom trading with PurchaseCap</a></li><li class="chapter-item expanded "><a href="../kiosk/purchase-cap-tricks.html"><strong aria-hidden="true">4.7.</strong> PurchaseCap tricks</a></li><li class="chapter-item expanded "><a href="../kiosk/extensions.html"><strong aria-hidden="true">4.8.</strong> Extensions</a></li></ol></li><li class="chapter-item expanded "><a href="../kiosk-extensions/index.html"><strong aria-hidden="true">5.</strong> Kiosk Extensions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../kiosk-extensions/simple-extensions.html"><strong aria-hidden="true">5.1.</strong> Simple Extensions</a></li><li class="chapter-item expanded "><a href="../kiosk-extensions/extensions-api/index.html"><strong aria-hidden="true">5.2.</strong> Extensions API</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../kiosk-extensions/extensions-api/adding-an-extension.html"><strong aria-hidden="true">5.2.1.</strong> Adding an Extension</a></li><li class="chapter-item expanded "><a href="../kiosk-extensions/extensions-api/extension-permissions.html"><strong aria-hidden="true">5.2.2.</strong> Extension Permissions</a></li><li class="chapter-item expanded "><a href="../kiosk-extensions/extensions-api/extension-storage.html"><strong aria-hidden="true">5.2.3.</strong> Extension Storage</a></li><li class="chapter-item expanded "><a href="../kiosk-extensions/extensions-api/disabling-and-removing.html"><strong aria-hidden="true">5.2.4.</strong> Disabling and Removing</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../building-with-kiosk/index.html"><strong aria-hidden="true">6.</strong> Building with Kiosk</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../building-with-kiosk/indexing-events.html"><strong aria-hidden="true">6.1.</strong> Indexing Events</a></li><li class="chapter-item expanded "><a href="../building-with-kiosk/using-kiosk-in-a-module.html"><strong aria-hidden="true">6.2.</strong> Using Kiosk in a Module</a></li><li class="chapter-item expanded "><a href="../building-with-kiosk/custom-event-handlers-in-extensions.html"><strong aria-hidden="true">6.3.</strong> Custom Event handlers in Extensions</a></li><li class="chapter-item expanded "><a href="../building-with-kiosk/demo-applications.html"><strong aria-hidden="true">6.4.</strong> Demo Applications</a></li></ol></li><li class="chapter-item expanded "><a href="../mysten-kiosk/index.html"><strong aria-hidden="true">7.</strong> Mysten Kiosk</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../mysten-kiosk/extensions/index.html"><strong aria-hidden="true">7.1.</strong> Extensions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../mysten-kiosk/extensions/personal-kiosk.html"><strong aria-hidden="true">7.1.1.</strong> Personal Kiosk</a></li></ol></li><li class="chapter-item expanded "><a href="../mysten-kiosk/rules/index.html"><strong aria-hidden="true">7.2.</strong> Rules</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../mysten-kiosk/rules/royalty-rule.html"><strong aria-hidden="true">7.2.1.</strong> Royalty Rule</a></li><li class="chapter-item expanded "><a href="../mysten-kiosk/rules/kiosk-lock-rule.html"><strong aria-hidden="true">7.2.2.</strong> Kiosk Lock Rule</a></li><li class="chapter-item expanded "><a href="../mysten-kiosk/rules/personal-kiosk.html"><strong aria-hidden="true">7.2.3.</strong> Personal Kiosk Rule</a></li><li class="chapter-item expanded "><a href="../mysten-kiosk/rules/witness-rule.html"><strong aria-hidden="true">7.2.4.</strong> Witness Rule</a></li><li class="chapter-item expanded "><a href="../mysten-kiosk/rules/floor-price-rule.html"><strong aria-hidden="true">7.2.5.</strong> Floor Price Rule</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../appendix/index.html"><strong aria-hidden="true">8.</strong> Appendix</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../appendix/glossary.html"><strong aria-hidden="true">8.1.</strong> A - Glossary</a></li><li class="chapter-item expanded "><a href="../appendix/asset-states-in-kiosk.html"><strong aria-hidden="true">8.2.</strong> B - Asset States in Kiosk</a></li><li class="chapter-item expanded "><a href="../appendix/extension-states.html"><strong aria-hidden="true">8.3.</strong> C - Extension States</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Sui Kiosk</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#guide-writing-rules" id="guide-writing-rules">Guide: Writing Rules</a></h1>
+<!-- Guide migrated from the sui repository -->
+<p>When an item is purchased in a Kiosk, a <code>TransferRequest</code> hot-potato is created, and the only way to resolve it and unblock the transaction is to confirm the request in the matching TransferPolicy. This guide explains how the TransferPolicy works and how new rules can be implemented and added into a policy.</p>
+<h2><a class="header" href="#basics" id="basics">Basics</a></h2>
+<p>An item of a type T can only be traded in Kiosks if the TransferPolicy for T exists and available to the buyer. This requirement is based on a simple fact that the TransferRequest issued on purchase must be resolved in a matching TransferPolicy and if there isn't one or buyer can't access it, the transaction will fail.</p>
+<p>This system was designed to give maximum freedom and flexibility for creators: by taking the transfer policy logic out of the trading primitive we make sure that the policies can be set only by creators, and as long as the trading primitive is used, enforcements are under their control. Effectively creators became closer to the trading ecosystem and got an important and solid role in the process.</p>
+<h2><a class="header" href="#architecture" id="architecture">Architecture</a></h2>
+<p>By default, a single TransferPolicy does not enforce anything - if a buyer attempts to confirm their TransferRequest, it will go through. However, the system allows setting so-called &quot;Rules&quot;. Their logic is simple: someone can publish a new rule module, for example &quot;fixed fee&quot;, and let it be &quot;added&quot; or &quot;set&quot; for the TransferPolicy. Once the Rule is added, TransferRequest needs to collect a TransferReceipt marking that the requiement specified in the Rule was completed.</p>
+<p>[TODO]</p>
+<ul>
+<li>Once a Rule is added to the TransferPolicy, every TransferRequest going to the policy must have a matching Receipt</li>
+</ul>
+<h2><a class="header" href="#rule-structure-dummy" id="rule-structure-dummy">Rule structure: Dummy</a></h2>
+<p>Every rule would follow the same structure and implement required types:</p>
+<ol>
+<li>RuleWitness struct</li>
+<li>Config struct stored in the TransferPolicy</li>
+<li>&quot;set&quot; function which adds the Rule to the TP</li>
+<li>an action function which adds a Receipt to the TransferRequest</li>
+</ol>
+<blockquote>
+<p>Important: there's no need to implement &quot;unset&quot; - any rule can be removed at any time as defined in the TransferPolicy module and guaranteed by the set of constraints on the rule Config (store + drop)</p>
+</blockquote>
+<pre><code class="language-move">module examples::dummy_rule {
+    use sui::coin::Coin;
+    use sui::sui::SUI;
+    use sui::transfer_policy::{
+        Self as policy,
+        TransferPolicy,
+        TransferPolicyCap,
+        TransferRequest
+    };
+
+    /// The Rule Witness; has no fields and is used as a
+    /// static authorization method for the rule.
+    struct Rule has drop {}
+
+    /// Configuration struct with any fields (as long as it
+    /// has `drop`). Managed by the Rule module.
+    struct Config has store, drop {}
+
+    /// Function that adds a Rule to the `TransferPolicy`.
+    /// Requires `TransferPolicyCap` to make sure the rules are
+    /// added only by the publisher of T.
+    public fun set&lt;T&gt;(
+        policy: &amp;mut TransferPolicy&lt;T&gt;,
+        cap: &amp;TransferPolicyCap&lt;T&gt;
+    ) {
+        policy::add_rule(Rule {}, policy, cap, Config {})
+    }
+
+    /// Action function - perform a certain action (any, really)
+    /// and pass in the `TransferRequest` so it gets the Receipt.
+    /// Receipt is a Rule Witness, so there's no way to create
+    /// it anywhere else but in this module.
+    ///
+    /// This example also illustrates that Rules can add Coin&lt;SUI&gt;
+    /// to the balance of the TransferPolicy allowing creators to
+    /// collect fees.
+    public fun pay&lt;T&gt;(
+        policy: &amp;mut TransferPolicy&lt;T&gt;,
+        request: &amp;mut TransferRequest&lt;T&gt;,
+        payment: Coin&lt;SUI&gt;
+    ) {
+        policy::add_to_balance(Rule {}, policy, payment);
+        policy::add_receipt(Rule {}, request);
+    }
+}
+</code></pre>
+<p>This module contains no configuration and requires a <code>Coin&lt;SUI&gt;</code> of any value (even &quot;0&quot;), so it's easy to imagine that every buyer would create a zero Coin and pass it to get the Receipt. The only thing this Rule module is good for is illustration and a skeleton. Goes without saying but <em>this code should never be used in production</em>.</p>
+<h2><a class="header" href="#reading-the-request-royalty" id="reading-the-request-royalty">Reading the Request: Royalty</a></h2>
+<p>To implement a percentage-based fee (a very common scenario - royalty fee), a Rule module needs to know the price for which an item was purchased. And the TransferRequest contains some information which can be used in this and other scenarios:</p>
+<ol>
+<li>Item ID</li>
+<li>Amount paid (SUI)</li>
+<li>From ID - the object which was used for selling (eg Kiosk)</li>
+</ol>
+<blockquote>
+<p>To provide access to these fields, the <code>sui::transfer_policy</code> module has a set of getter functions which are available to anyone: &quot;paid()&quot;, &quot;item()&quot; and &quot;from()&quot;</p>
+</blockquote>
+<pre><code class="language-move">module examples::royalty_rule {
+    // skipping dependencies
+    const MAX_BP: u16 = 10_000;
+
+    struct Rule has drop {}
+
+    /// In this implementation Rule has a configuration - `amount_bp`
+    /// which is the percentage of the `paid` in basis points.
+    struct Config has store, drop { amount_bp: u16 }
+
+    /// When a Rule is added, configuration details are specified
+    public fun set&lt;T&gt;(
+        policy: &amp;mut TransferPolicy&lt;T&gt;,
+        cap: &amp;TransferPolicyCap&lt;T&gt;,
+        amount_bp: u16
+    ) {
+        assert!(amount_bp &lt;= MAX_BP, 0);
+        policy::add_rule(Rule {}, policy, cap, Config { amount_bp })
+    }
+
+    /// To get the Receipt, the buyer must call this function and pay
+    /// the required amount; the amount is calculated dynamically and
+    /// it is more convenient to use a mutable reference
+    public fun pay&lt;T&gt;(
+        policy: &amp;mut TransferPolicy&lt;T&gt;,
+        request: &amp;mut TransferRequest&lt;T&gt;,
+        payment: &amp;mut Coin&lt;SUI&gt;,
+        ctx: &amp;mut TxContext
+    ) {
+        // using the getter to read the paid amount
+        let paid = policy::paid(request);
+        let config: &amp;Config = policy::get_rule(Rule {}, policy);
+        let amount = (((paid as u128) * (config.amount_bp as u128) / MAX_BP) as u64);
+        assert!(coin::value(payment) &gt;= amount, EInsufficientAmount);
+
+        let fee = coin::split(payment, amount, ctx);
+        policy::add_to_balance(Rule {}, policy, fee);
+        policy::add_receipt(Rule {}, request)
+    }
+}
+</code></pre>
+<h2><a class="header" href="#time-is-also-money" id="time-is-also-money">Time is also Money</a></h2>
+<p>Rules don't need to be only for payments and fees. Some might allow trading before or after a certain time. Since Rules are not standardized and can use anything, developers can encode logic around using any objects.</p>
+<pre><code class="language-move">module examples::time_rule {
+    // skipping some dependencies
+    use sui::clock::{Self, Clock};
+
+    struct Rule has drop {}
+    struct Config has store, drop { start_time: u64 }
+
+    /// Start time is yet to come
+    const ETooSoon: u64 = 0;
+
+    /// Add a Rule that enables purchases after a certain time
+    public fun set&lt;T&gt;(/* skip default fields */, start_time: u64) {
+        policy::add_rule(Rule {}, policy, cap, Config { start_time })
+    }
+
+    /// Pass in the Clock and prove that current time value is higher
+    /// than the `start_time`
+    public fun confirm_time&lt;T&gt;(
+        policy: &amp;TransferPolicy&lt;T&gt;,
+        request: &amp;mut TransferRequest&lt;T&gt;,
+        clock: &amp;Clock
+    ) {
+        let config: &amp;Config = policy::get_rule(Rule {}, policy)
+        assert!(clock::timestamp_ms(clock) &gt;= config.start_time, ETooSoon);
+        policy::add_receipt(Rule {}, request)
+    }
+}
+</code></pre>
+<h2><a class="header" href="#generalizing-approach-witness-policy" id="generalizing-approach-witness-policy">Generalizing approach: Witness policy</a></h2>
+<p>Sui Move has two main ways for authorizing an action: static - by using the Witness pattern, and dynamic - via the Capability pattern. With a small addition of type parameters to the Rule, it is possible to create a <em>generic Rule</em> which will not only vary by configuration but also by the type of the Rule.</p>
+<pre><code class="language-move">module examples::witness_rule {
+    // skipping dependencies
+
+    /// Rule is either not set or the Witness does not match the expectation
+    const ERuleNotSet: u64 = 0;
+
+    /// This Rule requires a witness of type W, see the implementation
+    struct Rule&lt;phantom W&gt; has drop {}
+    struct Config has store, drop {}
+
+    /// No special arguments are required to set this Rule, but the
+    /// publisher now needs to specify a Witness type
+    public fun set&lt;T, W&gt;(/* .... */) {
+        policy::add_rule(Rule&lt;W&gt; {}, policy, cap, Config {})
+    }
+
+    /// To confirm the action, buyer needs to pass in a witness
+    /// which should be acquired either by calling some function or
+    /// integrated into a more specific hook of a marketplace /
+    /// trading module
+    public fun confirm&lt;T, W&gt;(
+        _: W,
+        policy: &amp;TransferPolicy&lt;T&gt;,
+        request: &amp;mut TransferRequest&lt;T&gt;
+    ) {
+        assert!(policy::has_rule&lt;T, Rule&lt;W&gt;&gt;(policy), ERuleNotSet);
+        policy::add_receipt(Rule&lt;W&gt; {}, request)
+    }
+}
+</code></pre>
+<p>The &quot;witness_rule&quot; is very generic and can be used to require a custom Witness depending on the settings. It is a simple and yet a powerful way to link a custom marketplace / trading logic to the TransferPolicy. With a slight modification, the rule can be turned into a generic Capability requirement (basically any object, even a TransferPolicy for a different type or a TransferRequest - no limit to what could be done).</p>
+<pre><code class="language-move">module examples::capability_rule {
+    // skipping dependencies
+
+    /// Changing the type parameter name for better readability
+    struct Rule&lt;phantom Cap&gt; has drop {}
+    struct Config {}
+
+    /// Absolutely identical to the witness setting
+    public fun set&lt;T, Cap&gt;(/* ... *) {
+        policy::add_rule(Rule&lt;Cap&gt; {}, policy, cap, Config {})
+    }
+
+    /// Almost the same with the Witness requirement, only now we
+    /// require a reference to the type.
+    public fun confirm&lt;T, Cap&gt;(
+        cap: &amp;Cap,
+        /* ... */
+    ) {
+        assert!(policy::has_rule&lt;T, Rule&lt;Cap&gt;&gt;(policy), ERuleNotSet);
+        policy::add_receipt(Rule&lt;Cap&gt; {}, request)
+    }
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../transfer-policy/rules.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../transfer-policy/multiple-transfer-policies.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../transfer-policy/rules.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../transfer-policy/multiple-transfer-policies.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
