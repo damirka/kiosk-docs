@@ -8,7 +8,7 @@ the extension developer.
 
 Kiosk, like any object on Sui, has an `id: UID` field, which allows this object to not just be
 uniquely identified but also carry custom dynamic fields and dynamic object fields. The Kiosk itself
-is built around dynamic fields and features like [place](../kiosk/take-and-place.md) and
+is built around dynamic fields and features like [place](../kiosk/place-and-take.md) and
 [list](../kiosk/list-and-purchase.md) are built around dynamic object fields.
 
 ### The `uid_mut_as_owner` function

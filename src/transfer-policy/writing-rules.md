@@ -27,7 +27,8 @@ Every rule would follow the same structure and implement required types:
 3. "set" function which adds the Rule to the TP
 4. an action function which adds a Receipt to the TransferRequest
 
-> Important: there's no need to implement "unset" - any rule can be removed at any time as defined in the TransferPolicy module and guaranteed by the set of constraints on the rule Config (store + drop)
+> Important: there's no need to implement "unset" - any rule can be removed at any time as defined
+> in the TransferPolicy module and guaranteed by the set of constraints on the rule Config (store + drop)
 
 ```move
 module examples::dummy_rule {
@@ -51,7 +52,7 @@ module examples::dummy_rule {
     /// Function that adds a Rule to the `TransferPolicy`.
     /// Requires `TransferPolicyCap` to make sure the rules are
     /// added only by the publisher of T.
-    public fun set<T>(
+    public fun add<T>(
         policy: &mut TransferPolicy<T>,
         cap: &TransferPolicyCap<T>
     ) {
@@ -77,17 +78,23 @@ module examples::dummy_rule {
 }
 ```
 
-This module contains no configuration and requires a `Coin<SUI>` of any value (even "0"), so it's easy to imagine that every buyer would create a zero Coin and pass it to get the Receipt. The only thing this Rule module is good for is illustration and a skeleton. Goes without saying but *this code should never be used in production*.
+This module contains no configuration and requires a `Coin<SUI>` of any value (even "0"), so it's
+easy to imagine that every buyer would create a zero Coin and pass it to get the Receipt. The only
+thing this Rule module is good for is illustration and a skeleton. Goes without saying but **this
+code should never be used in production**.
 
 ## Reading the Request: Royalty
 
-To implement a percentage-based fee (a very common scenario - royalty fee), a Rule module needs to know the price for which an item was purchased. And the TransferRequest contains some information which can be used in this and other scenarios:
+To implement a percentage-based fee (a very common scenario - royalty fee), a Rule module needs to
+know the price for which an item was purchased. And the TransferRequest contains some information
+which can be used in this and other scenarios:
 
 1. Item ID
 2. Amount paid (SUI)
 3. From ID - the object which was used for selling (eg Kiosk)
 
-> To provide access to these fields, the `sui::transfer_policy` module has a set of getter functions which are available to anyone: "paid()", "item()" and "from()"
+> To provide access to these fields, the `sui::transfer_policy` module has a set of getter functions
+> which are available to anyone: "paid()", "item()" and "from()"
 
 ```move
 module examples::royalty_rule {
@@ -101,7 +108,7 @@ module examples::royalty_rule {
     struct Config has store, drop { amount_bp: u16 }
 
     /// When a Rule is added, configuration details are specified
-    public fun set<T>(
+    public fun add<T>(
         policy: &mut TransferPolicy<T>,
         cap: &TransferPolicyCap<T>,
         amount_bp: u16
@@ -134,7 +141,9 @@ module examples::royalty_rule {
 
 ## Time is also Money
 
-Rules don't need to be only for payments and fees. Some might allow trading before or after a certain time. Since Rules are not standardized and can use anything, developers can encode logic around using any objects.
+Rules don't need to be only for payments and fees. Some might allow trading before or after a
+certain time. Since Rules are not standardized and can use anything, developers can encode logic
+around using any objects.
 
 ```move
 module examples::time_rule {
@@ -148,7 +157,7 @@ module examples::time_rule {
     const ETooSoon: u64 = 0;
 
     /// Add a Rule that enables purchases after a certain time
-    public fun set<T>(/* skip default fields */, start_time: u64) {
+    public fun add<T>(/* skip default fields */, start_time: u64) {
         policy::add_rule(Rule {}, policy, cap, Config { start_time })
     }
 
@@ -168,7 +177,10 @@ module examples::time_rule {
 
 ## Generalizing approach: Witness policy
 
-Sui Move has two main ways for authorizing an action: static - by using the Witness pattern, and dynamic - via the Capability pattern. With a small addition of type parameters to the Rule, it is possible to create a *generic Rule* which will not only vary by configuration but also by the type of the Rule.
+Sui Move has two main ways for authorizing an action: static - by using the Witness pattern, and
+dynamic - via the Capability pattern. With a small addition of type parameters to the Rule, it is
+possible to create a *generic Rule* which will not only vary by configuration but also by the type
+of the Rule.
 
 ```move
 module examples::witness_rule {
@@ -183,7 +195,7 @@ module examples::witness_rule {
 
     /// No special arguments are required to set this Rule, but the
     /// publisher now needs to specify a Witness type
-    public fun set<T, W>(/* .... */) {
+    public fun add<T, W>(/* .... */) {
         policy::add_rule(Rule<W> {}, policy, cap, Config {})
     }
 
@@ -202,7 +214,11 @@ module examples::witness_rule {
 }
 ```
 
-The "witness_rule" is very generic and can be used to require a custom Witness depending on the settings. It is a simple and yet a powerful way to link a custom marketplace / trading logic to the TransferPolicy. With a slight modification, the rule can be turned into a generic Capability requirement (basically any object, even a TransferPolicy for a different type or a TransferRequest - no limit to what could be done).
+The "witness_rule" is very generic and can be used to require a custom Witness depending on the
+settings. It is a simple and yet a powerful way to link a custom marketplace / trading logic to the
+TransferPolicy. With a slight modification, the rule can be turned into a generic Capability
+requirement (basically any object, even a TransferPolicy for a different type or a TransferRequest -
+no limit to what could be done).
 
 ```move
 module examples::capability_rule {
@@ -213,7 +229,7 @@ module examples::capability_rule {
     struct Config {}
 
     /// Absolutely identical to the witness setting
-    public fun set<T, Cap>(/* ... *) {
+    public fun add<T, Cap>(/* ... *) {
         policy::add_rule(Rule<Cap> {}, policy, cap, Config {})
     }
 

@@ -13,6 +13,7 @@
     - [Writing Rules](./transfer-policy/writing-rules.md)
     - [Multiple Transfer Policies](./transfer-policy/multiple-transfer-policies.md)
 - [Kiosk](./kiosk/README.md)
+    - ["Open a Kiosk"](./kiosk/create.md)
     - [Place and Take](./kiosk/place-and-take.md)
     - [Locking](./kiosk/locking.md)
     - [List and Purchase](./kiosk/list-and-purchase.md)
