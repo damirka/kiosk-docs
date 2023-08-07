@@ -35,3 +35,32 @@ module examples::letterbox_ext {
     }
 }
 ```
+
+## Accessing protected functions
+
+If Extension requested permissions and was added and if it's not [disabled](./disabling-and-removing.md), it can access protected functions. The following example shows how to access the `place` function:
+
+```Move
+module examples::letterbox_ext {
+    // ...
+
+    /// Emitted when trying to place an item without permissions.
+    const ENotEnoughPermissions: u64 = 1;
+
+    /// Place a letter into the Kiosk without the KioskOwnerCap.
+    public fun place(kiosk: &mut Kiosk, letter: Letter, policy: &TransferPolicy<T>) {
+        assert!(kiosk_extension::can_place<Extension>(kiosk), ENotEnoughPermissions)
+
+        kiosk_extension::place(Extension {}, kiosk, letter, policy)
+    }
+}
+```
+
+Currently, two functions are available:
+
+- `place<Ext, T>(Ext, &mut Kiosk, T, &TransferPolicy<T>)` - similar to [place](./../../kiosk/place-and-take.md)
+- `lock<Ext, T>(Ext, &mut Kiosk, T, &TransferPolicy<T>)` - similar to [lock](./../../kiosk/locking.md)
+
+## Checking permissions
+
+The `can_place<Ext>(kiosk: &Kiosk): bool` function can be used to check if the extension has the `place` permission. The `can_lock<Ext>(kiosk: &Kiosk): bool` function can be used to check if the extension has the `lock` permission. Both functions make sure that the Extension is enabled, so an explicit check for that is not needed.
