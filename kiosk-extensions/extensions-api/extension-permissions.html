@@ -175,6 +175,29 @@
     }
 }
 </code></pre>
+<h2><a class="header" href="#accessing-protected-functions" id="accessing-protected-functions">Accessing protected functions</a></h2>
+<p>If Extension requested permissions and was added and if it's not <a href="./disabling-and-removing.html">disabled</a>, it can access protected functions. The following example shows how to access the <code>place</code> function:</p>
+<pre><code class="language-Move">module examples::letterbox_ext {
+    // ...
+
+    /// Emitted when trying to place an item without permissions.
+    const ENotEnoughPermissions: u64 = 1;
+
+    /// Place a letter into the Kiosk without the KioskOwnerCap.
+    public fun place(kiosk: &amp;mut Kiosk, letter: Letter, policy: &amp;TransferPolicy&lt;T&gt;) {
+        assert!(kiosk_extension::can_place&lt;Extension&gt;(kiosk), ENotEnoughPermissions)
+
+        kiosk_extension::place(Extension {}, kiosk, letter, policy)
+    }
+}
+</code></pre>
+<p>Currently, two functions are available:</p>
+<ul>
+<li><code>place&lt;Ext, T&gt;(Ext, &amp;mut Kiosk, T, &amp;TransferPolicy&lt;T&gt;)</code> - similar to <a href="./../../kiosk/place-and-take.html">place</a></li>
+<li><code>lock&lt;Ext, T&gt;(Ext, &amp;mut Kiosk, T, &amp;TransferPolicy&lt;T&gt;)</code> - similar to <a href="./../../kiosk/locking.html">lock</a></li>
+</ul>
+<h2><a class="header" href="#checking-permissions" id="checking-permissions">Checking permissions</a></h2>
+<p>The <code>can_place&lt;Ext&gt;(kiosk: &amp;Kiosk): bool</code> function can be used to check if the extension has the <code>place</code> permission. The <code>can_lock&lt;Ext&gt;(kiosk: &amp;Kiosk): bool</code> function can be used to check if the extension has the <code>lock</code> permission. Both functions make sure that the Extension is enabled, so an explicit check for that is not needed.</p>
 
                     </main>
 

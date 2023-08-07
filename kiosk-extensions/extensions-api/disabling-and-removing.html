@@ -150,8 +150,35 @@
                         <h1><a class="header" href="#disabling-and-removing" id="disabling-and-removing">Disabling and Removing</a></h1>
 <p>Any extension can be disabled by the Kiosk Owner at any time. This will revoke all permissions of the extension and prevent it from performing any actions in the Kiosk. The extension can be re-enabled at any time by the Kiosk Owner.</p>
 <blockquote>
-<p>Disabling an extension does not remove it from the Kiosk. An installed Extension will always have access to its storage. </p>
+<p>Disabling an extension does not remove it from the Kiosk. An installed Extension has access to its storage until completely removed from the Kiosk.</p>
 </blockquote>
+<h2><a class="header" href="#disabling-an-extension" id="disabling-an-extension">Disabling an extension</a></h2>
+<p>The <code>disable&lt;Ext&gt;(kiosk: &amp;mut Kiosk, cap: &amp;KioskOwnerCap)</code> function can be used to disable an extension. It will revoke all permissions of the extension and prevent it from performing any protected actions in the Kiosk.</p>
+<p><strong>Example PTB</strong></p>
+<pre><code class="language-js">let txb = new TransactionBuilder();
+let kioskArg = tx.object('&lt;ID&gt;');
+let capArg = tx.object('&lt;ID&gt;');
+
+txb.moveCall({
+    target: '0x2::kiosk_extension::disable',
+    arguments: [ kioskArg, capArg ],
+    typeArguments: '&lt;letter_box_package&gt;::letterbox_ext::Extension'
+});
+</code></pre>
+<h2><a class="header" href="#removing-an-extension" id="removing-an-extension">Removing an extension</a></h2>
+<p>An extension can be removed only <strong>if the storage is empty</strong>. The <code>remove&lt;Ext&gt;(kiosk: &amp;mut Kiosk, cap: &amp;KioskOwnerCap)</code> function can be used to remove an extension. It will remove the extension, unpack the extension storage and configuration and rebate the storage cost to the Kiosk Owner. Can only be performed by the Kiosk Owner.</p>
+<p>The call will fail if the storage is not empty.</p>
+<p><strong>Example PTB</strong></p>
+<pre><code class="language-js">let txb = new TransactionBuilder();
+let kioskArg = tx.object('&lt;ID&gt;');
+let capArg = tx.object('&lt;ID&gt;');
+
+txb.moveCall({
+    target: '0x2::kiosk_extension::remove',
+    arguments: [ kioskArg, capArg ],
+    typeArguments: '&lt;letter_box_package&gt;::letterbox_ext::Extension'
+});
+</code></pre>
 
                     </main>
 

@@ -213,7 +213,7 @@ returned or used to perform a trade.</p>
 <ul>
 <li><a href="roles/./../kiosk/place-and-take.html">Place and take items</a></li>
 <li><a href="roles/./../kiosk/list-and-purchase.html">List items for sale</a></li>
-<li><a href="roles/./../kiosk-extensions/README.html">Add and remove Extensions</a></li>
+<li><a href="roles/./../kiosk-extensions/">Add and remove Extensions</a></li>
 <li><a href="roles/./../kiosk/withdrawing-profits.html">Withdraw profits from sales</a></li>
 <li><a href="roles/./../kiosk/borrowing.html">Borrow and mutate owned assets</a></li>
 <li>Access full arsenal of trading tools (eg auctions, lotteries, collection bidding etc)</li>
@@ -948,13 +948,72 @@ KioskOwnerCap is a capability that makes the bearer the owner of the Kiosk. It a
     }
 }
 </code></pre>
+<h2><a class="header" href="#accessing-protected-functions" id="accessing-protected-functions">Accessing protected functions</a></h2>
+<p>If Extension requested permissions and was added and if it's not <a href="kiosk-extensions/extensions-api/./disabling-and-removing.html">disabled</a>, it can access protected functions. The following example shows how to access the <code>place</code> function:</p>
+<pre><code class="language-Move">module examples::letterbox_ext {
+    // ...
+
+    /// Emitted when trying to place an item without permissions.
+    const ENotEnoughPermissions: u64 = 1;
+
+    /// Place a letter into the Kiosk without the KioskOwnerCap.
+    public fun place(kiosk: &amp;mut Kiosk, letter: Letter, policy: &amp;TransferPolicy&lt;T&gt;) {
+        assert!(kiosk_extension::can_place&lt;Extension&gt;(kiosk), ENotEnoughPermissions)
+
+        kiosk_extension::place(Extension {}, kiosk, letter, policy)
+    }
+}
+</code></pre>
+<p>Currently, two functions are available:</p>
+<ul>
+<li><code>place&lt;Ext, T&gt;(Ext, &amp;mut Kiosk, T, &amp;TransferPolicy&lt;T&gt;)</code> - similar to <a href="kiosk-extensions/extensions-api/./../../kiosk/place-and-take.html">place</a></li>
+<li><code>lock&lt;Ext, T&gt;(Ext, &amp;mut Kiosk, T, &amp;TransferPolicy&lt;T&gt;)</code> - similar to <a href="kiosk-extensions/extensions-api/./../../kiosk/locking.html">lock</a></li>
+</ul>
+<h2><a class="header" href="#checking-permissions" id="checking-permissions">Checking permissions</a></h2>
+<p>The <code>can_place&lt;Ext&gt;(kiosk: &amp;Kiosk): bool</code> function can be used to check if the extension has the <code>place</code> permission. The <code>can_lock&lt;Ext&gt;(kiosk: &amp;Kiosk): bool</code> function can be used to check if the extension has the <code>lock</code> permission. Both functions make sure that the Extension is enabled, so an explicit check for that is not needed.</p>
 <h1><a class="header" href="#extension-storage" id="extension-storage">Extension Storage</a></h1>
-<p>Every extension gets its isolated storage which can be accessed only by the extension module (providing the Extension Witness). It's a <a href="https://github.com/MystenLabs/sui/blob/main/crates/sui-framework/packages/sui-framework/sources/bag.move"><code>Bag</code></a>. </p>
+<p>Every extension gets its isolated storage which can be accessed only by the extension module (providing the Extension Witness). It's a <a href="https://github.com/MystenLabs/sui/blob/main/crates/sui-framework/packages/sui-framework/sources/bag.move"><code>Bag</code></a>. Once an extension is installed, it can use the storage to store its data. Ideally, the storage should be managed in a way that allows the extension to be removed from the Kiosk if there are no active trades or other activities happening at the moment.</p>
+<blockquote>
+<p>The storage is always available to the extension if it is installed. Kiosk Owner can't access the storage of the extension if the logic for it is not implemented.</p>
+</blockquote>
+<h2><a class="header" href="#accessing-the-storage" id="accessing-the-storage">Accessing the storage</a></h2>
+<p>An installed extension can access the storage mutably or immutably using one of the following functions:</p>
+<ul>
+<li><code>storage(_ext: Extension {}, kiosk: &amp;Kiosk): Bag</code>: returns a reference to the storage of the extension. Can be used to read the storage.</li>
+<li><code>storage_mut(_ext: Extension {}, kiosk: &amp;mut Kiosk): &amp;mut Bag</code>: returns a mutable reference to the storage of the extension. Can be used to read and write to the storage.</li>
+</ul>
 <h1><a class="header" href="#disabling-and-removing" id="disabling-and-removing">Disabling and Removing</a></h1>
 <p>Any extension can be disabled by the Kiosk Owner at any time. This will revoke all permissions of the extension and prevent it from performing any actions in the Kiosk. The extension can be re-enabled at any time by the Kiosk Owner.</p>
 <blockquote>
-<p>Disabling an extension does not remove it from the Kiosk. An installed Extension will always have access to its storage. </p>
+<p>Disabling an extension does not remove it from the Kiosk. An installed Extension has access to its storage until completely removed from the Kiosk.</p>
 </blockquote>
+<h2><a class="header" href="#disabling-an-extension" id="disabling-an-extension">Disabling an extension</a></h2>
+<p>The <code>disable&lt;Ext&gt;(kiosk: &amp;mut Kiosk, cap: &amp;KioskOwnerCap)</code> function can be used to disable an extension. It will revoke all permissions of the extension and prevent it from performing any protected actions in the Kiosk.</p>
+<p><strong>Example PTB</strong></p>
+<pre><code class="language-js">let txb = new TransactionBuilder();
+let kioskArg = tx.object('&lt;ID&gt;');
+let capArg = tx.object('&lt;ID&gt;');
+
+txb.moveCall({
+    target: '0x2::kiosk_extension::disable',
+    arguments: [ kioskArg, capArg ],
+    typeArguments: '&lt;letter_box_package&gt;::letterbox_ext::Extension'
+});
+</code></pre>
+<h2><a class="header" href="#removing-an-extension" id="removing-an-extension">Removing an extension</a></h2>
+<p>An extension can be removed only <strong>if the storage is empty</strong>. The <code>remove&lt;Ext&gt;(kiosk: &amp;mut Kiosk, cap: &amp;KioskOwnerCap)</code> function can be used to remove an extension. It will remove the extension, unpack the extension storage and configuration and rebate the storage cost to the Kiosk Owner. Can only be performed by the Kiosk Owner.</p>
+<p>The call will fail if the storage is not empty.</p>
+<p><strong>Example PTB</strong></p>
+<pre><code class="language-js">let txb = new TransactionBuilder();
+let kioskArg = tx.object('&lt;ID&gt;');
+let capArg = tx.object('&lt;ID&gt;');
+
+txb.moveCall({
+    target: '0x2::kiosk_extension::remove',
+    arguments: [ kioskArg, capArg ],
+    typeArguments: '&lt;letter_box_package&gt;::letterbox_ext::Extension'
+});
+</code></pre>
 <h1><a class="header" href="#building-with-kiosk" id="building-with-kiosk">Building with Kiosk</a></h1>
 <h1><a class="header" href="#indexing-events" id="indexing-events">Indexing Events</a></h1>
 <h1><a class="header" href="#using-kiosk-in-a-module" id="using-kiosk-in-a-module">Using Kiosk in a Module</a></h1>

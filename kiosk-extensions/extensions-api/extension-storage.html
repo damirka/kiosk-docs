@@ -148,7 +148,16 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#extension-storage" id="extension-storage">Extension Storage</a></h1>
-<p>Every extension gets its isolated storage which can be accessed only by the extension module (providing the Extension Witness). It's a <a href="https://github.com/MystenLabs/sui/blob/main/crates/sui-framework/packages/sui-framework/sources/bag.move"><code>Bag</code></a>. </p>
+<p>Every extension gets its isolated storage which can be accessed only by the extension module (providing the Extension Witness). It's a <a href="https://github.com/MystenLabs/sui/blob/main/crates/sui-framework/packages/sui-framework/sources/bag.move"><code>Bag</code></a>. Once an extension is installed, it can use the storage to store its data. Ideally, the storage should be managed in a way that allows the extension to be removed from the Kiosk if there are no active trades or other activities happening at the moment.</p>
+<blockquote>
+<p>The storage is always available to the extension if it is installed. Kiosk Owner can't access the storage of the extension if the logic for it is not implemented.</p>
+</blockquote>
+<h2><a class="header" href="#accessing-the-storage" id="accessing-the-storage">Accessing the storage</a></h2>
+<p>An installed extension can access the storage mutably or immutably using one of the following functions:</p>
+<ul>
+<li><code>storage(_ext: Extension {}, kiosk: &amp;Kiosk): Bag</code>: returns a reference to the storage of the extension. Can be used to read the storage.</li>
+<li><code>storage_mut(_ext: Extension {}, kiosk: &amp;mut Kiosk): &amp;mut Bag</code>: returns a mutable reference to the storage of the extension. Can be used to read and write to the storage.</li>
+</ul>
 
                     </main>
 
