@@ -1,3 +1,3 @@
 # Philosophy
 
-
+We believe in 

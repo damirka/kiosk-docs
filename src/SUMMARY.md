@@ -4,7 +4,7 @@
 - [Overview](./overview.md)
     - [Philosophy](./philosophy.md)
     - [Guarantees](./guarantees.md)
-    - [Roles](./README.md)
+    - [Roles](./roles/README.md)
         - [Kiosk Owner (Seller)](./roles/kiosk-owner.md)
         - [Creator](./roles/creator.md)
         - [Buyer](./roles/buyer.md)
