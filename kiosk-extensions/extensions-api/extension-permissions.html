@@ -148,6 +148,33 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#extension-permissions" id="extension-permissions">Extension Permissions</a></h1>
+<p>Extensions can request permissions from the Kiosk Owner on installation. Permissions follow the all or nothing principle. If the Kiosk Owner adds an extension it gets all of the requested permissions; if the Kiosk Owner then <em>disables</em> an extension, all of its permissions are revoked.</p>
+<h2><a class="header" href="#structure" id="structure">Structure</a></h2>
+<p>Permissions are represented as a <code>u128</code> integer storing a <a href="https://en.wikipedia.org/wiki/Bit_array">bitmap</a>. Each of the bits corresponds to a permission, the first bit is the least significant bit. The following table lists all permissions and their corresponding bit:</p>
+<table><thead><tr><th>Bit</th><th>Decimal</th><th>Permission</th></tr></thead><tbody>
+<tr><td><code>0000</code></td><td><code>0</code></td><td>No permissions</td></tr>
+<tr><td><code>0001</code></td><td><code>1</code></td><td>Extension can place</td></tr>
+<tr><td><code>0010</code></td><td><code>2</code></td><td>Extension can place and lock</td></tr>
+<tr><td><code>0011</code></td><td><code>3</code></td><td>Extension can place and lock</td></tr>
+</tbody></table>
+<p>Currently, Kiosk has only 2 permissions: <code>place</code> (1st bit) and <code>lock</code> and <code>place</code> (2nd bit). The rest of the bits are reserved for future use.</p>
+<h2><a class="header" href="#using-permissions-in-the-add-function" id="using-permissions-in-the-add-function">Using permissions in the <code>add</code> function</a></h2>
+<p>It's a good practice to define a constant containing permissions of the extension:</p>
+<pre><code class="language-Move">module examples::letterbox_ext {
+    // ... dependencies
+
+    /// The expected set of permissions for extension. It requires `place`.
+    const PERMISSIONS: u128 = 1;
+
+    /// The Witness struct used to identify and authorize the extension.
+    struct Extension has drop {}
+
+    /// Install the Mallbox extension into the Kiosk and request `place` permission.
+    public fun add(kiosk: &amp;mut Kiosk, cap: &amp;KioskOwnerCap, ctx: &amp;mut TxContext) {
+        kiosk_extension::add(Extension {}, kiosk, cap, PERMISSIONS, ctx)
+    }
+}
+</code></pre>
 
                     </main>
 

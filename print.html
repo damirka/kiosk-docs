@@ -677,7 +677,105 @@ txb.moveCall({
 })
 </code></pre>
 <h1><a class="header" href="#place-and-take" id="place-and-take">Place and Take</a></h1>
+<p>Kiosk owner can <em>place</em> any items into their Kiosk, <em>placed</em> items can be <em>taken</em> by the owner if they're not <a href="kiosk/./list-and-purchase.html"><em>listed</em></a>.</p>
+<p>There's no limitations to which items can be placed into the Kiosk, however, it does not guarantee that they will be <em>tradable</em> - that depends on whether there's a <a href="kiosk/../transfer-policy/README.html">TransferPolicy</a> for the type.</p>
+<h2><a class="header" href="#calling-kioskplace" id="calling-kioskplace">Calling <code>kiosk::place</code></a></h2>
+<p>To place an item to the Kiosk, the owner needs to call the <code>sui::kiosk::place</code> function on the Kiosk object and pass the KioskOwnerCap and the Item as arguments.</p>
+<blockquote>
+<p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
+</blockquote>
+<p><strong>Example Kiosk SDK</strong></p>
+<pre><code class="language-js">import { place } from '@mysten/kiosk';
+
+let tx = new TransactionBuilder();
+
+let itemArg = tx.object('&lt;ID&gt;');
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+
+place(tx, '&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, item);
+</code></pre>
+<p><strong>Example PTB</strong></p>
+<pre><code class="language-js">let tx = new TransactionBuilder();
+
+let itemArg = tx.object('&lt;ID&gt;');
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+
+tx.moveCall({
+    target: '0x2::kiosk::place',
+    arguments: [ kioskArg, kioskOwnerCapArg, itemArg ],
+    typeArguments: [ '&lt;ITEM_TYPE&gt;' ]
+})
+</code></pre>
+<h2><a class="header" href="#calling-kiosktake" id="calling-kiosktake">Calling <code>kiosk::take</code></a></h2>
+<p>To take an item from the Kiosk, the owner needs to call the <code>sui::kiosk::take</code> function on the Kiosk object and pass the KioskOwnerCap and ID of the item as arguments.</p>
+<blockquote>
+<p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
+</blockquote>
+<p><strong>Example Kiosk SDK</strong></p>
+<pre><code class="language-js">import { take } from '@mysten/kiosk';
+
+let tx = new TransactionBuilder();
+
+let itemId = tx.pure('&lt;ITEM_ID&gt;', 'address');
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+
+let item = take('&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, itemId);
+
+tx.transferObjects([ item ], tx.pure(sender, 'address'));
+</code></pre>
+<p><strong>Example PTB</strong></p>
+<pre><code class="language-js">let tx = new TransactionBuilder();
+
+let itemId = tx.pure('&lt;ITEM_ID&gt;', 'address');
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+
+let item = tx.moveCall({
+    target: '0x2::kiosk::take',
+    arguments: [ kioskArg, kioskOwnerCapArg, itemId ],
+    typeArguments: [ '&lt;ITEM_TYPE&gt;' ]
+});
+</code></pre>
 <h1><a class="header" href="#locking" id="locking">Locking</a></h1>
+<p>Some policies may require items to never leave Kiosk (eg in a strong royalty enforcement scenario), and for that Kiosk has a locking mechanism.</p>
+<blockquote>
+<p><em>Locking</em> is similar to <a href="kiosk/./place-and-take.html#calling-kioskplace"><em>placing</em></a> with an exception, that a locked item can not be <a href="kiosk/./place-and-take.html#calling-kiosktake"><em>taken</em></a> out of the Kiosk.</p>
+</blockquote>
+<p>An item can be <em>locked</em> in a Kiosk by calling the <code>sui::kiosk::lock</code> function. To make sure that the item can be eventually unlocked, the call requires a <a href="kiosk/../transfer-policy/README.html">TransferPolicy</a> to exist.</p>
+<h3><a class="header" href="#calling-kiosklock" id="calling-kiosklock">Calling <code>kiosk::lock</code></a></h3>
+<p>Similar to <a href="kiosk/./place-and-take.html"><em>place</em></a>, <em>lock</em> call requires the KioskOwnerCap and the Item as arguments, but also requires the TransferPolicy to be shown.</p>
+<blockquote>
+<p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
+</blockquote>
+<p><strong>Example Kiosk SDK</strong></p>
+<pre><code class="language-js">import { lock } from '@mysten/kiosk';
+
+const tx = new TransactionBuilder();
+
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+let itemArg = tx.object('&lt;ID&gt;');
+let transferPolicyArg = tx.object('&lt;ID&gt;');
+
+lock(tx, '&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg);
+</code></pre>
+<p><strong>Example PTB</strong></p>
+<pre><code class="language-js">const tx = new TransactionBuilder();
+
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+let itemArg = tx.object('&lt;ID&gt;');
+let transferPolicyArg = tx.object('&lt;ID&gt;');
+
+tx.moveCall({
+    target: '0x2::kiosk::lock',
+    arguments: [ kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg ],
+    typeArguments: [ '&lt;ITEM_TYPE&gt;' ]
+});
+</code></pre>
 <h1><a class="header" href="#list-and-purchase" id="list-and-purchase">List and Purchase</a></h1>
 <h1><a class="header" href="#borrowing" id="borrowing">Borrowing</a></h1>
 <h1><a class="header" href="#withdrawing-profits" id="withdrawing-profits">Withdrawing Profits</a></h1>
@@ -725,20 +823,76 @@ Capability&quot; and other patterns.</p>
 KioskOwnerCap is a capability that makes the bearer the owner of the Kiosk. It allows the owner to -->
 <h1><a class="header" href="#extensions-api" id="extensions-api">Extensions API</a></h1>
 <p>Just having access to the <code>uid</code> is often not enough to build an extension due to the security limitations. Only Kiosk Owner has full access to the <code>uid</code>, which means that an extension involving a third party would require the Kiosk Owner to be involved in every step of the process.</p>
-<p>Not only the access to storage is limited and constrained but also the permissions of the extension. In the default setup, no party can <code>place</code> or <code>lock</code> items in a Kiosk without its Owner's consent. So some cases such as &quot;collection bidding&quot; (I offer X SUI for any item in this collection) will
-require the Kiosk Owner to approve the bid.</p>
+<p>Not only the access to storage is limited and constrained but also the permissions of the extension. In the default setup, no party can <code>place</code> or <code>lock</code> items in a Kiosk without its Owner's consent. So some cases such as &quot;collection bidding&quot; (I offer X SUI for any item in this collection) will require the Kiosk Owner to approve the bid.</p>
 <h3><a class="header" href="#kiosk_extension-module" id="kiosk_extension-module"><code>kiosk_extension</code> module</a></h3>
-<p>To address these concerns and provide more guarantees over the storage access, we created the <code>kiosk_extension</code> module. It provides a set of functions enable the extension developer to perform certain actions in the Kiosk without the Kiosk Owner's involvement and have a guarantee that the storage of the extension is not tampered with.</p>
+<p>To address these concerns and provide more guarantees over the storage access, we created the <code>kiosk_extension</code> module. It provides a set of functions which enable the extension developer to perform certain actions in the Kiosk without the Kiosk Owner's involvement and have a guarantee that the storage of the extension is not tampered with.</p>
 <pre><code class="language-Move">module example::my_extension {
     use sui::kiosk_extension;
 
     // ...
 }
 </code></pre>
+<h3><a class="header" href="#extension-lifecycle" id="extension-lifecycle">Extension Lifecycle</a></h3>
+<ol>
+<li>An extension can only be installed by an explicit call in the extension module.</li>
+<li>Kiosk Owner can revoke permissions of an extension at any time by calling the <code>disable</code> function.</li>
+<li>A disabled extension can be re-enabled at any time by the Kiosk Owner by calling the <code>enable</code> function.</li>
+<li>Extension can be removed only in if the Extension Storage is empty, i.e. all items are removed.</li>
+</ol>
 <h1><a class="header" href="#adding-an-extension" id="adding-an-extension">Adding an Extension</a></h1>
+<p>For the extension to function, it first needs to be installed by the Kiosk owner. To achieve that, an extension needs to implement the <code>add</code> function which will be called by the Kiosk owner and will request <a href="kiosk-extensions/extensions-api/./extension-permissions.html">all necessary permissions</a>.</p>
+<h2><a class="header" href="#implementing-add-function" id="implementing-add-function">Implementing <code>add</code> function</a></h2>
+<p>The signature of the <code>kiosk_extension::add</code> function requires the extension witness making it impossible to install an extension without an explicit implementation provided by the extension. The following example shows how to implement the <code>add</code> function for an extension that requires the <code>place</code> permission:</p>
+<pre><code class="language-Move">module examples::letterbox_ext {
+    // ... dependencies
+
+    /// The expected set of permissions for extension. It requires `place`.
+    const PERMISSIONS: u128 = 1;
+
+    /// The Witness struct used to identify and authorize the extension.
+    struct Extension has drop {}
+
+    /// Install the Mallbox extension into the Kiosk.
+    public fun add(kiosk: &amp;mut Kiosk, cap: &amp;KioskOwnerCap, ctx: &amp;mut TxContext) {
+        kiosk_extension::add(Extension {}, kiosk, cap, PERMISSIONS, ctx)
+    }
+}
+</code></pre>
 <h1><a class="header" href="#extension-permissions" id="extension-permissions">Extension Permissions</a></h1>
+<p>Extensions can request permissions from the Kiosk Owner on installation. Permissions follow the all or nothing principle. If the Kiosk Owner adds an extension it gets all of the requested permissions; if the Kiosk Owner then <em>disables</em> an extension, all of its permissions are revoked.</p>
+<h2><a class="header" href="#structure" id="structure">Structure</a></h2>
+<p>Permissions are represented as a <code>u128</code> integer storing a <a href="https://en.wikipedia.org/wiki/Bit_array">bitmap</a>. Each of the bits corresponds to a permission, the first bit is the least significant bit. The following table lists all permissions and their corresponding bit:</p>
+<table><thead><tr><th>Bit</th><th>Decimal</th><th>Permission</th></tr></thead><tbody>
+<tr><td><code>0000</code></td><td><code>0</code></td><td>No permissions</td></tr>
+<tr><td><code>0001</code></td><td><code>1</code></td><td>Extension can place</td></tr>
+<tr><td><code>0010</code></td><td><code>2</code></td><td>Extension can place and lock</td></tr>
+<tr><td><code>0011</code></td><td><code>3</code></td><td>Extension can place and lock</td></tr>
+</tbody></table>
+<p>Currently, Kiosk has only 2 permissions: <code>place</code> (1st bit) and <code>lock</code> and <code>place</code> (2nd bit). The rest of the bits are reserved for future use.</p>
+<h2><a class="header" href="#using-permissions-in-the-add-function" id="using-permissions-in-the-add-function">Using permissions in the <code>add</code> function</a></h2>
+<p>It's a good practice to define a constant containing permissions of the extension:</p>
+<pre><code class="language-Move">module examples::letterbox_ext {
+    // ... dependencies
+
+    /// The expected set of permissions for extension. It requires `place`.
+    const PERMISSIONS: u128 = 1;
+
+    /// The Witness struct used to identify and authorize the extension.
+    struct Extension has drop {}
+
+    /// Install the Mallbox extension into the Kiosk and request `place` permission.
+    public fun add(kiosk: &amp;mut Kiosk, cap: &amp;KioskOwnerCap, ctx: &amp;mut TxContext) {
+        kiosk_extension::add(Extension {}, kiosk, cap, PERMISSIONS, ctx)
+    }
+}
+</code></pre>
 <h1><a class="header" href="#extension-storage" id="extension-storage">Extension Storage</a></h1>
+<p>Every extension gets its isolated storage which can be accessed only by the extension module (providing the Extension Witness). It's a <a href="https://github.com/MystenLabs/sui/blob/main/crates/sui-framework/packages/sui-framework/sources/bag.move"><code>Bag</code></a>. </p>
 <h1><a class="header" href="#disabling-and-removing" id="disabling-and-removing">Disabling and Removing</a></h1>
+<p>Any extension can be disabled by the Kiosk Owner at any time. This will revoke all permissions of the extension and prevent it from performing any actions in the Kiosk. The extension can be re-enabled at any time by the Kiosk Owner.</p>
+<blockquote>
+<p>Disabling an extension does not remove it from the Kiosk. An installed Extension will always have access to its storage. </p>
+</blockquote>
 <h1><a class="header" href="#building-with-kiosk" id="building-with-kiosk">Building with Kiosk</a></h1>
 <h1><a class="header" href="#indexing-events" id="indexing-events">Indexing Events</a></h1>
 <h1><a class="header" href="#using-kiosk-in-a-module" id="using-kiosk-in-a-module">Using Kiosk in a Module</a></h1>

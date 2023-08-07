@@ -148,6 +148,68 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#place-and-take" id="place-and-take">Place and Take</a></h1>
+<p>Kiosk owner can <em>place</em> any items into their Kiosk, <em>placed</em> items can be <em>taken</em> by the owner if they're not <a href="./list-and-purchase.html"><em>listed</em></a>.</p>
+<p>There's no limitations to which items can be placed into the Kiosk, however, it does not guarantee that they will be <em>tradable</em> - that depends on whether there's a <a href="../transfer-policy/README.html">TransferPolicy</a> for the type.</p>
+<h2><a class="header" href="#calling-kioskplace" id="calling-kioskplace">Calling <code>kiosk::place</code></a></h2>
+<p>To place an item to the Kiosk, the owner needs to call the <code>sui::kiosk::place</code> function on the Kiosk object and pass the KioskOwnerCap and the Item as arguments.</p>
+<blockquote>
+<p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
+</blockquote>
+<p><strong>Example Kiosk SDK</strong></p>
+<pre><code class="language-js">import { place } from '@mysten/kiosk';
+
+let tx = new TransactionBuilder();
+
+let itemArg = tx.object('&lt;ID&gt;');
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+
+place(tx, '&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, item);
+</code></pre>
+<p><strong>Example PTB</strong></p>
+<pre><code class="language-js">let tx = new TransactionBuilder();
+
+let itemArg = tx.object('&lt;ID&gt;');
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+
+tx.moveCall({
+    target: '0x2::kiosk::place',
+    arguments: [ kioskArg, kioskOwnerCapArg, itemArg ],
+    typeArguments: [ '&lt;ITEM_TYPE&gt;' ]
+})
+</code></pre>
+<h2><a class="header" href="#calling-kiosktake" id="calling-kiosktake">Calling <code>kiosk::take</code></a></h2>
+<p>To take an item from the Kiosk, the owner needs to call the <code>sui::kiosk::take</code> function on the Kiosk object and pass the KioskOwnerCap and ID of the item as arguments.</p>
+<blockquote>
+<p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
+</blockquote>
+<p><strong>Example Kiosk SDK</strong></p>
+<pre><code class="language-js">import { take } from '@mysten/kiosk';
+
+let tx = new TransactionBuilder();
+
+let itemId = tx.pure('&lt;ITEM_ID&gt;', 'address');
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+
+let item = take('&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, itemId);
+
+tx.transferObjects([ item ], tx.pure(sender, 'address'));
+</code></pre>
+<p><strong>Example PTB</strong></p>
+<pre><code class="language-js">let tx = new TransactionBuilder();
+
+let itemId = tx.pure('&lt;ITEM_ID&gt;', 'address');
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+
+let item = tx.moveCall({
+    target: '0x2::kiosk::take',
+    arguments: [ kioskArg, kioskOwnerCapArg, itemId ],
+    typeArguments: [ '&lt;ITEM_TYPE&gt;' ]
+});
+</code></pre>
 
                     </main>
 

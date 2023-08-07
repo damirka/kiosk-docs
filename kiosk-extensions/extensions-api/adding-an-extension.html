@@ -148,6 +148,24 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#adding-an-extension" id="adding-an-extension">Adding an Extension</a></h1>
+<p>For the extension to function, it first needs to be installed by the Kiosk owner. To achieve that, an extension needs to implement the <code>add</code> function which will be called by the Kiosk owner and will request <a href="./extension-permissions.html">all necessary permissions</a>.</p>
+<h2><a class="header" href="#implementing-add-function" id="implementing-add-function">Implementing <code>add</code> function</a></h2>
+<p>The signature of the <code>kiosk_extension::add</code> function requires the extension witness making it impossible to install an extension without an explicit implementation provided by the extension. The following example shows how to implement the <code>add</code> function for an extension that requires the <code>place</code> permission:</p>
+<pre><code class="language-Move">module examples::letterbox_ext {
+    // ... dependencies
+
+    /// The expected set of permissions for extension. It requires `place`.
+    const PERMISSIONS: u128 = 1;
+
+    /// The Witness struct used to identify and authorize the extension.
+    struct Extension has drop {}
+
+    /// Install the Mallbox extension into the Kiosk.
+    public fun add(kiosk: &amp;mut Kiosk, cap: &amp;KioskOwnerCap, ctx: &amp;mut TxContext) {
+        kiosk_extension::add(Extension {}, kiosk, cap, PERMISSIONS, ctx)
+    }
+}
+</code></pre>
 
                     </main>
 

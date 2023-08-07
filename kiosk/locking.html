@@ -148,6 +148,42 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#locking" id="locking">Locking</a></h1>
+<p>Some policies may require items to never leave Kiosk (eg in a strong royalty enforcement scenario), and for that Kiosk has a locking mechanism.</p>
+<blockquote>
+<p><em>Locking</em> is similar to <a href="./place-and-take.html#calling-kioskplace"><em>placing</em></a> with an exception, that a locked item can not be <a href="./place-and-take.html#calling-kiosktake"><em>taken</em></a> out of the Kiosk.</p>
+</blockquote>
+<p>An item can be <em>locked</em> in a Kiosk by calling the <code>sui::kiosk::lock</code> function. To make sure that the item can be eventually unlocked, the call requires a <a href="../transfer-policy/README.html">TransferPolicy</a> to exist.</p>
+<h3><a class="header" href="#calling-kiosklock" id="calling-kiosklock">Calling <code>kiosk::lock</code></a></h3>
+<p>Similar to <a href="./place-and-take.html"><em>place</em></a>, <em>lock</em> call requires the KioskOwnerCap and the Item as arguments, but also requires the TransferPolicy to be shown.</p>
+<blockquote>
+<p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
+</blockquote>
+<p><strong>Example Kiosk SDK</strong></p>
+<pre><code class="language-js">import { lock } from '@mysten/kiosk';
+
+const tx = new TransactionBuilder();
+
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+let itemArg = tx.object('&lt;ID&gt;');
+let transferPolicyArg = tx.object('&lt;ID&gt;');
+
+lock(tx, '&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg);
+</code></pre>
+<p><strong>Example PTB</strong></p>
+<pre><code class="language-js">const tx = new TransactionBuilder();
+
+let kioskArg = tx.object('&lt;ID&gt;');
+let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
+let itemArg = tx.object('&lt;ID&gt;');
+let transferPolicyArg = tx.object('&lt;ID&gt;');
+
+tx.moveCall({
+    target: '0x2::kiosk::lock',
+    arguments: [ kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg ],
+    typeArguments: [ '&lt;ITEM_TYPE&gt;' ]
+});
+</code></pre>
 
                     </main>
 
