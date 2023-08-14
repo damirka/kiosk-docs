@@ -1,6 +1,6 @@
 # Open a Kiosk
 
-To use a Kiosk, the user needs to create one and have the `KioskOwnerCap` that matches the `Kiosk` object. Once created, all of the features of the Kiosk are available to the owner.
+To use a Kiosk, the user needs to create it and have the `KioskOwnerCap` that matches the `Kiosk` object. Once created, all of the features of the Kiosk are available to the owner.
 
 ## Default setup
 
