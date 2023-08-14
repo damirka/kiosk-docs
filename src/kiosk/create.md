@@ -11,17 +11,17 @@ Anyone can create a new Kiosk in a single transaction by calling the `kiosk::def
 ```js
 import { createKioskAndShare } from '@mysten/kiosk';
 
-let txb = new TransactionBuilder();
-let kioskOwnerCap = createKioskAndShare(txb);
+let tx = new TransactionBuilder();
+let kioskOwnerCap = createKioskAndShare(tx);
 
-txb.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
+tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
 ```
 
 **Example PTB**
 
 ```js
-let txb = new TransactionBuilder();
-txb.moveCall({
+let tx = new TransactionBuilder();
+tx.moveCall({
     target: '0x2::kiosk::default'
 });
 ```
@@ -47,11 +47,11 @@ For more advanced use cases, when you want to choose the storage model or perfor
 ```js
 import { createKiosk } from '@mysten/kiosk';
 
-let txb = new TransactionBuilder();
-let [kiosk, kioskOwnerCap] = createKiosk(txb);
+let tx = new TransactionBuilder();
+let [kiosk, kioskOwnerCap] = createKiosk(tx);
 
-txb.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
-txb.moveCall({
+tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
+tx.moveCall({
     target: '0x2::transfer::public_share_object',
     arguments: [ kiosk ],
     typeArguments: '0x2::kiosk::Kiosk'
@@ -61,13 +61,13 @@ txb.moveCall({
 **Example PTB**
 
 ```js
-let txb = new TransactionBuilder();
-let [kiosk, kioskOwnerCap] = txb.moveCall({
+let tx = new TransactionBuilder();
+let [kiosk, kioskOwnerCap] = tx.moveCall({
     target: '0x2::kiosk::new'
 });
 
-txb.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
-txb.moveCall({
+tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
+tx.moveCall({
     target: '0x2::transfer::public_share_object',
     arguments: [ kiosk ],
     typeArguments: '0x2::kiosk::Kiosk'
