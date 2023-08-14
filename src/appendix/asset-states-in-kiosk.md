@@ -10,8 +10,9 @@ An asset in Kiosk can be in one of the following states:
 Asset is put into the Kiosk by the [Kiosk Owner]() using the [`kiosk::place`](../kiosk/place-and-take) function. An owner can perform any available action on an item in this state.
 
 ### Available actions
-- [take](../kiosk/place-and-take) 
-- [list](../kiosk/list-and-purchase)
+- [take](../kiosk/place-and-take)
+- [list](../kiosk/list-and-purchase) - change state to Listed
+- [list with PurchaseCap](../kiosk/purchase-cap) - change state to Listed Exclusively
 - [borrow](../kiosk/borrowing)
 - [borrow_mut](../kiosk/borrowing)
 - [borrow_val](../kiosk/borrowing)
@@ -24,7 +25,7 @@ let is_placed = kiosk::is_placed<T>(&Kiosk, ItemID) && !kiosk::is_locked<T>(&Kio
 ```
 
 ## Locked
-Asset can also be placed and *locked* in a Kiosk using the [`kiosk::lock`](../kiosk/locking) function. Unlike *place*, locking mechanic disables taking. 
+Asset can also be placed and *locked* in a Kiosk using the [`kiosk::lock`](../kiosk/locking) function. Unlike *place*, locking mechanic disables taking.
 
 ### Available actions
 - [list](../kiosk/list-and-purchase) - change state to Listed
@@ -40,7 +41,7 @@ let is_locked = kiosk::is_locked<T>(&Kiosk, ItemID);
 ```
 
 ## Listed
-A placed or a locked item can be listed using the [`list`](../kiosk/list-and-purchase) function. The asset then becomes publicly available for purchase. 
+A placed or a locked item can be listed using the [`list`](../kiosk/list-and-purchase) function. The asset then becomes publicly available for purchase.
 
 > While listed, an asset can not be modified.
 
