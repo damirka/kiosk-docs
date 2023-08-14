@@ -10,7 +10,7 @@ Kiosk comes with a basic trading functionality. The Kiosk Owner can list assets 
 
 Kiosk Owner can list any asset asset that is stored in their Kiosk. To do so they need to call the `kiosk::list` function, specify the asset they're willing to put on sale, and the price they're willing to sell it for.
 
-> The price only supports SUI at the moment.
+> All listings are in SUI at the moment.
 
 When an item is listed, a `kiosk::ItemListed` event is emitted. The event contains the Kiosk ID, Item ID, type of the Item and the price it was listed for.
 
