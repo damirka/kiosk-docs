@@ -62,7 +62,7 @@ let capArg = tx.object('<ID>');
 let [item, promise] = borrowValue(tx, itemType, kioskArg, capArg, itemId);
 
 // freely mutate or reference the `item`
-// any calls are available as long as they take a mutable reference
+// any calls are available as long as they take a reference
 // `returnValue` must be explicitly called
 
 returnValue(tx, itemType, kioskArg, item, promise);
@@ -85,7 +85,7 @@ let [item, promise] = tx.moveCall({
 });
 
 // freely mutate or reference the `item`
-// any calls are available as long as they take a mutable reference
+// any calls are available as long as they take a reference
 // `returnValue` must be explicitly called
 
 tx.moveCall({
