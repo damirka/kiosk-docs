@@ -159,8 +159,9 @@
 <p>Asset is put into the Kiosk by the <a href="">Kiosk Owner</a> using the <a href="../kiosk/place-and-take"><code>kiosk::place</code></a> function. An owner can perform any available action on an item in this state.</p>
 <h3><a class="header" href="#available-actions" id="available-actions">Available actions</a></h3>
 <ul>
-<li><a href="../kiosk/place-and-take">take</a> </li>
-<li><a href="../kiosk/list-and-purchase">list</a></li>
+<li><a href="../kiosk/place-and-take">take</a></li>
+<li><a href="../kiosk/list-and-purchase">list</a> - change state to Listed</li>
+<li><a href="../kiosk/purchase-cap">list with PurchaseCap</a> - change state to Listed Exclusively</li>
 <li><a href="../kiosk/borrowing">borrow</a></li>
 <li><a href="../kiosk/borrowing">borrow_mut</a></li>
 <li><a href="../kiosk/borrowing">borrow_val</a></li>
@@ -170,7 +171,7 @@
 <pre><code class="language-Move">let is_placed = kiosk::is_placed&lt;T&gt;(&amp;Kiosk, ItemID) &amp;&amp; !kiosk::is_locked&lt;T&gt;(&amp;Kiosk, ItemID);
 </code></pre>
 <h2><a class="header" href="#locked" id="locked">Locked</a></h2>
-<p>Asset can also be placed and <em>locked</em> in a Kiosk using the <a href="../kiosk/locking"><code>kiosk::lock</code></a> function. Unlike <em>place</em>, locking mechanic disables taking. </p>
+<p>Asset can also be placed and <em>locked</em> in a Kiosk using the <a href="../kiosk/locking"><code>kiosk::lock</code></a> function. Unlike <em>place</em>, locking mechanic disables taking.</p>
 <h3><a class="header" href="#available-actions-1" id="available-actions-1">Available actions</a></h3>
 <ul>
 <li><a href="../kiosk/list-and-purchase">list</a> - change state to Listed</li>
@@ -184,7 +185,7 @@
 <pre><code class="language-Move">let is_locked = kiosk::is_locked&lt;T&gt;(&amp;Kiosk, ItemID);
 </code></pre>
 <h2><a class="header" href="#listed" id="listed">Listed</a></h2>
-<p>A placed or a locked item can be listed using the <a href="../kiosk/list-and-purchase"><code>list</code></a> function. The asset then becomes publicly available for purchase. </p>
+<p>A placed or a locked item can be listed using the <a href="../kiosk/list-and-purchase"><code>list</code></a> function. The asset then becomes publicly available for purchase.</p>
 <blockquote>
 <p>While listed, an asset can not be modified.</p>
 </blockquote>
