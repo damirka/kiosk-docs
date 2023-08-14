@@ -148,6 +148,29 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#appendix-a-glossary" id="appendix-a-glossary">Appendix A: Glossary</a></h1>
+<ul>
+<li>
+<p><strong>Kiosk</strong> - a single Kiosk object that stores assets and their states, and profits from sales; protects the contents, the only party that can access and change the state is <strong>Kiosk Owner</strong>.</p>
+</li>
+<li>
+<p><strong>Kiosk Owner</strong> - a party that owns the <code>KioskOwnerCap</code> - can be an application (represented as an object) or a single account</p>
+</li>
+<li>
+<p><strong>TransferPolicy</strong> - an object that authorizes <code>TransferRequest</code>s, by default requires no actions but can be modified by adding Rules. TransferPolicy is controlled by the <strong>Creator</strong>, and can only receive payments and approve TransferRequests.</p>
+</li>
+<li>
+<p><strong>Transfer Request</strong> - a temporary non-discardable struct (Hot Potato) created on every purchase operation in Kiosk. Must be resolved at a matching <strong>TransferPolicy</strong> for the transaction to succeed. If a policy has <strong>Rules</strong>, each of the rules must add a <strong>Rule Receipt</strong> to the TransferRequest before the confirmation.</p>
+</li>
+<li>
+<p><strong>Creator</strong> - a party that owns the <code>TransferPolicyCap</code> - an object that grants full access to the TransferPolicy. Can be both an application (represented as an object) and a single account. </p>
+</li>
+<li>
+<p><strong>Rule</strong> - a single requirement in a <strong>TransferPolicy</strong> represented as a module with a unique witness type and a function to “satisfy the rule” and add a receipt in the TransferRequest.</p>
+</li>
+<li>
+<p><strong>Rule Receipt</strong> - a “stamp” put into a <strong>TransferRequest</strong> by presenting a witness (instance of a droppable struct); receipts in the TransferRequest are compared against <strong>Rules</strong> added to the <strong>TransferPolicy</strong>, and if they match, a request can be confirmed.</p>
+</li>
+</ul>
 
                     </main>
 

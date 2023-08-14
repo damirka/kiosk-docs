@@ -148,6 +148,71 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#appendix-b-asset-states-in-kiosk" id="appendix-b-asset-states-in-kiosk">Appendix B: Asset States in Kiosk</a></h1>
+<p>An asset in Kiosk can be in one of the following states:</p>
+<ul>
+<li>Placed</li>
+<li>Locked (special case of Placed)</li>
+<li>Listed</li>
+<li>Listed Exclusively</li>
+</ul>
+<h2><a class="header" href="#placed" id="placed">Placed</a></h2>
+<p>Asset is put into the Kiosk by the <a href="">Kiosk Owner</a> using the <a href="../kiosk/place-and-take"><code>kiosk::place</code></a> function. An owner can perform any available action on an item in this state.</p>
+<h3><a class="header" href="#available-actions" id="available-actions">Available actions</a></h3>
+<ul>
+<li><a href="../kiosk/place-and-take">take</a> </li>
+<li><a href="../kiosk/list-and-purchase">list</a></li>
+<li><a href="../kiosk/borrowing">borrow</a></li>
+<li><a href="../kiosk/borrowing">borrow_mut</a></li>
+<li><a href="../kiosk/borrowing">borrow_val</a></li>
+</ul>
+<h3><a class="header" href="#check-state" id="check-state">Check state</a></h3>
+<p>To check that asset is in the right state, the caller can use <code>is_placed</code> function, however, to make sure that the asset is not <em>locked</em>, we need to check <code>!is_locked</code>.</p>
+<pre><code class="language-Move">let is_placed = kiosk::is_placed&lt;T&gt;(&amp;Kiosk, ItemID) &amp;&amp; !kiosk::is_locked&lt;T&gt;(&amp;Kiosk, ItemID);
+</code></pre>
+<h2><a class="header" href="#locked" id="locked">Locked</a></h2>
+<p>Asset can also be placed and <em>locked</em> in a Kiosk using the <a href="../kiosk/locking"><code>kiosk::lock</code></a> function. Unlike <em>place</em>, locking mechanic disables taking. </p>
+<h3><a class="header" href="#available-actions-1" id="available-actions-1">Available actions</a></h3>
+<ul>
+<li><a href="../kiosk/list-and-purchase">list</a> - change state to Listed</li>
+<li><a href="../kiosk/purchase-cap">list with PurchaseCap</a> - change state to Listed Exclusively</li>
+<li><a href="../kiosk/borrowing">borrow</a></li>
+<li><a href="../kiosk/borrowing">borrow_mut</a></li>
+<li><a href="../kiosk/borrowing">borrow_val</a></li>
+</ul>
+<h3><a class="header" href="#check-state-1" id="check-state-1">Check state</a></h3>
+<p>Kiosk has a built in <code>is_locked</code> function to check if the item is locked.</p>
+<pre><code class="language-Move">let is_locked = kiosk::is_locked&lt;T&gt;(&amp;Kiosk, ItemID);
+</code></pre>
+<h2><a class="header" href="#listed" id="listed">Listed</a></h2>
+<p>A placed or a locked item can be listed using the <a href="../kiosk/list-and-purchase"><code>list</code></a> function. The asset then becomes publicly available for purchase. </p>
+<blockquote>
+<p>While listed, an asset can not be modified.</p>
+</blockquote>
+<h3><a class="header" href="#available-actions-2" id="available-actions-2">Available actions</a></h3>
+<ul>
+<li><a href="../kiosk/list-and-purchase">purchase</a> - move the asset out of the Kiosk</li>
+<li><a href="../kiosk/list-and-purchase">delist</a> - return to the previous state: Placed or Locked</li>
+<li><a href="../kiosk/borrowing">borrow</a></li>
+</ul>
+<h3><a class="header" href="#check-state-2" id="check-state-2">Check state</a></h3>
+<p>To check if the item is listed, use <code>is_listed</code> function.</p>
+<pre><code class="language-Move">let is_listed = kiosk::is_listed&lt;T&gt;(&amp;Kiosk, ItemID)
+</code></pre>
+<h2><a class="header" href="#listed-exclusively" id="listed-exclusively">Listed Exclusively</a></h2>
+<p>When an asset is listed using the <a href="../kiosk/purchase-cap"><code>list_with_purchase_cap</code></a>, it gets “listed exclusively” state. While in this state, an asset is available for purchase to the owner of the <code>PurchaseCap</code>, and cannot be delisted unless the <code>PurchaseCap</code> is returned.</p>
+<blockquote>
+<p>While listed exclusively, an asset can not be modified.</p>
+</blockquote>
+<h3><a class="header" href="#available-actions-3" id="available-actions-3">Available actions</a></h3>
+<ul>
+<li><a href="../kiosk/purchase-cap.html">purchase with PurchaseCap</a> - move the asset out of the Kiosk</li>
+<li><a href="../kiosk/purchase-cap.html">return PurchaseCap</a> - return to the previous state: Placed or Locked</li>
+<li><a href="../kiosk/borrowing.html">borrow</a></li>
+</ul>
+<h3><a class="header" href="#check-state-3" id="check-state-3">Check state</a></h3>
+<p>To check if an asset is listed exclusively, use <code>is_listed_exclusively</code> function.</p>
+<pre><code class="language-Move">let is_listed_exclusively = kiosk::is_listed_exclusively&lt;T&gt;(&amp;Kiosk, ItemID);
+</code></pre>
 
                     </main>
 
