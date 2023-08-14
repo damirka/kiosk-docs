@@ -151,7 +151,7 @@
 <p>To use a Kiosk, the user needs to create one and have the <code>KioskOwnerCap</code> that matches the <code>Kiosk</code> object. Once created, all of the features of the Kiosk are available to the owner.</p>
 <h2><a class="header" href="#default-setup" id="default-setup">Default setup</a></h2>
 <p>Anyone can create a new Kiosk in a single transaction by calling the <code>kiosk::default</code> function. It will create and share a Kiosk and transfer the <code>KioskOwnerCap</code> to the transaction sender.</p>
-<p><strong>Example Kiosk SDK</strong></p>
+<h3><a class="header" href="#example-kiosk-sdk" id="example-kiosk-sdk">Example Kiosk SDK</a></h3>
 <pre><code class="language-js">import { createKioskAndShare } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
@@ -159,13 +159,13 @@ let kioskOwnerCap = createKioskAndShare(tx);
 
 tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
 </code></pre>
-<p><strong>Example PTB</strong></p>
+<h3><a class="header" href="#example-ptb" id="example-ptb">Example PTB</a></h3>
 <pre><code class="language-js">let tx = new TransactionBuilder();
 tx.moveCall({
     target: '0x2::kiosk::default'
 });
 </code></pre>
-<p><strong>Example CLI</strong></p>
+<h3><a class="header" href="#example-cli" id="example-cli">Example CLI</a></h3>
 <pre><code class="language-bash">sui client call \
     --package 0x2 \
     --module kiosk \
@@ -177,7 +177,7 @@ tx.moveCall({
 <blockquote>
 <p>Kiosk is intended to be <strong>shared</strong> and choosing a different storage model (eg &quot;owned&quot;) would lead to Kiosk not being fully functional and not available for other users. Make sure you know what you're doing.</p>
 </blockquote>
-<p><strong>Example Kiosk SDK</strong></p>
+<h3><a class="header" href="#example-kiosk-sdk-1" id="example-kiosk-sdk-1">Example Kiosk SDK</a></h3>
 <pre><code class="language-js">import { createKiosk } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
@@ -190,7 +190,7 @@ tx.moveCall({
     typeArguments: '0x2::kiosk::Kiosk'
 })
 </code></pre>
-<p><strong>Example PTB</strong></p>
+<h3><a class="header" href="#example-ptb-1" id="example-ptb-1">Example PTB</a></h3>
 <pre><code class="language-js">let tx = new TransactionBuilder();
 let [kiosk, kioskOwnerCap] = tx.moveCall({
     target: '0x2::kiosk::new'
@@ -203,6 +203,8 @@ tx.moveCall({
     typeArguments: '0x2::kiosk::Kiosk'
 })
 </code></pre>
+<h3><a class="header" href="#example-cli-1" id="example-cli-1">Example CLI</a></h3>
+<p>Sui CLI does not support PTBs and transaction chaining yet. You can use the <code>kiosk::default</code> function instead.</p>
 
                     </main>
 

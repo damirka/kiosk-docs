@@ -156,9 +156,9 @@
 <h3><a class="header" href="#calling-kiosklock" id="calling-kiosklock">Calling <code>kiosk::lock</code></a></h3>
 <p>Similar to <a href="./place-and-take.html"><em>place</em></a>, <em>lock</em> call requires the KioskOwnerCap and the Item as arguments, but also requires the TransferPolicy to be shown.</p>
 <blockquote>
-<p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
+<p><code>&lt;ITEM_TYPE&gt;</code> in the examples below is the full type of the item.</p>
 </blockquote>
-<p><strong>Example Kiosk SDK</strong></p>
+<h3><a class="header" href="#example-kiosk-sdk" id="example-kiosk-sdk">Example Kiosk SDK</a></h3>
 <pre><code class="language-js">import { lock } from '@mysten/kiosk';
 
 const tx = new TransactionBuilder();
@@ -170,7 +170,7 @@ let transferPolicyArg = tx.object('&lt;ID&gt;');
 
 lock(tx, '&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg);
 </code></pre>
-<p><strong>Example PTB</strong></p>
+<h3><a class="header" href="#example-ptb" id="example-ptb">Example PTB</a></h3>
 <pre><code class="language-js">const tx = new TransactionBuilder();
 
 let kioskArg = tx.object('&lt;ID&gt;');
@@ -183,6 +183,15 @@ tx.moveCall({
     arguments: [ kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg ],
     typeArguments: [ '&lt;ITEM_TYPE&gt;' ]
 });
+</code></pre>
+<h3><a class="header" href="#example-cli" id="example-cli">Example CLI</a></h3>
+<pre><code class="language-bash">sui client call \
+    --package 0x2 \
+    --module kiosk \
+    --function lock \
+    --args &quot;&lt;KIOSK_ID&gt;&quot; &quot;&lt;CAP_ID&gt;&quot; &quot;&lt;TRANSFER_POLICY_ID&gt;&quot; &quot;&lt;ITEM_ID&gt;&quot; \
+    --type-args &quot;&lt;ITEM_TYPE&gt;&quot; \
+    --gas-budget 1000000000
 </code></pre>
 
                     </main>

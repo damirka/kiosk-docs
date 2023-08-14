@@ -687,7 +687,7 @@ no limit to what could be done).</p>
 <p>To use a Kiosk, the user needs to create one and have the <code>KioskOwnerCap</code> that matches the <code>Kiosk</code> object. Once created, all of the features of the Kiosk are available to the owner.</p>
 <h2><a class="header" href="#default-setup" id="default-setup">Default setup</a></h2>
 <p>Anyone can create a new Kiosk in a single transaction by calling the <code>kiosk::default</code> function. It will create and share a Kiosk and transfer the <code>KioskOwnerCap</code> to the transaction sender.</p>
-<p><strong>Example Kiosk SDK</strong></p>
+<h3><a class="header" href="#example-kiosk-sdk" id="example-kiosk-sdk">Example Kiosk SDK</a></h3>
 <pre><code class="language-js">import { createKioskAndShare } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
@@ -695,13 +695,13 @@ let kioskOwnerCap = createKioskAndShare(tx);
 
 tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
 </code></pre>
-<p><strong>Example PTB</strong></p>
+<h3><a class="header" href="#example-ptb" id="example-ptb">Example PTB</a></h3>
 <pre><code class="language-js">let tx = new TransactionBuilder();
 tx.moveCall({
     target: '0x2::kiosk::default'
 });
 </code></pre>
-<p><strong>Example CLI</strong></p>
+<h3><a class="header" href="#example-cli" id="example-cli">Example CLI</a></h3>
 <pre><code class="language-bash">sui client call \
     --package 0x2 \
     --module kiosk \
@@ -713,7 +713,7 @@ tx.moveCall({
 <blockquote>
 <p>Kiosk is intended to be <strong>shared</strong> and choosing a different storage model (eg &quot;owned&quot;) would lead to Kiosk not being fully functional and not available for other users. Make sure you know what you're doing.</p>
 </blockquote>
-<p><strong>Example Kiosk SDK</strong></p>
+<h3><a class="header" href="#example-kiosk-sdk-1" id="example-kiosk-sdk-1">Example Kiosk SDK</a></h3>
 <pre><code class="language-js">import { createKiosk } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
@@ -726,7 +726,7 @@ tx.moveCall({
     typeArguments: '0x2::kiosk::Kiosk'
 })
 </code></pre>
-<p><strong>Example PTB</strong></p>
+<h3><a class="header" href="#example-ptb-1" id="example-ptb-1">Example PTB</a></h3>
 <pre><code class="language-js">let tx = new TransactionBuilder();
 let [kiosk, kioskOwnerCap] = tx.moveCall({
     target: '0x2::kiosk::new'
@@ -739,6 +739,8 @@ tx.moveCall({
     typeArguments: '0x2::kiosk::Kiosk'
 })
 </code></pre>
+<h3><a class="header" href="#example-cli-1" id="example-cli-1">Example CLI</a></h3>
+<p>Sui CLI does not support PTBs and transaction chaining yet. You can use the <code>kiosk::default</code> function instead.</p>
 <h1><a class="header" href="#place-and-take" id="place-and-take">Place and Take</a></h1>
 <p>Kiosk owner can <em>place</em> any items into their Kiosk, <em>placed</em> items can be <em>taken</em> by the owner if they're not <a href="kiosk/./list-and-delist.html"><em>listed</em></a>.</p>
 <p>There's no limitations to which items can be placed into the Kiosk, however, it does not guarantee that they will be <em>tradable</em> - that depends on whether there's a <a href="kiosk/../transfer-policy/README.html">TransferPolicy</a> for the type.</p>
@@ -747,7 +749,7 @@ tx.moveCall({
 <blockquote>
 <p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
 </blockquote>
-<p><strong>Example Kiosk SDK</strong></p>
+<h3><a class="header" href="#example-kiosk-sdk-2" id="example-kiosk-sdk-2">Example Kiosk SDK</a></h3>
 <pre><code class="language-js">import { place } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
@@ -758,7 +760,7 @@ let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
 
 place(tx, '&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, item);
 </code></pre>
-<p><strong>Example PTB</strong></p>
+<h3><a class="header" href="#example-ptb-2" id="example-ptb-2">Example PTB</a></h3>
 <pre><code class="language-js">let tx = new TransactionBuilder();
 
 let itemArg = tx.object('&lt;ID&gt;');
@@ -771,12 +773,21 @@ tx.moveCall({
     typeArguments: [ '&lt;ITEM_TYPE&gt;' ]
 })
 </code></pre>
+<h3><a class="header" href="#example-cli-2" id="example-cli-2">Example CLI</a></h3>
+<pre><code class="language-bash">sui client call \
+    --package 0x2 \
+    --module kiosk \
+    --function place \
+    --args &quot;&lt;KIOSK_ID&gt;&quot; &quot;&lt;CAP_ID&gt;&quot; &quot;&lt;ITEM_ID&gt;&quot; \
+    --type-args &quot;&lt;ITEM_TYPE&gt;&quot; \
+    --gas-budget 1000000000
+</code></pre>
 <h2><a class="header" href="#calling-kiosktake" id="calling-kiosktake">Calling <code>kiosk::take</code></a></h2>
 <p>To take an item from the Kiosk, the owner needs to call the <code>sui::kiosk::take</code> function on the Kiosk object and pass the KioskOwnerCap and ID of the item as arguments.</p>
 <blockquote>
 <p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
 </blockquote>
-<p><strong>Example Kiosk SDK</strong></p>
+<h3><a class="header" href="#example-kiosk-sdk-3" id="example-kiosk-sdk-3">Example Kiosk SDK</a></h3>
 <pre><code class="language-js">import { take } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
@@ -789,7 +800,7 @@ let item = take('&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, itemId);
 
 tx.transferObjects([ item ], tx.pure(sender, 'address'));
 </code></pre>
-<p><strong>Example PTB</strong></p>
+<h3><a class="header" href="#example-ptb-3" id="example-ptb-3">Example PTB</a></h3>
 <pre><code class="language-js">let tx = new TransactionBuilder();
 
 let itemId = tx.pure('&lt;ITEM_ID&gt;', 'address');
@@ -802,6 +813,8 @@ let item = tx.moveCall({
     typeArguments: [ '&lt;ITEM_TYPE&gt;' ]
 });
 </code></pre>
+<h3><a class="header" href="#example-cli-3" id="example-cli-3">Example CLI</a></h3>
+<p>The <code>kiosk::take</code> function is built to be PTB friendly and returns the asset, and CLI does not support transaction chaining yet.</p>
 <h1><a class="header" href="#locking" id="locking">Locking</a></h1>
 <p>Some policies may require items to never leave Kiosk (eg in a strong royalty enforcement scenario), and for that Kiosk has a locking mechanism.</p>
 <blockquote>
@@ -811,9 +824,9 @@ let item = tx.moveCall({
 <h3><a class="header" href="#calling-kiosklock" id="calling-kiosklock">Calling <code>kiosk::lock</code></a></h3>
 <p>Similar to <a href="kiosk/./place-and-take.html"><em>place</em></a>, <em>lock</em> call requires the KioskOwnerCap and the Item as arguments, but also requires the TransferPolicy to be shown.</p>
 <blockquote>
-<p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
+<p><code>&lt;ITEM_TYPE&gt;</code> in the examples below is the full type of the item.</p>
 </blockquote>
-<p><strong>Example Kiosk SDK</strong></p>
+<h3><a class="header" href="#example-kiosk-sdk-4" id="example-kiosk-sdk-4">Example Kiosk SDK</a></h3>
 <pre><code class="language-js">import { lock } from '@mysten/kiosk';
 
 const tx = new TransactionBuilder();
@@ -825,7 +838,7 @@ let transferPolicyArg = tx.object('&lt;ID&gt;');
 
 lock(tx, '&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg);
 </code></pre>
-<p><strong>Example PTB</strong></p>
+<h3><a class="header" href="#example-ptb-4" id="example-ptb-4">Example PTB</a></h3>
 <pre><code class="language-js">const tx = new TransactionBuilder();
 
 let kioskArg = tx.object('&lt;ID&gt;');
@@ -838,6 +851,15 @@ tx.moveCall({
     arguments: [ kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg ],
     typeArguments: [ '&lt;ITEM_TYPE&gt;' ]
 });
+</code></pre>
+<h3><a class="header" href="#example-cli-4" id="example-cli-4">Example CLI</a></h3>
+<pre><code class="language-bash">sui client call \
+    --package 0x2 \
+    --module kiosk \
+    --function lock \
+    --args &quot;&lt;KIOSK_ID&gt;&quot; &quot;&lt;CAP_ID&gt;&quot; &quot;&lt;TRANSFER_POLICY_ID&gt;&quot; &quot;&lt;ITEM_ID&gt;&quot; \
+    --type-args &quot;&lt;ITEM_TYPE&gt;&quot; \
+    --gas-budget 1000000000
 </code></pre>
 <h1><a class="header" href="#list-and-delist" id="list-and-delist">List and Delist</a></h1>
 <p>Kiosk comes with a basic trading functionality. The Kiosk Owner can list assets for sale and buyers can discover and purchase them. Listing functionality is available in Kiosk by default, and features 3 main functions:</p>
@@ -852,7 +874,7 @@ tx.moveCall({
 <p>The price only supports SUI at the moment.</p>
 </blockquote>
 <p>When an item is listed, a <code>kiosk::ItemListed</code> event is emitted. The event contains the Kiosk ID, Item ID, type of the Item and the price it was listed for.</p>
-<h3><a class="header" href="#example-kiosk-sdk" id="example-kiosk-sdk">Example Kiosk SDK</a></h3>
+<h3><a class="header" href="#example-kiosk-sdk-5" id="example-kiosk-sdk-5">Example Kiosk SDK</a></h3>
 <pre><code class="language-TS">import { list } from '@mysten/kiosk';
 
 let tx = new TransactionBlock();
@@ -864,7 +886,7 @@ let price = '&lt;price&gt;'; // in MIST (1 SUI = 10^9 MIST)
 
 list(tx, itemType, kioskArg, capArg, itemId, price);
 </code></pre>
-<h3><a class="header" href="#example-ptb" id="example-ptb">Example PTB</a></h3>
+<h3><a class="header" href="#example-ptb-5" id="example-ptb-5">Example PTB</a></h3>
 <pre><code class="language-TS">let tx = new TransactionBlock();
 
 let kioskArg = tx.object('&lt;ID&gt;');
@@ -879,7 +901,7 @@ tx.moveCall({
     typeArguments: [ itemType ]
 });
 </code></pre>
-<h3><a class="header" href="#example-cli" id="example-cli">Example CLI</a></h3>
+<h3><a class="header" href="#example-cli-5" id="example-cli-5">Example CLI</a></h3>
 <pre><code class="language-bash">sui client call \
     --package 0x2 \
     --module kiosk \
@@ -894,7 +916,7 @@ tx.moveCall({
 <p>Delisting is a <em>&quot;negative-gas&quot;</em> operation, meaning that the Kiosk Owner will be refunded for the gas they spent on listing the item.</p>
 </blockquote>
 <p>When an item is delisted, a <code>kiosk::ItemDelisted</code> event is emitted. The event contains the Kiosk ID, Item ID and the type of the Item.</p>
-<h3><a class="header" href="#example-kiosk-sdk-1" id="example-kiosk-sdk-1">Example Kiosk SDK</a></h3>
+<h3><a class="header" href="#example-kiosk-sdk-6" id="example-kiosk-sdk-6">Example Kiosk SDK</a></h3>
 <pre><code class="language-TS">import { delist } from '@mysten/kiosk';
 
 let tx = new TransactionBlock();
@@ -905,7 +927,7 @@ let itemType = 'ITEM_TYPE';
 
 delist(tx, itemType, kioskArg, capArg, itemId);
 </code></pre>
-<h3><a class="header" href="#example-ptb-1" id="example-ptb-1">Example PTB</a></h3>
+<h3><a class="header" href="#example-ptb-6" id="example-ptb-6">Example PTB</a></h3>
 <pre><code class="language-TS">let tx = new TransactionBlock();
 let kioskArg = tx.object('&lt;ID&gt;');
 let capArg = tx.object('&lt;ID&gt;');
@@ -918,7 +940,7 @@ tx.moveCall({
     typeArguments: [ itemType ]
 });
 </code></pre>
-<h3><a class="header" href="#example-cli-1" id="example-cli-1">Example CLI</a></h3>
+<h3><a class="header" href="#example-cli-6" id="example-cli-6">Example CLI</a></h3>
 <pre><code class="language-bash">sui client call \
     --package 0x2 \
     --module kiosk \
@@ -965,7 +987,7 @@ tx.moveCall({
 </code></pre>
 <h2><a class="header" href="#mutable-borrow-with-borrow_val-ptb" id="mutable-borrow-with-borrow_val-ptb">Mutable borrow with <code>borrow_val</code> (PTB)</a></h2>
 <p>A PTB-friendly borrowing is available with the <code>kiosk::borrow_val</code> function. It allows to take an asset and return it in the same transaction. To make sure an asset is returned, the function &quot;obliges&quot; the caller with a Hot Potato.</p>
-<h3><a class="header" href="#example-kiosk-sdk-2" id="example-kiosk-sdk-2">Example Kiosk SDK</a></h3>
+<h3><a class="header" href="#example-kiosk-sdk-7" id="example-kiosk-sdk-7">Example Kiosk SDK</a></h3>
 <p>Kiosk SDK gives a handy function for the borrowing logic usable within a PTB: <code>borrowValue</code> (and <code>returnValue</code>).</p>
 <pre><code class="language-TS">import { borrowValue, returnValue } from '@sui/kiosk-sdk';
 
@@ -983,7 +1005,7 @@ let [item, promise] = borrowValue(tx, itemType, kioskArg, capArg, itemId);
 
 returnValue(tx, itemType, kioskArg, item, promise);
 </code></pre>
-<h3><a class="header" href="#example-ptb-2" id="example-ptb-2">Example PTB</a></h3>
+<h3><a class="header" href="#example-ptb-7" id="example-ptb-7">Example PTB</a></h3>
 <pre><code class="language-TS">let tx = new TransactionBuilder();
 
 let itemType = 'ITEM_TYPE';
@@ -1011,6 +1033,8 @@ tx.moveCall({
 <h1><a class="header" href="#purchase-cap" id="purchase-cap">Purchase Cap</a></h1>
 <h1><a class="header" href="#purchasecap-tricks" id="purchasecap-tricks">PurchaseCap tricks</a></h1>
 <h1><a class="header" href="#extensions" id="extensions">Extensions</a></h1>
+<p>Kiosk Extensions are a way to extend the functionality of the Kiosk. They're represented as modules published on Sui and can be called or installed by the Kiosk Owner to provide additional functionality to the Kiosk. Not only do they allow for custom trading logic but also for minor improvements such as attaching a name to the Kiosk.</p>
+<p>See more examples and implementation details in the <a href="kiosk/./extensions.html">Extensions section</a>.</p>
 <h1><a class="header" href="#kiosk-extensions" id="kiosk-extensions">Kiosk Extensions</a></h1>
 <p>Extensions are a way to extend the functionality of Kiosk while keeping the core functionality
 intact. They are a way to add new features to the Kiosk without having to modify the core code or
