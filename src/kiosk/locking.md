@@ -1,17 +1,17 @@
 # Locking
 
-Some policies may require items to never leave Kiosk (eg in a strong royalty enforcement scenario), and for that Kiosk has a locking mechanism.
+Some policies may require assets to never leave Kiosk (eg in a strong royalty enforcement scenario), and for that Kiosk has a locking mechanism.
 
-> *Locking* is similar to [*placing*](./place-and-take.md#calling-kioskplace) with an exception, that a locked item can not be [*taken*](./place-and-take.md#calling-kiosktake) out of the Kiosk.
+> *Locking* is similar to [*placing*](./place-and-take.md#calling-kioskplace) with an exception, that a locked asset can not be [*taken*](./place-and-take.md#calling-kiosktake) out of the Kiosk.
 
-An item can be *locked* in a Kiosk by calling the `sui::kiosk::lock` function. To make sure that the item can be eventually unlocked, the call requires a [TransferPolicy](../transfer-policy/README.md) to exist.
+An asset can be *locked* in a Kiosk by calling the `sui::kiosk::lock` function. To make sure that the asset can be eventually unlocked, the call requires a [TransferPolicy](../transfer-policy/README.md) to exist.
 
 
-### Calling `kiosk::lock`
+### Lock an asset in a Kiosk
 
 Similar to [*place*](./place-and-take.md), *lock* call requires the KioskOwnerCap and the Item as arguments, but also requires the TransferPolicy to be shown.
 
-> `<ITEM_TYPE>` in the examples below is the full type of the item.
+> `<ITEM_TYPE>` in the examples below is the full type of the asset.
 
 ### Example Kiosk SDK
 

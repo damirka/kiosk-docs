@@ -1,10 +1,10 @@
 # Place and Take
 
-Kiosk owner can *place* any items into their Kiosk, *placed* items can be *taken* by the owner if they're not [*listed*](./list-and-delist.md).
+Kiosk owner can *place* any assets into their Kiosk, *placed* assets can be *taken* by the owner if they're not [*listed*](./list-and-delist.md).
 
-There's no limitations to which items can be placed into the Kiosk, however, it does not guarantee that they will be *tradable* - that depends on whether there's a [TransferPolicy](../transfer-policy/README.md) for the type.
+There's no limitations to which assets can be placed into the Kiosk, however, it does not guarantee that they will be *tradable* - that depends on whether there's a [TransferPolicy](../transfer-policy/README.md) for the type. See the [Purchase section](./purchase.md) for more details.
 
-## Calling `kiosk::place`
+## Placing an item into the Kiosk
 
 To place an item to the Kiosk, the owner needs to call the `sui::kiosk::place` function on the Kiosk object and pass the KioskOwnerCap and the Item as arguments.
 
@@ -52,7 +52,7 @@ sui client call \
     --gas-budget 1000000000
 ```
 
-## Calling `kiosk::take`
+## Taking an item from the Kiosk
 
 To take an item from the Kiosk, the owner needs to call the `sui::kiosk::take` function on the Kiosk object and pass the KioskOwnerCap and ID of the item as arguments.
 

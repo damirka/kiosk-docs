@@ -1,6 +1,6 @@
 # Borrowing
 
-An asset placed or locked in a Kiosk can be accessed by the Kiosk Owner without taking it from it. The Kiosk Owner can always borrow the asset immutably, however mutalbe borrow [depends on the asset state](../appendix/asset-states-in-kiosk.md) - a listed item can not be modified. The functions at the Kiosk Owner's disposal are:
+An asset placed or locked in a Kiosk can be accessed by the Kiosk Owner without taking it from it. The Kiosk Owner can always borrow the asset immutably, however mutable borrow [depends on the asset state](../appendix/asset-states-in-kiosk.md) - a listed item can not be modified. The functions at the Kiosk Owner's disposal are:
 
 - `kiosk::borrow` - returns an immutable reference to the asset
 - `kiosk::borrow_mut` - returns a mutable reference to the asset
