@@ -15,7 +15,7 @@ Similar to [*place*](./place-and-take.md), *lock* call requires the KioskOwnerCa
 
 ### Example Kiosk SDK
 
-```js
+```ts
 import { lock } from '@mysten/kiosk';
 
 const tx = new TransactionBuilder();
@@ -30,7 +30,7 @@ lock(tx, '<ITEM_TYPE>', kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg);
 
 ### Example PTB
 
-```js
+```ts
 const tx = new TransactionBuilder();
 
 let kioskArg = tx.object('<ID>');

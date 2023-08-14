@@ -8,7 +8,7 @@ Anyone can create a new Kiosk in a single transaction by calling the `kiosk::def
 
 ### Example Kiosk SDK
 
-```js
+```ts
 import { createKioskAndShare } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
@@ -19,7 +19,7 @@ tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
 
 ### Example PTB
 
-```js
+```ts
 let tx = new TransactionBuilder();
 tx.moveCall({
     target: '0x2::kiosk::default'
@@ -44,7 +44,7 @@ For more advanced use cases, when you want to choose the storage model or perfor
 
 ### Example Kiosk SDK
 
-```js
+```ts
 import { createKiosk } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
@@ -60,7 +60,7 @@ tx.moveCall({
 
 ### Example PTB
 
-```js
+```ts
 let tx = new TransactionBuilder();
 let [kiosk, kioskOwnerCap] = tx.moveCall({
     target: '0x2::kiosk::new'

@@ -12,7 +12,7 @@ To place an item to the Kiosk, the owner needs to call the `sui::kiosk::place` f
 
 ### Example Kiosk SDK
 
-```js
+```ts
 import { place } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
@@ -26,7 +26,7 @@ place(tx, '<ITEM_TYPE>', kioskArg, kioskOwnerCapArg, item);
 
 ### Example PTB
 
-```js
+```ts
 let tx = new TransactionBuilder();
 
 let itemArg = tx.object('<ID>');
@@ -60,7 +60,7 @@ To take an item from the Kiosk, the owner needs to call the `sui::kiosk::take` f
 
 ### Example Kiosk SDK
 
-```js
+```ts
 import { take } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
@@ -76,7 +76,7 @@ tx.transferObjects([ item ], tx.pure(sender, 'address'));
 
 ### Example PTB
 
-```js
+```ts
 let tx = new TransactionBuilder();
 
 let itemId = tx.pure('<ITEM_ID>', 'address');
