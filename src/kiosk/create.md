@@ -6,7 +6,7 @@ To use a Kiosk, the user needs to create one and have the `KioskOwnerCap` that m
 
 Anyone can create a new Kiosk in a single transaction by calling the `kiosk::default` function. It will create and share a Kiosk and transfer the `KioskOwnerCap` to the transaction sender.
 
-**Example Kiosk SDK**
+### Example Kiosk SDK
 
 ```js
 import { createKioskAndShare } from '@mysten/kiosk';
@@ -17,7 +17,7 @@ let kioskOwnerCap = createKioskAndShare(tx);
 tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
 ```
 
-**Example PTB**
+### Example PTB
 
 ```js
 let tx = new TransactionBuilder();
@@ -26,7 +26,7 @@ tx.moveCall({
 });
 ```
 
-**Example CLI**
+### Example CLI
 
 ```bash
 sui client call \
@@ -42,7 +42,7 @@ For more advanced use cases, when you want to choose the storage model or perfor
 
 > Kiosk is intended to be **shared** and choosing a different storage model (eg "owned") would lead to Kiosk not being fully functional and not available for other users. Make sure you know what you're doing.
 
-**Example Kiosk SDK**
+### Example Kiosk SDK
 
 ```js
 import { createKiosk } from '@mysten/kiosk';
@@ -58,7 +58,7 @@ tx.moveCall({
 })
 ```
 
-**Example PTB**
+### Example PTB
 
 ```js
 let tx = new TransactionBuilder();
@@ -73,3 +73,7 @@ tx.moveCall({
     typeArguments: '0x2::kiosk::Kiosk'
 })
 ```
+
+### Example CLI
+
+Sui CLI does not support PTBs and transaction chaining yet. You can use the `kiosk::default` function instead.

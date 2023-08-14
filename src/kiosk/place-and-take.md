@@ -10,7 +10,7 @@ To place an item to the Kiosk, the owner needs to call the `sui::kiosk::place` f
 
 > `ITEM_TYPE` in the examples below is the full type of the item.
 
-**Example Kiosk SDK**
+### Example Kiosk SDK
 
 ```js
 import { place } from '@mysten/kiosk';
@@ -24,7 +24,7 @@ let kioskOwnerCapArg = tx.object('<ID>');
 place(tx, '<ITEM_TYPE>', kioskArg, kioskOwnerCapArg, item);
 ```
 
-**Example PTB**
+### Example PTB
 
 ```js
 let tx = new TransactionBuilder();
@@ -40,13 +40,25 @@ tx.moveCall({
 })
 ```
 
+### Example CLI
+
+```bash
+sui client call \
+    --package 0x2 \
+    --module kiosk \
+    --function place \
+    --args "<KIOSK_ID>" "<CAP_ID>" "<ITEM_ID>" \
+    --type-args "<ITEM_TYPE>" \
+    --gas-budget 1000000000
+```
+
 ## Calling `kiosk::take`
 
 To take an item from the Kiosk, the owner needs to call the `sui::kiosk::take` function on the Kiosk object and pass the KioskOwnerCap and ID of the item as arguments.
 
 > `ITEM_TYPE` in the examples below is the full type of the item.
 
-**Example Kiosk SDK**
+### Example Kiosk SDK
 
 ```js
 import { take } from '@mysten/kiosk';
@@ -62,7 +74,7 @@ let item = take('<ITEM_TYPE>', kioskArg, kioskOwnerCapArg, itemId);
 tx.transferObjects([ item ], tx.pure(sender, 'address'));
 ```
 
-**Example PTB**
+### Example PTB
 
 ```js
 let tx = new TransactionBuilder();
@@ -77,3 +89,7 @@ let item = tx.moveCall({
     typeArguments: [ '<ITEM_TYPE>' ]
 });
 ```
+
+### Example CLI
+
+The `kiosk::take` function is built to be PTB friendly and returns the asset, and CLI does not support transaction chaining yet.

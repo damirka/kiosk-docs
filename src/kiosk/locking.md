@@ -11,9 +11,9 @@ An item can be *locked* in a Kiosk by calling the `sui::kiosk::lock` function. T
 
 Similar to [*place*](./place-and-take.md), *lock* call requires the KioskOwnerCap and the Item as arguments, but also requires the TransferPolicy to be shown.
 
-> `ITEM_TYPE` in the examples below is the full type of the item.
+> `<ITEM_TYPE>` in the examples below is the full type of the item.
 
-**Example Kiosk SDK**
+### Example Kiosk SDK
 
 ```js
 import { lock } from '@mysten/kiosk';
@@ -28,7 +28,7 @@ let transferPolicyArg = tx.object('<ID>');
 lock(tx, '<ITEM_TYPE>', kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg);
 ```
 
-**Example PTB**
+### Example PTB
 
 ```js
 const tx = new TransactionBuilder();
@@ -43,4 +43,16 @@ tx.moveCall({
     arguments: [ kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg ],
     typeArguments: [ '<ITEM_TYPE>' ]
 });
+```
+
+### Example CLI
+
+```bash
+sui client call \
+    --package 0x2 \
+    --module kiosk \
+    --function lock \
+    --args "<KIOSK_ID>" "<CAP_ID>" "<TRANSFER_POLICY_ID>" "<ITEM_ID>" \
+    --type-args "<ITEM_TYPE>" \
+    --gas-budget 1000000000
 ```
