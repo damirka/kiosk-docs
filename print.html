@@ -1096,30 +1096,52 @@ An example of an extension that does not require the API is the
 interaction with a third party and provide guarantees for the storage access (preventing the
 malicious actions from the seller).</p>
 <h1><a class="header" href="#simple-extensions-1" id="simple-extensions-1">Simple Extensions</a></h1>
-<p>Some extensions may be implemented without the &quot;more advanced&quot; Kiosk Extensions API. To understand
-the approaches to building extensions of this kind, let's look at the tools that are available to
-the extension developer.</p>
-<h2><a class="header" href="#uid-access-via-the-uid_mut" id="uid-access-via-the-uid_mut">UID access via the <code>uid_mut</code></a></h2>
-<p>Kiosk, like any object on Sui, has an <code>id: UID</code> field, which allows this object to not just be
-uniquely identified but also carry custom dynamic fields and dynamic object fields. The Kiosk itself
-is built around dynamic fields and features like <a href="kiosk-extensions/../kiosk/place-and-take.html">place</a> and
-<a href="kiosk-extensions/../kiosk/list-and-delist.html">list</a> are built around dynamic object fields.</p>
+<p>Some extensions may be implemented without the &quot;more advanced&quot; Kiosk Extensions API. To understand the approaches to building extensions of this kind, let's look at the tools that are available to the extension developer.</p>
+<h2><a class="header" href="#available-tools" id="available-tools">Available tools</a></h2>
+<h3><a class="header" href="#uid-access-via-the-uid_mut" id="uid-access-via-the-uid_mut">UID access via the <code>uid_mut</code></a></h3>
+<p>Kiosk, like any object on Sui, has an <code>id: UID</code> field, which allows this object to not just be uniquely identified but also carry custom dynamic fields and dynamic object fields. The Kiosk itself is built around dynamic fields and features like <a href="kiosk-extensions/../kiosk/place-and-take.html">place</a> and <a href="kiosk-extensions/../kiosk/list-and-delist.html">list</a> are built around dynamic object fields.</p>
 <h3><a class="header" href="#the-uid_mut_as_owner-function" id="the-uid_mut_as_owner-function">The <code>uid_mut_as_owner</code> function</a></h3>
-<p>Kiosk can carry additional dynamic fields and dynamic object fields. The <code>uid_mut_as_owner</code> function
-allows the Kiosk Owner to mutably access the <code>UID</code> of the <code>Kiosk</code> object and use it to add or remove
-custom fields.</p>
+<p>Kiosk can carry additional dynamic fields and dynamic object fields. The <code>uid_mut_as_owner</code> function allows the Kiosk Owner to mutably access the <code>UID</code> of the <code>Kiosk</code> object and use it to add or remove custom fields.</p>
 <blockquote>
 <p>Function signature:</p>
 <pre><code class="language-Move">kiosk::uid_mut_as_owner(self: &amp;mut Kiosk, cap: &amp;KioskOwnerCap): &amp;mut UID
 </code></pre>
 </blockquote>
 <h3><a class="header" href="#the-public-uid-getter" id="the-public-uid-getter">The public <code>uid</code> getter</a></h3>
-<p>Anyone can read the <code>uid</code> of the Kiosk. This allows third party modules read the fields of the Kiosk
-if they're allowed to do so (TODO: Custom Dynamic Field Keys). Therefore enabling the &quot;Object
-Capability&quot; and other patterns.</p>
+<p>Anyone can read the <code>uid</code> of the Kiosk. This allows third party modules read the fields of the Kiosk if they're allowed to do so (TODO: Custom Dynamic Field Keys). Therefore enabling the &quot;Object Capability&quot; and other patterns.</p>
 <!-- ## Wrapping the KioskOwnerCap
 
 KioskOwnerCap is a capability that makes the bearer the owner of the Kiosk. It allows the owner to -->
+<h2><a class="header" href="#extension-ideas" id="extension-ideas">Extension ideas</a></h2>
+<p>Given that the Kiosk Owner can attach custom dynamic fields to Kiosk, and anyone can then read them (not modify), we can utilize this to implement some simple extensions. For example, a &quot;Kiosk Name&quot; extension. The Kiosk Owner can define a name for the Kiosk, attach it as a dynamic field, and make it readable by anyone.</p>
+<blockquote>
+<p>We used a similar approach in the <a href="kiosk-extensions/./../mysten-kiosk/extensions/personal-kiosk.html">Personal Kiosk Extension</a>.</p>
+</blockquote>
+<pre><code class="language-Move">module examples::kiosk_name_ext {
+    use std::string::String;
+    use std::option::{Self, Option};
+    use sui::dynamic_field as df;
+    use sui::kiosk::{Self, Kiosk, KioskOwnerCap};
+
+    /// The dynamic field key for the Kiosk Name Extension
+    struct KioskName has store, drop {}
+
+    /// Add a name to the Kiosk (in this implementation can be called only once)
+    public fun add(self: &amp;mut Kiosk, cap: &amp;KioskOwnerCap, name: String) {
+        let uid_mut = kiosk::uid_mut_as_owner(self, cap);
+        df::add(uid_mut, KioskName {}, name)
+    }
+
+    /// Try read the name of the Kiosk - if set - return Some(String), if not - None
+    public fun name(self: &amp;Kiosk): Option&lt;String&gt; {
+        if (df::exists_(kiosk::uid(self), KioskName {}) {
+            option::some(*df::borrow(kiosk::uid(self), KioskName {}))
+        } else {
+            option::none()
+        }
+    }
+}
+</code></pre>
 <h1><a class="header" href="#extensions-api" id="extensions-api">Extensions API</a></h1>
 <p>Just having access to the <code>uid</code> is often not enough to build an extension due to the security limitations. Only Kiosk Owner has full access to the <code>uid</code>, which means that an extension involving a third party would require the Kiosk Owner to be involved in every step of the process.</p>
 <p>Not only the access to storage is limited and constrained but also the permissions of the extension. In the default setup, no party can <code>place</code> or <code>lock</code> items in a Kiosk without its Owner's consent. So some cases such as &quot;collection bidding&quot; (I offer X SUI for any item in this collection) will require the Kiosk Owner to approve the bid.</p>
