@@ -5,7 +5,7 @@ Anyone on the network can create a Kiosk and use it to store and trade assets. T
 Kiosk Owner can:
 
 - [Place and take items](./../kiosk/place-and-take.md)
-- [List items for sale](./../kiosk/list-and-purchase.md)
+- [List items for sale](./../kiosk/list-and-delist.md)
 - [Add and remove Extensions](./../kiosk-extensions/)
 - [Withdraw profits from sales](./../kiosk/withdrawing-profits.md)
 - [Borrow and mutate owned assets](./../kiosk/borrowing.md)

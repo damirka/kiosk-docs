@@ -1,6 +1,6 @@
 # Place and Take
 
-Kiosk owner can *place* any items into their Kiosk, *placed* items can be *taken* by the owner if they're not [*listed*](./list-and-purchase.md).
+Kiosk owner can *place* any items into their Kiosk, *placed* items can be *taken* by the owner if they're not [*listed*](./list-and-delist.md).
 
 There's no limitations to which items can be placed into the Kiosk, however, it does not guarantee that they will be *tradable* - that depends on whether there's a [TransferPolicy](../transfer-policy/README.md) for the type.
 
