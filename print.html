@@ -690,7 +690,7 @@ no limit to what could be done).</p>
 <h2><a class="header" href="#default-setup" id="default-setup">Default setup</a></h2>
 <p>Anyone can create a new Kiosk in a single transaction by calling the <code>kiosk::default</code> function. It will create and share a Kiosk and transfer the <code>KioskOwnerCap</code> to the transaction sender.</p>
 <h3><a class="header" href="#example-kiosk-sdk" id="example-kiosk-sdk">Example Kiosk SDK</a></h3>
-<pre><code class="language-js">import { createKioskAndShare } from '@mysten/kiosk';
+<pre><code class="language-ts">import { createKioskAndShare } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
 let kioskOwnerCap = createKioskAndShare(tx);
@@ -698,7 +698,7 @@ let kioskOwnerCap = createKioskAndShare(tx);
 tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
 </code></pre>
 <h3><a class="header" href="#example-ptb" id="example-ptb">Example PTB</a></h3>
-<pre><code class="language-js">let tx = new TransactionBuilder();
+<pre><code class="language-ts">let tx = new TransactionBuilder();
 tx.moveCall({
     target: '0x2::kiosk::default'
 });
@@ -716,7 +716,7 @@ tx.moveCall({
 <p>Kiosk is intended to be <strong>shared</strong> and choosing a different storage model (eg &quot;owned&quot;) would lead to Kiosk not being fully functional and not available for other users. Make sure you know what you're doing.</p>
 </blockquote>
 <h3><a class="header" href="#example-kiosk-sdk-1" id="example-kiosk-sdk-1">Example Kiosk SDK</a></h3>
-<pre><code class="language-js">import { createKiosk } from '@mysten/kiosk';
+<pre><code class="language-ts">import { createKiosk } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
 let [kiosk, kioskOwnerCap] = createKiosk(tx);
@@ -729,7 +729,7 @@ tx.moveCall({
 })
 </code></pre>
 <h3><a class="header" href="#example-ptb-1" id="example-ptb-1">Example PTB</a></h3>
-<pre><code class="language-js">let tx = new TransactionBuilder();
+<pre><code class="language-ts">let tx = new TransactionBuilder();
 let [kiosk, kioskOwnerCap] = tx.moveCall({
     target: '0x2::kiosk::new'
 });
@@ -752,7 +752,7 @@ tx.moveCall({
 <p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
 </blockquote>
 <h3><a class="header" href="#example-kiosk-sdk-2" id="example-kiosk-sdk-2">Example Kiosk SDK</a></h3>
-<pre><code class="language-js">import { place } from '@mysten/kiosk';
+<pre><code class="language-ts">import { place } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
 
@@ -763,7 +763,7 @@ let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
 place(tx, '&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, item);
 </code></pre>
 <h3><a class="header" href="#example-ptb-2" id="example-ptb-2">Example PTB</a></h3>
-<pre><code class="language-js">let tx = new TransactionBuilder();
+<pre><code class="language-ts">let tx = new TransactionBuilder();
 
 let itemArg = tx.object('&lt;ID&gt;');
 let kioskArg = tx.object('&lt;ID&gt;');
@@ -790,7 +790,7 @@ tx.moveCall({
 <p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
 </blockquote>
 <h3><a class="header" href="#example-kiosk-sdk-3" id="example-kiosk-sdk-3">Example Kiosk SDK</a></h3>
-<pre><code class="language-js">import { take } from '@mysten/kiosk';
+<pre><code class="language-ts">import { take } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
 
@@ -803,7 +803,7 @@ let item = take('&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, itemId);
 tx.transferObjects([ item ], tx.pure(sender, 'address'));
 </code></pre>
 <h3><a class="header" href="#example-ptb-3" id="example-ptb-3">Example PTB</a></h3>
-<pre><code class="language-js">let tx = new TransactionBuilder();
+<pre><code class="language-ts">let tx = new TransactionBuilder();
 
 let itemId = tx.pure('&lt;ITEM_ID&gt;', 'address');
 let kioskArg = tx.object('&lt;ID&gt;');
@@ -829,7 +829,7 @@ let item = tx.moveCall({
 <p><code>&lt;ITEM_TYPE&gt;</code> in the examples below is the full type of the item.</p>
 </blockquote>
 <h3><a class="header" href="#example-kiosk-sdk-4" id="example-kiosk-sdk-4">Example Kiosk SDK</a></h3>
-<pre><code class="language-js">import { lock } from '@mysten/kiosk';
+<pre><code class="language-ts">import { lock } from '@mysten/kiosk';
 
 const tx = new TransactionBuilder();
 
@@ -841,7 +841,7 @@ let transferPolicyArg = tx.object('&lt;ID&gt;');
 lock(tx, '&lt;ITEM_TYPE&gt;', kioskArg, kioskOwnerCapArg, transferPolicyArg, itemArg);
 </code></pre>
 <h3><a class="header" href="#example-ptb-4" id="example-ptb-4">Example PTB</a></h3>
-<pre><code class="language-js">const tx = new TransactionBuilder();
+<pre><code class="language-ts">const tx = new TransactionBuilder();
 
 let kioskArg = tx.object('&lt;ID&gt;');
 let kioskOwnerCapArg = tx.object('&lt;ID&gt;');
@@ -1032,6 +1032,49 @@ tx.moveCall({
 });
 </code></pre>
 <h1><a class="header" href="#withdrawing-profits" id="withdrawing-profits">Withdrawing Profits</a></h1>
+<p>Whevener an item is <a href="kiosk/./purchase.html">purchased</a>, profits from the sale are stored in the Kiosk. The Kiosk Owner can withdraw these profits at any time by calling the <code>kiosk::withdraw</code> function.</p>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<p>The function is simple, however, due to it being PTB friendly, it is not currently supported in the CLI environment.</p>
+<h3><a class="header" href="#example-kiosk-sdk-8" id="example-kiosk-sdk-8">Example Kiosk SDK</a></h3>
+<pre><code class="language-TS">import { withdrawFromKiosk } from '@mysten/kiosk';
+
+let tx = new TransactionBlock();
+let kioskArg = tx.object('&lt;ID&gt;');
+let capArg = tx.object('&lt;ID&gt;');
+
+// The amount can be `null` to withdraw everything or a specific amount
+let amount = '&lt;amount&gt;';
+let withdrawAll = null;
+
+let coin = withdrawFromKiosk(tx, kioskArg, capArg, amount);
+</code></pre>
+<h3><a class="header" href="#example-ptb-8" id="example-ptb-8">Example PTB</a></h3>
+<pre><code class="language-TS">let tx = new TransactionBlock();
+let kioskArg = tx.object('&lt;ID&gt;');
+let capArg = tx.object('&lt;ID&gt;');
+
+// because the function uses an Option&lt;u64&gt; argument,
+// constructing is a bit more complex
+let amountArg = tx.moveCall({
+    target: '0x1::option::some',
+    arguments: [ tx.pure('&lt;amount&gt;', 'u64') ],
+    typeArguments: [ 'u64' ],
+});
+
+// alternatively
+let withdrawAllArg = tx.moveCall({
+    target: '0x1::option::none',
+    typeArguments: [ 'u64' ],
+});
+
+let coin = tx.moveCall({
+    target: '0x2::kiosk::withdraw',
+    arguments: [ kioskArg, capArg, amountArg ],
+    typeArguments: [ 'u64' ],
+});
+</code></pre>
+<h3><a class="header" href="#example-cli-7" id="example-cli-7">Example CLI</a></h3>
+<p>Due to the function being PTB friendly, it is not currently supported in the CLI environment.</p>
 <h1><a class="header" href="#purchase-cap" id="purchase-cap">Purchase Cap</a></h1>
 <h1><a class="header" href="#purchasecap-tricks" id="purchasecap-tricks">PurchaseCap tricks</a></h1>
 <h1><a class="header" href="#extensions" id="extensions">Extensions</a></h1>

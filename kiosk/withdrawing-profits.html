@@ -148,6 +148,49 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#withdrawing-profits" id="withdrawing-profits">Withdrawing Profits</a></h1>
+<p>Whevener an item is <a href="./purchase.html">purchased</a>, profits from the sale are stored in the Kiosk. The Kiosk Owner can withdraw these profits at any time by calling the <code>kiosk::withdraw</code> function.</p>
+<h2><a class="header" href="#examples" id="examples">Examples</a></h2>
+<p>The function is simple, however, due to it being PTB friendly, it is not currently supported in the CLI environment.</p>
+<h3><a class="header" href="#example-kiosk-sdk" id="example-kiosk-sdk">Example Kiosk SDK</a></h3>
+<pre><code class="language-TS">import { withdrawFromKiosk } from '@mysten/kiosk';
+
+let tx = new TransactionBlock();
+let kioskArg = tx.object('&lt;ID&gt;');
+let capArg = tx.object('&lt;ID&gt;');
+
+// The amount can be `null` to withdraw everything or a specific amount
+let amount = '&lt;amount&gt;';
+let withdrawAll = null;
+
+let coin = withdrawFromKiosk(tx, kioskArg, capArg, amount);
+</code></pre>
+<h3><a class="header" href="#example-ptb" id="example-ptb">Example PTB</a></h3>
+<pre><code class="language-TS">let tx = new TransactionBlock();
+let kioskArg = tx.object('&lt;ID&gt;');
+let capArg = tx.object('&lt;ID&gt;');
+
+// because the function uses an Option&lt;u64&gt; argument,
+// constructing is a bit more complex
+let amountArg = tx.moveCall({
+    target: '0x1::option::some',
+    arguments: [ tx.pure('&lt;amount&gt;', 'u64') ],
+    typeArguments: [ 'u64' ],
+});
+
+// alternatively
+let withdrawAllArg = tx.moveCall({
+    target: '0x1::option::none',
+    typeArguments: [ 'u64' ],
+});
+
+let coin = tx.moveCall({
+    target: '0x2::kiosk::withdraw',
+    arguments: [ kioskArg, capArg, amountArg ],
+    typeArguments: [ 'u64' ],
+});
+</code></pre>
+<h3><a class="header" href="#example-cli" id="example-cli">Example CLI</a></h3>
+<p>Due to the function being PTB friendly, it is not currently supported in the CLI environment.</p>
 
                     </main>
 

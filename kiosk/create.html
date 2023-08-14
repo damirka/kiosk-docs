@@ -152,7 +152,7 @@
 <h2><a class="header" href="#default-setup" id="default-setup">Default setup</a></h2>
 <p>Anyone can create a new Kiosk in a single transaction by calling the <code>kiosk::default</code> function. It will create and share a Kiosk and transfer the <code>KioskOwnerCap</code> to the transaction sender.</p>
 <h3><a class="header" href="#example-kiosk-sdk" id="example-kiosk-sdk">Example Kiosk SDK</a></h3>
-<pre><code class="language-js">import { createKioskAndShare } from '@mysten/kiosk';
+<pre><code class="language-ts">import { createKioskAndShare } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
 let kioskOwnerCap = createKioskAndShare(tx);
@@ -160,7 +160,7 @@ let kioskOwnerCap = createKioskAndShare(tx);
 tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
 </code></pre>
 <h3><a class="header" href="#example-ptb" id="example-ptb">Example PTB</a></h3>
-<pre><code class="language-js">let tx = new TransactionBuilder();
+<pre><code class="language-ts">let tx = new TransactionBuilder();
 tx.moveCall({
     target: '0x2::kiosk::default'
 });
@@ -178,7 +178,7 @@ tx.moveCall({
 <p>Kiosk is intended to be <strong>shared</strong> and choosing a different storage model (eg &quot;owned&quot;) would lead to Kiosk not being fully functional and not available for other users. Make sure you know what you're doing.</p>
 </blockquote>
 <h3><a class="header" href="#example-kiosk-sdk-1" id="example-kiosk-sdk-1">Example Kiosk SDK</a></h3>
-<pre><code class="language-js">import { createKiosk } from '@mysten/kiosk';
+<pre><code class="language-ts">import { createKiosk } from '@mysten/kiosk';
 
 let tx = new TransactionBuilder();
 let [kiosk, kioskOwnerCap] = createKiosk(tx);
@@ -191,7 +191,7 @@ tx.moveCall({
 })
 </code></pre>
 <h3><a class="header" href="#example-ptb-1" id="example-ptb-1">Example PTB</a></h3>
-<pre><code class="language-js">let tx = new TransactionBuilder();
+<pre><code class="language-ts">let tx = new TransactionBuilder();
 let [kiosk, kioskOwnerCap] = tx.moveCall({
     target: '0x2::kiosk::new'
 });
