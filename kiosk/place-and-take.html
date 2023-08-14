@@ -148,9 +148,9 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#place-and-take" id="place-and-take">Place and Take</a></h1>
-<p>Kiosk owner can <em>place</em> any items into their Kiosk, <em>placed</em> items can be <em>taken</em> by the owner if they're not <a href="./list-and-delist.html"><em>listed</em></a>.</p>
-<p>There's no limitations to which items can be placed into the Kiosk, however, it does not guarantee that they will be <em>tradable</em> - that depends on whether there's a <a href="../transfer-policy/README.html">TransferPolicy</a> for the type.</p>
-<h2><a class="header" href="#calling-kioskplace" id="calling-kioskplace">Calling <code>kiosk::place</code></a></h2>
+<p>Kiosk owner can <em>place</em> any assets into their Kiosk, <em>placed</em> assets can be <em>taken</em> by the owner if they're not <a href="./list-and-delist.html"><em>listed</em></a>.</p>
+<p>There's no limitations to which assets can be placed into the Kiosk, however, it does not guarantee that they will be <em>tradable</em> - that depends on whether there's a <a href="../transfer-policy/README.html">TransferPolicy</a> for the type. See the <a href="./purchase.html">Purchase section</a> for more details.</p>
+<h2><a class="header" href="#placing-an-item-into-the-kiosk" id="placing-an-item-into-the-kiosk">Placing an item into the Kiosk</a></h2>
 <p>To place an item to the Kiosk, the owner needs to call the <code>sui::kiosk::place</code> function on the Kiosk object and pass the KioskOwnerCap and the Item as arguments.</p>
 <blockquote>
 <p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
@@ -188,7 +188,7 @@ tx.moveCall({
     --type-args &quot;&lt;ITEM_TYPE&gt;&quot; \
     --gas-budget 1000000000
 </code></pre>
-<h2><a class="header" href="#calling-kiosktake" id="calling-kiosktake">Calling <code>kiosk::take</code></a></h2>
+<h2><a class="header" href="#taking-an-item-from-the-kiosk" id="taking-an-item-from-the-kiosk">Taking an item from the Kiosk</a></h2>
 <p>To take an item from the Kiosk, the owner needs to call the <code>sui::kiosk::take</code> function on the Kiosk object and pass the KioskOwnerCap and ID of the item as arguments.</p>
 <blockquote>
 <p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>

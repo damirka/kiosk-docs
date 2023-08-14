@@ -148,6 +148,13 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#purchase" id="purchase">Purchase</a></h1>
+<p>A <a href="./list-and-delist.html">listed</a> item can be purchased by anyone on the network. The buyer should call the <code>kiosk::purchase</code> function, specify the item they're willing to purchase and pay the price set by the <a href="./../roles/kiosk-owner.html">Kiosk Owner</a>.</p>
+<blockquote>
+<p>Currently listed items can be discovered via the <code>kiosk::ItemListed</code> event.</p>
+</blockquote>
+<p>The purchase function returns the purchased Asset and the TransferRequest for this its type which needs to be resolved in a matching TransferPolicy. See the <a href="../transfer-policy">TransferPolicy section</a> for more details.</p>
+<h2><a class="header" href="#kiosk-sdk" id="kiosk-sdk">Kiosk SDK</a></h2>
+<pre><code class="language-TS"></code></pre>
 
                     </main>
 

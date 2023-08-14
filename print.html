@@ -744,9 +744,9 @@ tx.moveCall({
 <h3><a class="header" href="#example-cli-1" id="example-cli-1">Example CLI</a></h3>
 <p>Sui CLI does not support PTBs and transaction chaining yet. You can use the <code>kiosk::default</code> function instead.</p>
 <h1><a class="header" href="#place-and-take" id="place-and-take">Place and Take</a></h1>
-<p>Kiosk owner can <em>place</em> any items into their Kiosk, <em>placed</em> items can be <em>taken</em> by the owner if they're not <a href="kiosk/./list-and-delist.html"><em>listed</em></a>.</p>
-<p>There's no limitations to which items can be placed into the Kiosk, however, it does not guarantee that they will be <em>tradable</em> - that depends on whether there's a <a href="kiosk/../transfer-policy/README.html">TransferPolicy</a> for the type.</p>
-<h2><a class="header" href="#calling-kioskplace" id="calling-kioskplace">Calling <code>kiosk::place</code></a></h2>
+<p>Kiosk owner can <em>place</em> any assets into their Kiosk, <em>placed</em> assets can be <em>taken</em> by the owner if they're not <a href="kiosk/./list-and-delist.html"><em>listed</em></a>.</p>
+<p>There's no limitations to which assets can be placed into the Kiosk, however, it does not guarantee that they will be <em>tradable</em> - that depends on whether there's a <a href="kiosk/../transfer-policy/README.html">TransferPolicy</a> for the type. See the <a href="kiosk/./purchase.html">Purchase section</a> for more details.</p>
+<h2><a class="header" href="#placing-an-item-into-the-kiosk" id="placing-an-item-into-the-kiosk">Placing an item into the Kiosk</a></h2>
 <p>To place an item to the Kiosk, the owner needs to call the <code>sui::kiosk::place</code> function on the Kiosk object and pass the KioskOwnerCap and the Item as arguments.</p>
 <blockquote>
 <p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
@@ -784,7 +784,7 @@ tx.moveCall({
     --type-args &quot;&lt;ITEM_TYPE&gt;&quot; \
     --gas-budget 1000000000
 </code></pre>
-<h2><a class="header" href="#calling-kiosktake" id="calling-kiosktake">Calling <code>kiosk::take</code></a></h2>
+<h2><a class="header" href="#taking-an-item-from-the-kiosk" id="taking-an-item-from-the-kiosk">Taking an item from the Kiosk</a></h2>
 <p>To take an item from the Kiosk, the owner needs to call the <code>sui::kiosk::take</code> function on the Kiosk object and pass the KioskOwnerCap and ID of the item as arguments.</p>
 <blockquote>
 <p><code>ITEM_TYPE</code> in the examples below is the full type of the item.</p>
@@ -818,15 +818,15 @@ let item = tx.moveCall({
 <h3><a class="header" href="#example-cli-3" id="example-cli-3">Example CLI</a></h3>
 <p>The <code>kiosk::take</code> function is built to be PTB friendly and returns the asset, and CLI does not support transaction chaining yet.</p>
 <h1><a class="header" href="#locking" id="locking">Locking</a></h1>
-<p>Some policies may require items to never leave Kiosk (eg in a strong royalty enforcement scenario), and for that Kiosk has a locking mechanism.</p>
+<p>Some policies may require assets to never leave Kiosk (eg in a strong royalty enforcement scenario), and for that Kiosk has a locking mechanism.</p>
 <blockquote>
-<p><em>Locking</em> is similar to <a href="kiosk/./place-and-take.html#calling-kioskplace"><em>placing</em></a> with an exception, that a locked item can not be <a href="kiosk/./place-and-take.html#calling-kiosktake"><em>taken</em></a> out of the Kiosk.</p>
+<p><em>Locking</em> is similar to <a href="kiosk/./place-and-take.html#calling-kioskplace"><em>placing</em></a> with an exception, that a locked asset can not be <a href="kiosk/./place-and-take.html#calling-kiosktake"><em>taken</em></a> out of the Kiosk.</p>
 </blockquote>
-<p>An item can be <em>locked</em> in a Kiosk by calling the <code>sui::kiosk::lock</code> function. To make sure that the item can be eventually unlocked, the call requires a <a href="kiosk/../transfer-policy/README.html">TransferPolicy</a> to exist.</p>
-<h3><a class="header" href="#calling-kiosklock" id="calling-kiosklock">Calling <code>kiosk::lock</code></a></h3>
+<p>An asset can be <em>locked</em> in a Kiosk by calling the <code>sui::kiosk::lock</code> function. To make sure that the asset can be eventually unlocked, the call requires a <a href="kiosk/../transfer-policy/README.html">TransferPolicy</a> to exist.</p>
+<h3><a class="header" href="#lock-an-asset-in-a-kiosk" id="lock-an-asset-in-a-kiosk">Lock an asset in a Kiosk</a></h3>
 <p>Similar to <a href="kiosk/./place-and-take.html"><em>place</em></a>, <em>lock</em> call requires the KioskOwnerCap and the Item as arguments, but also requires the TransferPolicy to be shown.</p>
 <blockquote>
-<p><code>&lt;ITEM_TYPE&gt;</code> in the examples below is the full type of the item.</p>
+<p><code>&lt;ITEM_TYPE&gt;</code> in the examples below is the full type of the asset.</p>
 </blockquote>
 <h3><a class="header" href="#example-kiosk-sdk-4" id="example-kiosk-sdk-4">Example Kiosk SDK</a></h3>
 <pre><code class="language-ts">import { lock } from '@mysten/kiosk';
@@ -954,8 +954,15 @@ tx.moveCall({
 <h2><a class="header" href="#more-on-the-topic" id="more-on-the-topic">More on the topic</a></h2>
 <p>A listed item can be purchased by anyone on the network, to see the purchase flow, check out the <a href="kiosk/./purchase.html">Purchase</a> section. To learn more about asset states and what can be done with a listed item, see the <a href="kiosk/./../appendix/asset-states-in-kiosk.html">Asset States</a> section.</p>
 <h1><a class="header" href="#purchase" id="purchase">Purchase</a></h1>
+<p>A <a href="kiosk/./list-and-delist.html">listed</a> item can be purchased by anyone on the network. The buyer should call the <code>kiosk::purchase</code> function, specify the item they're willing to purchase and pay the price set by the <a href="kiosk/./../roles/kiosk-owner.html">Kiosk Owner</a>.</p>
+<blockquote>
+<p>Currently listed items can be discovered via the <code>kiosk::ItemListed</code> event.</p>
+</blockquote>
+<p>The purchase function returns the purchased Asset and the TransferRequest for this its type which needs to be resolved in a matching TransferPolicy. See the <a href="kiosk/../transfer-policy">TransferPolicy section</a> for more details.</p>
+<h2><a class="header" href="#kiosk-sdk" id="kiosk-sdk">Kiosk SDK</a></h2>
+<pre><code class="language-TS"></code></pre>
 <h1><a class="header" href="#borrowing" id="borrowing">Borrowing</a></h1>
-<p>An asset placed or locked in a Kiosk can be accessed by the Kiosk Owner without taking it from it. The Kiosk Owner can always borrow the asset immutably, however mutalbe borrow <a href="kiosk/../appendix/asset-states-in-kiosk.html">depends on the asset state</a> - a listed item can not be modified. The functions at the Kiosk Owner's disposal are:</p>
+<p>An asset placed or locked in a Kiosk can be accessed by the Kiosk Owner without taking it from it. The Kiosk Owner can always borrow the asset immutably, however mutable borrow <a href="kiosk/../appendix/asset-states-in-kiosk.html">depends on the asset state</a> - a listed item can not be modified. The functions at the Kiosk Owner's disposal are:</p>
 <ul>
 <li><code>kiosk::borrow</code> - returns an immutable reference to the asset</li>
 <li><code>kiosk::borrow_mut</code> - returns a mutable reference to the asset</li>
