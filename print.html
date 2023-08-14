@@ -689,14 +689,14 @@ no limit to what could be done).</p>
 <p><strong>Example Kiosk SDK</strong></p>
 <pre><code class="language-js">import { createKioskAndShare } from '@mysten/kiosk';
 
-let txb = new TransactionBuilder();
-let kioskOwnerCap = createKioskAndShare(txb);
+let tx = new TransactionBuilder();
+let kioskOwnerCap = createKioskAndShare(tx);
 
-txb.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
+tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
 </code></pre>
 <p><strong>Example PTB</strong></p>
-<pre><code class="language-js">let txb = new TransactionBuilder();
-txb.moveCall({
+<pre><code class="language-js">let tx = new TransactionBuilder();
+tx.moveCall({
     target: '0x2::kiosk::default'
 });
 </code></pre>
@@ -715,24 +715,24 @@ txb.moveCall({
 <p><strong>Example Kiosk SDK</strong></p>
 <pre><code class="language-js">import { createKiosk } from '@mysten/kiosk';
 
-let txb = new TransactionBuilder();
-let [kiosk, kioskOwnerCap] = createKiosk(txb);
+let tx = new TransactionBuilder();
+let [kiosk, kioskOwnerCap] = createKiosk(tx);
 
-txb.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
-txb.moveCall({
+tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
+tx.moveCall({
     target: '0x2::transfer::public_share_object',
     arguments: [ kiosk ],
     typeArguments: '0x2::kiosk::Kiosk'
 })
 </code></pre>
 <p><strong>Example PTB</strong></p>
-<pre><code class="language-js">let txb = new TransactionBuilder();
-let [kiosk, kioskOwnerCap] = txb.moveCall({
+<pre><code class="language-js">let tx = new TransactionBuilder();
+let [kiosk, kioskOwnerCap] = tx.moveCall({
     target: '0x2::kiosk::new'
 });
 
-txb.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
-txb.moveCall({
+tx.transferObjects([ kioskOwnerCap ], tx.pure(sender, 'address'));
+tx.moveCall({
     target: '0x2::transfer::public_share_object',
     arguments: [ kiosk ],
     typeArguments: '0x2::kiosk::Kiosk'
@@ -840,7 +840,84 @@ tx.moveCall({
 </code></pre>
 <h1><a class="header" href="#list-and-purchase" id="list-and-purchase">List and Purchase</a></h1>
 <h1><a class="header" href="#borrowing" id="borrowing">Borrowing</a></h1>
+<p>An asset placed or locked in a Kiosk can be accessed by the Kiosk Owner without taking it from it. The Kiosk Owner can always borrow the asset immutably, however mutalbe borrow <a href="kiosk/../appendix/asset-states-in-kiosk.html">depends on the asset state</a> - a listed item can not be modified. The functions at the Kiosk Owner's disposal are:</p>
+<ul>
+<li><code>kiosk::borrow</code> - returns an immutable reference to the asset</li>
+<li><code>kiosk::borrow_mut</code> - returns a mutable reference to the asset</li>
+<li><code>kiosk::borrow_val</code> - a PTB-friendly version of <code>borrow_mut</code> - allows to take an asset and return it in the same transaction</li>
+</ul>
+<h2><a class="header" href="#immutable-borrow" id="immutable-borrow">Immutable borrow</a></h2>
+<p>An asset can always be immutably borrowed from a Kiosk. Borrowing is performed via the <code>kiosk::borrow</code> function, however, it is not possible to use references within a PTB, so to access the immutable borrow, a published module (function) is required.</p>
+<h3><a class="header" href="#example-move" id="example-move">Example Move</a></h3>
+<pre><code class="language-Move">module examples::immutable_borrow
+    use sui::object::ID;
+    use sui::kiosk::{Self, Kiosk, KioskOwnerCap};
+
+    public fun immutable_borrow_example&lt;T&gt;(self: &amp;Kiosk, cap: &amp;KioskOwnerCap, item_id: ID): &amp;T {
+        kiosk::borrow(self, cap, item_id)
+    }
+}
+</code></pre>
+<h2><a class="header" href="#mutable-borrow-with-borrow_mut" id="mutable-borrow-with-borrow_mut">Mutable borrow with <code>borrow_mut</code></a></h2>
+<p>An asset can be mutably borrowed from a Kiosk <a href="kiosk/../appendix/asset-states-in-kiosk.html">if it is not listed</a>. Borrowing is performed via the <code>kiosk::borrow_mut</code> function, however, it is not possible to use references within a PTB, so to access the mutable borrow, a published module (function) is required.</p>
+<h3><a class="header" href="#example-move-1" id="example-move-1">Example Move</a></h3>
+<pre><code class="language-Move">module examples::mutable_borrow
+    use sui::object::ID;
+    use sui::kiosk::{Self, Kiosk, KioskOwnerCap};
+
+    public fun mutable_borrow_example&lt;T&gt;(
+        self: &amp;mut Kiosk, cap: &amp;KioskOwnerCap, item_id: ID
+    ): &amp;mut T {
+        kiosk::borrow_mut(self, cap, item_id)
+    }
+}
+</code></pre>
+<h2><a class="header" href="#mutable-borrow-with-borrow_val-ptb" id="mutable-borrow-with-borrow_val-ptb">Mutable borrow with <code>borrow_val</code> (PTB)</a></h2>
+<p>A PTB-friendly borrowing is available with the <code>kiosk::borrow_val</code> function. It allows to take an asset and return it in the same transaction. To make sure an asset is returned, the function &quot;obliges&quot; the caller with a Hot Potato.</p>
+<h3><a class="header" href="#example-kiosk-sdk" id="example-kiosk-sdk">Example Kiosk SDK</a></h3>
+<p>Kiosk SDK gives a handy function for the borrowing logic usable within a PTB: <code>borrowValue</code> (and <code>returnValue</code>).</p>
+<pre><code class="language-TS">import { borrowValue, returnValue } from '@sui/kiosk-sdk';
+
+let tx = new TransactionBuilder();
+let itemType = 'ITEM_TYPE';
+let itemId = tx.pure('&lt;ITEM_ID&gt;', 'address');
+let kioskArg = tx.object('&lt;ID&gt;');
+let capArg = tx.object('&lt;ID&gt;');
+
+let [item, promise] = borrowValue(tx, itemType, kioskArg, capArg, itemId);
+
+// freely mutate or reference the `item`
+// any calls are available as long as they take a mutable reference
+// `returnValue` must be explicitly called
+
+returnValue(tx, itemType, kioskArg, item, promise);
+</code></pre>
+<h3><a class="header" href="#example-ptb" id="example-ptb">Example PTB</a></h3>
+<pre><code class="language-TS">let tx = new TransactionBuilder();
+
+let itemType = 'ITEM_TYPE';
+let itemId = tx.pure('&lt;ITEM_ID&gt;', 'address');
+let kioskArg = tx.object('&lt;ID&gt;');
+let capArg = tx.object('&lt;ID&gt;');
+
+let [item, promise] = tx.moveCall({
+    target: '0x2::kiosk::borrow_val',
+    arguments: [ kioskArg, capArg, itemId ],
+    typeArguments: [ itemType ],
+});
+
+// freely mutate or reference the `item`
+// any calls are available as long as they take a mutable reference
+// `returnValue` must be explicitly called
+
+tx.moveCall({
+    target: '0x2::kiosk::return_val',
+    arguments: [ kioskArg, item, promise ],
+    typeArguments: [ itemType ],
+});
+</code></pre>
 <h1><a class="header" href="#withdrawing-profits" id="withdrawing-profits">Withdrawing Profits</a></h1>
+<h1><a class="header" href="#purchase-cap" id="purchase-cap">Purchase Cap</a></h1>
 <h1><a class="header" href="#purchasecap-tricks" id="purchasecap-tricks">PurchaseCap tricks</a></h1>
 <h1><a class="header" href="#extensions" id="extensions">Extensions</a></h1>
 <h1><a class="header" href="#kiosk-extensions" id="kiosk-extensions">Kiosk Extensions</a></h1>
