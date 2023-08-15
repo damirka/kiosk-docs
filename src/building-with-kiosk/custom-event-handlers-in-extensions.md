@@ -1,5 +1,5 @@
 # Custom Events in Extensions
-While the default Kiosk implementation for list-purchase flow always emits events, custom features covered in the [purchase-cap](../kiosk/purchase-cap.md) section do not. And the place is intentionally left available for custom events integration.
+While the default Kiosk implementation for list-purchase flow always emits events, custom features covered in the [purchase-cap](../kiosk/purchase-cap.md) section do not. And this is intentional - to keep the space available for custom events integration.
 
 If we were to map default functionality of the Kiosk to analogous “custom” features, the map would look like:
 
@@ -9,7 +9,7 @@ If we were to map default functionality of the Kiosk to analogous “custom” f
 | `delist` |  `ItemDelisted<T>`  | `return_purchase_cap` | None
 | `purchase` | `ItemPurchased<T>`  | `purchase_with_cap` | None
 
-> When building custom events, it is important to keep in mind, that `sender` and `timestamp` are default meta-properties of all emitted events. So adding a `sender` field in events is necessary and even more - it increases the event emission price (which is typically paid by the user).
+> When building custom events, it is important to keep in mind, that `sender` and `timestamp` are default meta-properties of all emitted events. So adding a `sender` field in an event is not necessary and even more - it increases the event emission price (which is typically paid by user).
 
 Each of the PurchaseCap-enabled actions follows the general principle of the list-purchase flow, however there are no events emitted. An extension utilizing these functions should create and emit custom events. 
 

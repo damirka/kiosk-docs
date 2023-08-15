@@ -1,6 +1,6 @@
 # What is Sui Kiosk
 
-Kiosk is a decentralized system for commerce applications on Sui. It consists of “Kiosks” - shared objects owned by individual parties which store assets and allow listing them for sale as well as utilize custom trading functionality - for example, an Auction. While being highly decentralized, Kiosk provides a set of strong guarantees:
+    Kiosk is a decentralized system for commerce applications on Sui. It consists of “Kiosks” - shared objects owned by individual parties which store assets and allow listing them for sale as well as utilize custom trading functionality - for example, an Auction. While being highly decentralized, Kiosk provides a set of strong guarantees:
 
 - Kiosk Owners retain ownership of their assets to the moment of purchase;
 - Creators set custom “policies” - sets of rules applied to every trade (eg pay Royalty fee, do some arbitrary action X);
