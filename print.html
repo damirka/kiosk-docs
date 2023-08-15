@@ -150,7 +150,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#what-is-sui-kiosk" id="what-is-sui-kiosk">What is Sui Kiosk</a></h1>
-<p>Kiosk is a decentralized system for commerce applications on Sui. It consists of “Kiosks” - shared objects owned by individual parties which store assets and allow listing them for sale as well as utilize custom trading functionality - for example, an Auction. While being highly decentralized, Kiosk provides a set of strong guarantees:</p>
+<pre><code>Kiosk is a decentralized system for commerce applications on Sui. It consists of “Kiosks” - shared objects owned by individual parties which store assets and allow listing them for sale as well as utilize custom trading functionality - for example, an Auction. While being highly decentralized, Kiosk provides a set of strong guarantees:
+</code></pre>
 <ul>
 <li>Kiosk Owners retain ownership of their assets to the moment of purchase;</li>
 <li>Creators set custom “policies” - sets of rules applied to every trade (eg pay Royalty fee, do some arbitrary action X);</li>
@@ -183,12 +184,10 @@ are:</p>
 assets are traded.</p>
 </li>
 <li>
-<p>&quot;True Ownership&quot; - Kiosk Owner is the only party that can take, list, borrow and modify assets in
-their Kiosk. No other party can do this. Similarly to how single owner objects work on Sui.</p>
+<p>&quot;True Ownership&quot; - Kiosk Owner is the only party that can take, list, borrow and modify assets in their Kiosk. No other party can do this. Similarly to how single owner objects work on Sui.</p>
 </li>
 <li>
-<p>Strong Policy (eg Royalty) enforcement is an option for creators which can be enabled or disabled
-at any time affecting all trades on the platform.</p>
+<p>Strong Policy (eg Royalty) enforcement is an option for creators which can be enabled or disabled at any time affecting all trades on the platform.</p>
 </li>
 <li>
 <p>Changes to the TransferPolicy are instant and global.</p>
@@ -202,8 +201,7 @@ at any time affecting all trades on the platform.</p>
 <p>While an item is traded, it can not be modified or taken.</p>
 </li>
 <li>
-<p>While PurchaseCap exists, an item is locked and can not be taken or modified unless the PCap is
-returned or used to perform a trade.</p>
+<p>While PurchaseCap exists, an item is locked and can not be taken or modified unless the PCap is returned or used to perform a trade.</p>
 </li>
 <li>
 <p>Any Rule can be removed at any time.</p>
@@ -1228,7 +1226,7 @@ txb.moveCall({
 </code></pre>
 <h1><a class="header" href="#building-with-kiosk" id="building-with-kiosk">Building with Kiosk</a></h1>
 <p>Kiosk comes with a simple trading functionality which consists of two functions: <code>list</code> (and a matching <code>delist</code>) and <code>purchase</code>. It emits events when an action happens which enables off-chain discovery of Kiosk activity. </p>
-<p>An application utilizing Kiosk‘s default functions needs to be able to interact with Kiosks, listen to Kiosk events and update the interfaces accordingly and resolve <a href="building-with-kiosk/../transfer-policy">TransferRequests</a> on purchase. While an application creating custom logic for Kiosks needs to also build interaction logic based on PurchaseCap’s and emit events to track its activity off-chain.</p>
+<p>An application utilizing Kiosk‘s default functions needs to be able to interact with Kiosks, listen to Kiosk events and update the interfaces accordingly and resolve <a href="building-with-kiosk/../transfer-policy">TransferRequests</a> on purchase. While an application creating custom logic for Kiosks needs to also build an interaction logic based on PurchaseCap’s and emit events to track its activity off-chain.</p>
 <p>In this section we go through main areas which need to be covered for both default and custom flows and look into what’s necessary to build an application with Kiosk.</p>
 <h1><a class="header" href="#demo-applications" id="demo-applications">Demo Applications</a></h1>
 <p>Currently, there are two public demo applications for Kiosk: “Kiosk Demo” and “Kiosk CLI” both of which can be used as code references for building custom client applications. </p>
@@ -1273,7 +1271,7 @@ Extra topic: building a Marketplace with Kiosk. How to:
 3. Indexing events 
 
 --><h1><a class="header" href="#custom-events-in-extensions" id="custom-events-in-extensions">Custom Events in Extensions</a></h1>
-<p>While the default Kiosk implementation for list-purchase flow always emits events, custom features covered in the <a href="building-with-kiosk/../kiosk/purchase-cap.html">purchase-cap</a> section do not. And the place is intentionally left available for custom events integration.</p>
+<p>While the default Kiosk implementation for list-purchase flow always emits events, custom features covered in the <a href="building-with-kiosk/../kiosk/purchase-cap.html">purchase-cap</a> section do not. And this is intentional - to keep the space available for custom events integration.</p>
 <p>If we were to map default functionality of the Kiosk to analogous “custom” features, the map would look like:</p>
 <table><thead><tr><th>Default Feature</th><th>Default Event</th><th>Custom Feature</th><th>Custom Event</th></tr></thead><tbody>
 <tr><td><code>list</code></td><td><code>ItemListed&lt;T&gt;</code></td><td><code>list_with_purchase_cap</code></td><td>None</td></tr>
@@ -1281,7 +1279,7 @@ Extra topic: building a Marketplace with Kiosk. How to:
 <tr><td><code>purchase</code></td><td><code>ItemPurchased&lt;T&gt;</code></td><td><code>purchase_with_cap</code></td><td>None</td></tr>
 </tbody></table>
 <blockquote>
-<p>When building custom events, it is important to keep in mind, that <code>sender</code> and <code>timestamp</code> are default meta-properties of all emitted events. So adding a <code>sender</code> field in events is necessary and even more - it increases the event emission price (which is typically paid by the user).</p>
+<p>When building custom events, it is important to keep in mind, that <code>sender</code> and <code>timestamp</code> are default meta-properties of all emitted events. So adding a <code>sender</code> field in an event is not necessary and even more - it increases the event emission price (which is typically paid by user).</p>
 </blockquote>
 <p>Each of the PurchaseCap-enabled actions follows the general principle of the list-purchase flow, however there are no events emitted. An extension utilizing these functions should create and emit custom events. </p>
 <blockquote>

@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#custom-events-in-extensions" id="custom-events-in-extensions">Custom Events in Extensions</a></h1>
-<p>While the default Kiosk implementation for list-purchase flow always emits events, custom features covered in the <a href="../kiosk/purchase-cap.html">purchase-cap</a> section do not. And the place is intentionally left available for custom events integration.</p>
+<p>While the default Kiosk implementation for list-purchase flow always emits events, custom features covered in the <a href="../kiosk/purchase-cap.html">purchase-cap</a> section do not. And this is intentional - to keep the space available for custom events integration.</p>
 <p>If we were to map default functionality of the Kiosk to analogous “custom” features, the map would look like:</p>
 <table><thead><tr><th>Default Feature</th><th>Default Event</th><th>Custom Feature</th><th>Custom Event</th></tr></thead><tbody>
 <tr><td><code>list</code></td><td><code>ItemListed&lt;T&gt;</code></td><td><code>list_with_purchase_cap</code></td><td>None</td></tr>
@@ -156,7 +156,7 @@
 <tr><td><code>purchase</code></td><td><code>ItemPurchased&lt;T&gt;</code></td><td><code>purchase_with_cap</code></td><td>None</td></tr>
 </tbody></table>
 <blockquote>
-<p>When building custom events, it is important to keep in mind, that <code>sender</code> and <code>timestamp</code> are default meta-properties of all emitted events. So adding a <code>sender</code> field in events is necessary and even more - it increases the event emission price (which is typically paid by the user).</p>
+<p>When building custom events, it is important to keep in mind, that <code>sender</code> and <code>timestamp</code> are default meta-properties of all emitted events. So adding a <code>sender</code> field in an event is not necessary and even more - it increases the event emission price (which is typically paid by user).</p>
 </blockquote>
 <p>Each of the PurchaseCap-enabled actions follows the general principle of the list-purchase flow, however there are no events emitted. An extension utilizing these functions should create and emit custom events. </p>
 <blockquote>
