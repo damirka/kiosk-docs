@@ -27,8 +27,7 @@ Every rule would follow the same structure and implement required types:
 3. "set" function which adds the Rule to the TP
 4. an action function which adds a Receipt to the TransferRequest
 
-> Important: there's no need to implement "unset" - any rule can be removed at any time as defined
-> in the TransferPolicy module and guaranteed by the set of constraints on the rule Config (store + drop)
+> Important: there's no need to implement "unset" - any rule can be removed at any time as defined in the TransferPolicy module and guaranteed by the set of constraints on the rule Config (store + drop)
 
 ```move
 module examples::dummy_rule {
@@ -78,10 +77,7 @@ module examples::dummy_rule {
 }
 ```
 
-This module contains no configuration and requires a `Coin<SUI>` of any value (even "0"), so it's
-easy to imagine that every buyer would create a zero Coin and pass it to get the Receipt. The only
-thing this Rule module is good for is illustration and a skeleton. Goes without saying but **this
-code should never be used in production**.
+This module contains no configuration and requires a `Coin<SUI>` of any value (even "0"), so it's easy to imagine that every buyer would create a zero Coin and pass it to get the Receipt. The only thing this Rule module is good for is illustration and a skeleton. Goes without saying but **this code should never be used in production**.
 
 ## Reading the Request: Royalty
 
@@ -93,8 +89,7 @@ which can be used in this and other scenarios:
 2. Amount paid (SUI)
 3. From ID - the object which was used for selling (eg Kiosk)
 
-> To provide access to these fields, the `sui::transfer_policy` module has a set of getter functions
-> which are available to anyone: "paid()", "item()" and "from()"
+> To provide access to these fields, the `sui::transfer_policy` module has a set of getter functions which are available to anyone: "paid()", "item()" and "from()"
 
 ```move
 module examples::royalty_rule {
@@ -142,8 +137,7 @@ module examples::royalty_rule {
 ## Time is also Money
 
 Rules don't need to be only for payments and fees. Some might allow trading before or after a
-certain time. Since Rules are not standardized and can use anything, developers can encode logic
-around using any objects.
+certain time. Since Rules are not standardized and can use anything, developers can encode logic around using any objects.
 
 ```move
 module examples::time_rule {
@@ -214,11 +208,7 @@ module examples::witness_rule {
 }
 ```
 
-The "witness_rule" is very generic and can be used to require a custom Witness depending on the
-settings. It is a simple and yet a powerful way to link a custom marketplace / trading logic to the
-TransferPolicy. With a slight modification, the rule can be turned into a generic Capability
-requirement (basically any object, even a TransferPolicy for a different type or a TransferRequest -
-no limit to what could be done).
+The "witness_rule" is very generic and can be used to require a custom Witness depending on the settings. It is a simple and yet a powerful way to link a custom marketplace / trading logic to the TransferPolicy. With a slight modification, the rule can be turned into a generic Capability requirement (basically any object, even a TransferPolicy for a different type or a TransferRequest - no limit to what could be done).
 
 ```move
 module examples::capability_rule {

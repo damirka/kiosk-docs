@@ -1,19 +1,12 @@
 # Rules
 
-The `TransferPolicy` does not require any action from the user by default; it
-confirms `TransferRequest`s and therefore unblocks a transaction. However, if we
-were to implement the `VAT` example further and allow the `VAT` to collect fees
-for every "merchant transaction" we need to introduce "Rules".
+The `TransferPolicy` does not require any action from the user by default; it confirms `TransferRequest`s and therefore unblocks a transaction. However, if we were to implement the `VAT` example further and allow the `VAT` to collect fees for every "merchant transaction" we need to introduce "Rules".
 
 ## "Receipts" in TransferRequest
 
-TransferRequest features the `receipts` field which is a VecSet of `TypeName`.
-When the request is "confirmed" via the `confirm_request` call, the receipts are
-compared against the `TransferPolicy.rules`, and if "receipts" don't match the
-"rules", the request can not be confirmed, and the transaction aborts.
+TransferRequest features the `receipts` field which is a VecSet of `TypeName`. When the request is "confirmed" via the `confirm_request` call, the receipts are compared against the `TransferPolicy.rules`, and if "receipts" don't match the "rules", the request can not be confirmed, and the transaction aborts.
 
-In the default scenario, the rules are empty and receipts are too, so the
-matching is trivial and the request is confirmed.
+In the default scenario, the rules are empty and receipts are too, so the matching is trivial and the request is confirmed.
 
 ```Move
 module sui::transfer_policy {
@@ -45,20 +38,14 @@ module sui::transfer_policy {
 
 ## Rules and Receipts
 
-A Rule is a way to request an additional action from the user before the request
-can be confirmed. For example, if we want to implement a "VAT" module that would
-collect fees for every "merchant transaction", we need to introduce a Rule that
-would allow the VAT to collect fees. The way for us to know that the VAT is paid
-is to add a "receipt" to the TransferRequest.
+A Rule is a way to request an additional action from the user before the request can be confirmed. For example, if we want to implement a "VAT" module that would collect fees for every "merchant transaction", we need to introduce a Rule that would allow the VAT to collect fees. The way for us to know that the VAT is paid is to add a "receipt" to the TransferRequest.
 
-> A Rule added to the TransferPolicy requires a matching Receipt in the
-> TransferRequest. The match is performed based on the Rule type.
+> A Rule added to the TransferPolicy requires a matching Receipt in the TransferRequest. The match is performed based on the Rule type.
 
 
 ## Rule Implementation
 
-A rule is a module that implements the "Rule" functionality in the
-`transfer_policy` module - it needs to provide 3 main components:
+A rule is a module that implements the "Rule" functionality in the `transfer_policy` module - it needs to provide 3 main components:
 
 1. A `Rule` Witness type which uniquely identifies the Rule
 2. A `Config` type which is stored in the `TransferPolicy` and is used to
