@@ -27,7 +27,7 @@ KioskOwnerCap is a capability that makes the bearer the owner of the Kiosk. It a
 
 ## Extension ideas
 
-Given that the Kiosk Owner can attach custom dynamic fields to Kiosk, and anyone can then read them (not modify), we can utilize this to implement some simple extensions. For example, a "Kiosk Name" extension. The Kiosk Owner can define a name for the Kiosk, attach it as a dynamic field, and make it readable by anyone.
+Given that the Kiosk Owner can attach custom dynamic fields to Kiosk, and anyone can then read them (but not modify), we can use this to implement simple extensions. For example, a "Kiosk Name" extension: the Kiosk Owner can set a name for the Kiosk, attach it as a dynamic field, and make it readable by anyone.
 
 > We used a similar approach in the [Personal Kiosk Extension](./../mysten-kiosk/).
 
