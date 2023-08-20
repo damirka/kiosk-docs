@@ -218,9 +218,9 @@ module examples::marketplace_ext {
 		// see Extensions API for details
 
 		event::emit(MarketItemListed&lt;T&gt; {
-			kiosk: object::id(&amp;self),
-			item_id,
-			price,
+    		kiosk: object::id(&amp;self),
+    		item_id,
+    		price,
 		})
 	}
 	

@@ -178,8 +178,8 @@ Key points:
 are:</p>
 <ol>
 <li>
-<p>Every trade operation in the <a href="./kiosk/README.html">Kiosk</a> requires a
-<a href="./transfer-policy/README.html">TransferPolicy</a> resolution giving creators control over how their
+<p>Every trade operation in the <a href="./kiosk/">Kiosk</a> requires a
+<a href="./transfer-policy/">TransferPolicy</a> resolution giving creators control over how their
 assets are traded.</p>
 </li>
 <li>
@@ -1340,9 +1340,9 @@ module examples::marketplace_ext {
 		// see Extensions API for details
 
 		event::emit(MarketItemListed&lt;T&gt; {
-			kiosk: object::id(&amp;self),
-			item_id,
-			price,
+    		kiosk: object::id(&amp;self),
+    		item_id,
+    		price,
 		})
 	}
 	
