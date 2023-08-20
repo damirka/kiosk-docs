@@ -72,9 +72,9 @@ module examples::marketplace_ext {
 		// see Extensions API for details
 
 		event::emit(MarketItemListed<T> {
-			kiosk: object::id(&self),
-			item_id,
-			price,
+    		kiosk: object::id(&self),
+    		item_id,
+    		price,
 		})
 	}
 	
