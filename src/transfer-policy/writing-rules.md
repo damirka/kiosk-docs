@@ -219,7 +219,7 @@ module examples::capability_rule {
     struct Config {}
 
     /// Absolutely identical to the witness setting
-    public fun add<T, Cap>(/* ... *) {
+    public fun add<T, Cap>(/* ... */) {
         policy::add_rule(Rule<Cap> {}, policy, cap, Config {})
     }
 
