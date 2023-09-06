@@ -613,7 +613,7 @@ of the Rule.</p>
     struct Config {}
 
     /// Absolutely identical to the witness setting
-    public fun add&lt;T, Cap&gt;(/* ... *) {
+    public fun add&lt;T, Cap&gt;(/* ... */) {
         policy::add_rule(Rule&lt;Cap&gt; {}, policy, cap, Config {})
     }
 
