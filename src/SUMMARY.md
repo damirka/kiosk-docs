@@ -1,9 +1,6 @@
 # Summary
 
-- [What is Kiosk]()
-    - [Kiosk Support]()
-    - [Kiosk in a Nutshell]()
-    - [Limitations]()
+- [What is Kiosk](README.md)
 - [Basic Concepts](concepts/README.md)
     - [Creator Policy](concepts/transfer-policy.md)
     - [Kiosk Owner](concepts/kiosk-owner.md)

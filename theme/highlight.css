@@ -84,6 +84,8 @@
 
 .hljs.language-undefined {
   font-weight: 400;
+  font-size: 1.6rem !important;
+  line-height: 1.45em !important;
   line-height: inherit;
   font-size: inherit;
 }
