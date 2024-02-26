@@ -1,1 +1,0 @@
-# PurchaseCap tricks

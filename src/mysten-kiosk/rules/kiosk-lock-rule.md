@@ -1,1 +1,0 @@
-# Kiosk Lock Rule
