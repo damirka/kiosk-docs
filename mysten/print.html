@@ -1,0 +1,446 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Sui Kiosk</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        <script defer="" src="https://www.googletagmanager.com/gtag/js?id=G-13SN8BGG6W"></script>
+        <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-13SN8BGG6W")</script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> What is Kiosk</a></li><li class="chapter-item expanded "><a href="concepts/index.html"><strong aria-hidden="true">2.</strong> Basic Concepts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="concepts/transfer-policy.html"><strong aria-hidden="true">2.1.</strong> Creator Policy</a></li><li class="chapter-item expanded "><a href="concepts/kiosk-owner.html"><strong aria-hidden="true">2.2.</strong> Kiosk Owner</a></li><li class="chapter-item expanded "><a href="concepts/personal-non-personal-kiosk.html"><strong aria-hidden="true">2.3.</strong> Personal and non-personal Kiosk</a></li><li class="chapter-item expanded "><a href="concepts/royalties.html"><strong aria-hidden="true">2.4.</strong> Royalties</a></li><li class="chapter-item expanded "><a href="concepts/locking.html"><strong aria-hidden="true">2.5.</strong> Locking</a></li></ol></li><li class="chapter-item expanded "><a href="mysten-kiosk/index.html"><strong aria-hidden="true">3.</strong> Kiosk for Creators</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="mysten-kiosk/lock-rule.html"><strong aria-hidden="true">3.1.</strong> Lock Rule</a></li><li class="chapter-item expanded "><a href="mysten-kiosk/royalty-rule.html"><strong aria-hidden="true">3.2.</strong> Royalty Rule</a></li><li class="chapter-item expanded "><a href="mysten-kiosk/floor-price-rule.html"><strong aria-hidden="true">3.3.</strong> Floor Price Rule</a></li><li class="chapter-item expanded "><a href="mysten-kiosk/personal-kiosk-rule.html"><strong aria-hidden="true">3.4.</strong> Personal Kiosk</a></li></ol></li><li class="chapter-item expanded "><a href="marketplace/index.html"><strong aria-hidden="true">4.</strong> Kiosk for Marketplaces</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="marketplace/policy-setting.html"><strong aria-hidden="true">4.1.</strong> Setting a Policy</a></li><li class="chapter-item expanded "><a href="marketplace/marketplace-adapter.html"><strong aria-hidden="true">4.2.</strong> Utilizing Marketplace Adapter</a></li><li class="chapter-item expanded "><a href="marketplace/fixed-price-trading.html"><strong aria-hidden="true">4.3.</strong> Fixed Price Trading</a></li><li class="chapter-item expanded "><a href="marketplace/collection-bidding.html"><strong aria-hidden="true">4.4.</strong> Collection Bidding</a></li><li class="chapter-item expanded "><a href="marketplace/single-item-bidding.html"><strong aria-hidden="true">4.5.</strong> Single Item Bidding</a></li><li class="chapter-item expanded "><a href="marketplace/indexing-events.html"><strong aria-hidden="true">4.6.</strong> Indexing Events</a></li></ol></li><li class="chapter-item expanded "><a href="guides/index.html"><strong aria-hidden="true">5.</strong> Guides</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="guides/royalty-enforcement-101.html"><strong aria-hidden="true">5.1.</strong> Royalty Enforcement 101</a></li><li class="chapter-item expanded "><a href="guides/launchpad.html"><strong aria-hidden="true">5.2.</strong> Utilizing Kiosk for Launchpad</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">6.</strong> Tooling</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="tooling/kiosk-sdk.html"><strong aria-hidden="true">6.1.</strong> Kiosk SDK</a></li></ol></li><li class="chapter-item expanded "><a href="LINKS.html"><strong aria-hidden="true">7.</strong> Links</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Sui Kiosk</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="what-is-kiosk"><a class="header" href="#what-is-kiosk">What is Kiosk</a></h1>
+<p>Kiosk is a decentralized, non-custodial, low-level protocol for storing and trading digital assets. It is designed to be used by creators, marketplaces, and developers to create and enforce rules for trading digital assets. It provides strong ownership guarantees to users, policy enforcement guarantees to creators, and trading functionality and a single ecosystem to marketplaces.</p>
+<p>Kiosk is native to Sui, and is a part of the Sui Framework. As such, it is widely supported by the Sui ecosystem, and can be used to own and trade assets on the Sui blockchain.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="basic-concepts"><a class="header" href="#basic-concepts">Basic Concepts</a></h1>
+<p>In this section we give an overview of the basic concepts of the Kiosk. It can be used as a quick reference for understanding the Kiosk, its features and how it works.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="transfer-policy"><a class="header" href="#transfer-policy">Transfer Policy</a></h1>
+<p>Transfer Policy (or - Asset Policy) is an object which defines the rules for the asset transfer. The policy goal is to <em>confirm requests</em> - programmable obligations that must be met before the asset can be transferred. While this system can be integrated into any application, its main use case is to enforce the rules in the Kiosk.</p>
+<p>When an Item is purchased in a Kiosk, the buyer gets the <em>Item</em> and the <em>TransferRequest</em> for this item - the latter must be confirmed in the matching Policy for the transaction to be completed. If the Policy is not satisfied, transaction aborts. The Policy can be set up to enforce various rules, such as royalties, or a floor price.</p>
+<h2 id="policy-structure"><a class="header" href="#policy-structure">Policy Structure</a></h2>
+<p>A single Transfer Policy is created for a single type, and it can contain almost unlimited number rules. For example, a Policy can require a percentage-based roaylty, an an obligation to lock the item in the buyer's Kiosk, so that the policy will be enforced when the item is sold again.</p>
+<p>Here's an example of a Policy:</p>
+<pre><code>TransferPolicy&lt;Capy&gt;
+  - lock_rule
+  - personal_kiosk_rule
+  - royalty_rule(1% or 0.05 SUI)
+</code></pre>
+<p>Policy can also collect any transaction fees to be paid to the Policy owner.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="kiosk-owner"><a class="header" href="#kiosk-owner">Kiosk Owner</a></h1>
+<p>As a generic primitive, Kiosk was designed to be used in various applications. As part of this design, Kiosk can be owned by different entities, such as a single account, a custom contract, or a DAO. Hence, it does not offer the concept of an owner account by default.</p>
+<blockquote>
+<p>The <code>owner</code> field of Kiosk is not a reliable source of truth for the owner of the Kiosk. It can be changed by the owner at any time, and it is not used in the Kiosk logic.</p>
+</blockquote>
+<p>For guaranteed ownership detection, a <a href="concepts/./personal-non-personal-kiosk.html">Personal Kiosk</a> should be used.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="personal-kiosk"><a class="header" href="#personal-kiosk">Personal Kiosk</a></h1>
+<p>Because of the <a href="concepts/./kiosk-owner.html">ownership model</a>, Kiosk does not have a concept of an owner account by default. However, to address the need for personal (or - soulbound) Kiosks, we introduce the concept of personal (soulbound) and non-personal (default) Kiosks.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="royalties"><a class="header" href="#royalties">Royalties</a></h1>
+<p>Royalties (or - generalized - fees) can be enforced on transactions in the Kiosk. The royalties can be both percentage-based and fixed, and they can be set by creators and marketplaces to be enforced on the items they sell.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="locking"><a class="header" href="#locking">Locking</a></h1>
+<p>Kiosk has two ways of putting an item into it: the <em>place</em> and the <em>lock</em> functions. The former allows the item to be <em>taken</em> from the Kiosk, while the latter makes sure that the item stays in the Kiosk. The <em>lock</em> is essential to enforce the rules set in the <a href="concepts/transfer-policy.html">Transfer Policy</a>, such as royalties or floor price.</p>
+<p>To ensure that the item is still locked on purchase, the creator has to set the <a href="concepts/../mysten-kiosk/lock-rule.html">Lock Rule</a> in the Policy. The Lock Rule is a simple rule that checks if the purchased item is locked in the Kiosk. If the rule is not set, the item can be taken from the Kiosk and transferred to the buyer, regardless of the Policy.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="kiosk-for-creators"><a class="header" href="#kiosk-for-creators">Kiosk for Creators</a></h1>
+<p>This section describes the Mysten's <a href="https://github.com/MystenLabs/apps/tree/main/kiosk">Kiosk package</a>, which provides a set of base rules and extensions aimed at setting up the common Kiosk policies. The package is designed to be used as a base for creating a <a href="mysten-kiosk/../concepts/transfer-policy.html">Policy</a> with a set of predefined rules, such as lock, royalty, and floor price rules.</p>
+<h2 id="quick-overview"><a class="header" href="#quick-overview">Quick Overview</a></h2>
+<p>The Kiosk package gives the basic ruleset for strong royalty enforcement: a combination of the <a href="mysten-kiosk/lock-rule.html">Lock Rule</a>, <a href="mysten-kiosk/royalty-rule.html">Royalty Rule</a>, and <a href="mysten-kiosk/personal-kiosk-rule.html">Personal Kiosk Rule</a> can be used to make sure that the item never leaves Kiosk, creator gets the royalties and the buyer is Kiosk is not a shared one and can't be transferred to another user.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="lock-rule"><a class="header" href="#lock-rule">Lock Rule</a></h1>
+<p>The Lock Rule is an important rule that checks if the purchased item is locked in the buyer's Kiosk. If the rule is not set, the item can be taken from the Kiosk, regardless of the Policy.</p>
+<h2 id="configuration"><a class="header" href="#configuration">Configuration</a></h2>
+<ul>
+<li>none</li>
+</ul>
+<h2 id="example"><a class="header" href="#example">Example</a></h2>
+<pre><code class="language-ts">// Lock the item in the buyer's Kiosk
+policy.addRule(new LockRule());
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="royalty-rule"><a class="header" href="#royalty-rule">Royalty Rule</a></h1>
+<p>The Royalty Rule is a rule that enforces a fee to be paid to the creator of the item on each purchase. It supports a flexible configuration: the creator can set the percentage based fee and the fixed fee to be enforced on the item. Both configurations can be set at the same time, and the rule will require the buyer to pay the maximum of the two fees.</p>
+<h2 id="configuration-1"><a class="header" href="#configuration-1">Configuration</a></h2>
+<ul>
+<li><code>percentage</code> - the percentage of the item's price that the creator will receive as a fee.</li>
+<li><code>amount</code> - the fixed amount that the creator will receive as a fee.</li>
+</ul>
+<h2 id="example-1"><a class="header" href="#example-1">Example</a></h2>
+<pre><code class="language-ts">// 10% of the item's price or 0.5 SUI as a fixed fee
+policy.addRule(new RoyaltyRule({ percentage: 10, amount: '500000000' }));
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="floor-price-rule"><a class="header" href="#floor-price-rule">Floor Price Rule</a></h1>
+<p>The Floor Price Rule is a simple rule that checks that the price of the item is not lower than the floor price set in the Policy. The floor price is a minimum price that the item can be sold for. The rule can be used in some cases to prevent the item from being sold for a price lower than the creator's expectations.</p>
+<h2 id="configuration-2"><a class="header" href="#configuration-2">Configuration</a></h2>
+<ul>
+<li><code>amount</code> - the minimum price that the item can be sold for.</li>
+</ul>
+<h2 id="example-2"><a class="header" href="#example-2">Example</a></h2>
+<pre><code class="language-ts">// 10 SUI is the minimum price for the item
+policy.addRule(new FloorPriceRule({ amount: '10000000000' }));
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="personal-kiosk-rule"><a class="header" href="#personal-kiosk-rule">Personal Kiosk Rule</a></h1>
+<p>The Personal Kiosk Rule is a rule that guarantees that the buyer's Kiosk is a <a href="mysten-kiosk/personal-kiosk.html">Personal Kiosk</a>. The rule is essential to enforce the rules set in the <a href="mysten-kiosk/transfer-policy.html">Transfer Policy</a>, such as royalties or floor price.</p>
+<h2 id="configuration-3"><a class="header" href="#configuration-3">Configuration</a></h2>
+<ul>
+<li>none</li>
+</ul>
+<h2 id="example-3"><a class="header" href="#example-3">Example</a></h2>
+<pre><code class="language-ts">// Ensure that the buyer's Kiosk is a Personal Kiosk
+policy.addRule(new PersonalKioskRule());
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="kiosk-for-marketplaces"><a class="header" href="#kiosk-for-marketplaces">Kiosk for Marketplaces</a></h1>
+<p>This section describes how to utilize Kiosk for marketplaces. While being a decentralized system focused on fair policy enforcement, Kiosk can be used to create a marketplace with various trading mechanisms. This section covers the Mysten's <a href="https://github.com/MystenLabs/apps/tree/main/kiosk-marketplace">Kiosk Marketplace</a> package, which provides a set of base modules to implement a marketplace with Kiosk.</p>
+<h2 id="quick-overview-1"><a class="header" href="#quick-overview-1">Quick Overview</a></h2>
+<p>The Kiosk Marketplace package builds upon the idea of policy enforcement. But unlike the default Kiosk functions, which focus on satisfying a single policy, the marketplace package creates two requests for each trade: one for the creator and one for the marketplace. This allows the marketplace to enforce its own policies, such as a fee for each trade, while reusing the exising rules originally intended for creators.</p>
+<p>In the <a href="marketplace/./policy-setting.html">Policy Setting</a> section, we illustrate the process of setting a policy for a marketplace. In the following sections, we describe how to utilize the marketplace adapter and its trading mechanisms to implement marketplace functionality on top of Kiosk.</p>
+<h2 id="features"><a class="header" href="#features">Features</a></h2>
+<ul>
+<li><a href="marketplace/./fixed-price-trading.html">Fixed Price Trading</a> - a simple "list for 10 SUI" trading, where the buyer can purchase the item for a fixed price.</li>
+<li><a href="marketplace/./collection-bidding.html">Collection Bidding</a> - a trading mechanism where the buyer can bid on a collection of items offering multiple Coins.</li>
+<li><a href="marketplace/./single-item-bidding.html">Single Item Bidding</a> - a trading mechanism where the buyer can bid on a single item offering a Coin.</li>
+</ul>
+<p>Moreover, we describe how to <a href="marketplace/./indexing-events.html">Index Events</a> to allow the marketplace to track the trades and provide a better user experience. Marketplace Adapter puts an emphasis on the developer tooling and provides richer set of events to be indexed.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="setting-a-policy"><a class="header" href="#setting-a-policy">Setting a Policy</a></h1>
+<p>Similarly to how creators can set a policy for their assets, marketplaces can set a policy for trades too. The policy can be set to enforce any rules creators can set for their assets, such as royalties, floor prices, or lock rules. Just like creators' policies, the marketplace policy can be set to collect any transaction fees.</p>
+<pre><code class="language-move">module kiosk::my_market {
+    use sui::tx_context::{Self, TxContext};
+    use sui::transfer_policy;
+    use sui::transfer;
+    use sui::package;
+
+    /// The OTW and the type of the marketplace.
+    struct MY_MARKET has drop {}
+
+    #[allow(lint(share_owned))]
+    /// In the module initializer:
+    /// 1. Claim the Publisher object
+    /// 2. Create and publish a TransferPolicy
+    /// 3. Send Publisher and TransferPolicyCap to the sender
+    fun init(otw: MY_MARKET, ctx: &amp;mut TxContext) {
+        let publisher = package::claim(otw, ctx);
+        let (policy, policy_cap) = transfer_policy::new&lt;MY_MARKET&gt;(&amp;publisher, ctx);
+
+        transfer::public_transfer(policy_cap, tx_context::sender(ctx));
+        transfer::public_transfer(publisher, tx_context::sender(ctx));
+        transfer::public_share_object(policy);
+    }
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="marketplace-adapter"><a class="header" href="#marketplace-adapter">Marketplace Adapter</a></h1>
+<p>Marketplace Adapter is a thin wrapper for the standard <code>PurchaseCap</code> functionality defined in the Kiosk. Unlike the <code>PurchaseCap</code> which enforces a single policy by creating a TransferRequest when used, the <code>MarketplaceAdapter</code> allows for two policies to be enforced: one for the creator and one for the marketplace.</p>
+<p>When a buyer purchases an item using one of the trading modules, the <code>MarketplaceAdapter</code> creates two TransferRequests: one for the creator and one for the marketplace. This allows the marketplace to enforce its own policies, such as a fee for each trade, while reusing the existing rules originally intended for creators.</p>
+<h2 id="features-1"><a class="header" href="#features-1">Features</a></h2>
+<ul>
+<li>Marketplace can act as a policy-owner and enforce its own rules.</li>
+<li>Existing ruleset can be reused for the marketplace policies.</li>
+<li>The use of two TransferRequests allows for "marketplace-locking" mechanics, giving creators an option to allow trading only on a specified marketplace.</li>
+</ul>
+<h2 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h2>
+<p>To start using the <code>MarketplaceAdapter</code>, a developer needs to create a new TransferPolicy using a standard template (see <a href="marketplace/./../guides/marketplace.html">Marketplace Guide</a>). The rest of the features can be implemented in off-chain, using the rest of the Kiosk Marketplace package.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="fixed-price-trading"><a class="header" href="#fixed-price-trading">Fixed Price Trading</a></h1>
+<p>The Fixed Price Trading module can be used for simple listings with a fixed price. The only difference from the default Kiosk <code>list</code> function is that the buyer specifies the <code>Market</code> type during listing.</p>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<ul>
+<li>User needs to install the <a href="marketplace/./marketplace-adapter.html">marketplace extension</a>.</li>
+</ul>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<p>The Fixed Price Trading module provides the following functions:</p>
+<ul>
+<li><code>list</code> - list an item for sale.</li>
+<li><code>delist</code> - remove an active listing.</li>
+<li><code>purchase</code> - purchase an item.</li>
+</ul>
+<p>All of the functions are almost identical to the default Kiosk functions, with only additional <code>Market</code> type parameter.</p>
+<h2 id="events"><a class="header" href="#events">Events</a></h2>
+<p>ItemListed - when an item is listed for sale. The sender in this event is the seller.</p>
+<pre><code class="language-move">struct ItemListed&lt;phantom T, phantom Market&gt; has copy, drop {
+    kiosk_id: ID,
+    item_id: ID,
+    price: u64,
+    is_personal: bool,
+}
+</code></pre>
+<p>ItemDelisted - when an active listing is removed. The sender in this event is the seller.</p>
+<pre><code class="language-move">struct ItemDelisted&lt;phantom T, phantom Market&gt; has copy, drop {
+    kiosk_id: ID,
+    item_id: ID,
+    is_personal: bool,
+}
+</code></pre>
+<p>ItemPurchased - when an item is purchased. The sender in this event is the buyer.</p>
+<pre><code class="language-move">struct ItemPurchased&lt;phantom T, phantom Market&gt; has copy, drop {
+    kiosk_id: ID,
+    item_id: ID,
+    /// The seller address if the Kiosk is personal.
+    seller: Option&lt;address&gt;,
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="collection-bidding"><a class="header" href="#collection-bidding">Collection Bidding</a></h1>
+<p>Collection Bidding implements the ability to bid on a collection of items. The user can place multiple bids at once, and the seller can accept the bids in the submitted order. For example: "Alice bids 20 SUI and 10 SUI, Bob has to accept the 10 SUI bid before the 20 SUI bid." The seller resolves both transfer requests: for the Market and for the creator of the item.</p>
+<h2 id="prerequisites-1"><a class="header" href="#prerequisites-1">Prerequisites</a></h2>
+<ul>
+<li>User needs to install the <a href="marketplace/./marketplace-adapter.html">marketplace extension</a>.</li>
+</ul>
+<h2 id="usage-1"><a class="header" href="#usage-1">Usage</a></h2>
+<pre><code class="language-js">...
+</code></pre>
+<h2 id="events-1"><a class="header" href="#events-1">Events</a></h2>
+<p>The Collection Bidding module emits the following events:</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="single-item-bidding"><a class="header" href="#single-item-bidding">Single Item Bidding</a></h1>
+<p>User can bid on a single item with a specified ID. Any number of bids on different items can be placed, only one bid per item. The seller can accept the bid if they have the item. The seller resolves both transfer requests: for the Market and for the creator of the item.</p>
+<h2 id="prerequisites-2"><a class="header" href="#prerequisites-2">Prerequisites</a></h2>
+<ul>
+<li>User needs to install the <a href="marketplace/./marketplace-adapter.html">marketplace extension</a>.</li>
+</ul>
+<h2 id="usage-2"><a class="header" href="#usage-2">Usage</a></h2>
+<pre><code class="language-js">// List an item for 10 SUI
+</code></pre>
+<h2 id="events-2"><a class="header" href="#events-2">Events</a></h2>
+<p>The Fixed Price Trading module emits the following events:</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="indexing-events"><a class="header" href="#indexing-events">Indexing Events</a></h1>
+<p>Marketplace Package provides extensive event support to allow the marketplace to track the trades and provide a better user experience. All of the events are type-indexed, which means that the marketplace can filter the events by the type.</p>
+<h2 id="events-3"><a class="header" href="#events-3">Events</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="guides"><a class="header" href="#guides">Guides</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="royalty-enforcement-101"><a class="header" href="#royalty-enforcement-101">Royalty Enforcement 101</a></h1>
+<h2 id="policy-rules"><a class="header" href="#policy-rules">Policy Rules</a></h2>
+<p>To ensure royalty enforcement, the policy for the asset needs to have the following rules:</p>
+<ol>
+<li><a href="guides/./../mysten-kiosk/lock-rule.html">Lock Rule</a></li>
+<li><a href="guides/./../mysten-kiosk/personal-kiosk-rule.html">Personal Kiosk Rule</a></li>
+<li><a href="guides/./../mysten-kiosk/royalty-rule.html">Royalty Rule</a></li>
+</ol>
+<p>The minted assets, if the process of minting is handled by the user, have to be locked using the <code>kiosk::lock</code> function, see <a href="guides/./../concepts/locking.html">Locking</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="utilizing-kiosk-for-launchpad"><a class="header" href="#utilizing-kiosk-for-launchpad">Utilizing Kiosk for Launchpad</a></h1>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>Kiosk can be used as an instrument for primary sales as well as for secondary sales. In this guide, we will focus on the primary sales, also known as the launchpad.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="kiosk-sdk"><a class="header" href="#kiosk-sdk">Kiosk SDK</a></h1>
+<p>Kiosk SDK is a TypeScript library that provides a set of tools for interacting with Kiosk module and Mysten Kiosk packages. It is designed to be used in the front-end applications, such as marketplaces, wallets, and other dApps. The SDK provides a set of functions for creating, listing, and purchasing items, as well as for managing the Kiosk policies, and managing items in the Kiosk.</p>
+<p>The documentation for the Kiosk SDK <a href="https://sdk.mystenlabs.com/kiosk">is available here</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="links"><a class="header" href="#links">Links</a></h1>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
