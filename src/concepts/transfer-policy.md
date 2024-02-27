@@ -6,4 +6,14 @@ When an Item is purchased in a Kiosk, the buyer gets the *Item* and the *Transfe
 
 ## Policy Structure
 
-A single Transfer Policy is set for a single type, and it can contain almost unlimited number rules. For example, a Policy can require a percentage-based roaylty, an an obligation to lock the item in the buyer's Kiosk, so that the policy will be enforced when the item is sold again.
+A single Transfer Policy is created for a single type, and it can contain almost unlimited number rules. For example, a Policy can require a percentage-based roaylty, an an obligation to lock the item in the buyer's Kiosk, so that the policy will be enforced when the item is sold again.
+
+Here's an example of a Policy:
+```
+TransferPolicy<Capy>
+  - lock_rule
+  - personal_kiosk_rule
+  - royalty_rule(1% or 0.05 SUI)
+```
+
+Policy can also collect any transaction fees to be paid to the Policy owner.

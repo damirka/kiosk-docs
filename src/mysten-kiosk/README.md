@@ -1,4 +1,4 @@
-# Mysten Kiosk Package
+# Kiosk for Creators
 
 This section describes the Mysten's [Kiosk package](https://github.com/MystenLabs/apps/tree/main/kiosk), which provides a set of base rules and extensions aimed at setting up the common Kiosk policies. The package is designed to be used as a base for creating a [Policy](../concepts/transfer-policy.md) with a set of predefined rules, such as lock, royalty, and floor price rules.
 

@@ -1,9 +1,9 @@
 [package]
-name = "examples"
+name = "kiosk"
 version = "0.0.1"
 
 [dependencies]
-Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "ds/kiosk-extensions-api" }
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "framework/mainnet" }
 
 [addresses]
-examples = "0x0"
+kiosk = "0x0"

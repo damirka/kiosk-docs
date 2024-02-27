@@ -8,14 +8,13 @@ The Fixed Price Trading module can be used for simple listings with a fixed pric
 
 ## Usage
 
-```js
-// List an item for 10 SUI
-// await kiosk.market('0x....::my_market::MyMarket').list({
-//   item: '0x....',
-//   price: '10000000000',
-//   // market: '0x....::my_market::MyMarket',
-// });
-```
+The Fixed Price Trading module provides the following functions:
+
+- `list` - list an item for sale.
+- `delist` - remove an active listing.
+- `purchase` - purchase an item.
+
+All of the functions are almost identical to the default Kiosk functions, with only additional `Market` type parameter. 
 
 ## Events
 
