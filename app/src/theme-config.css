@@ -1,0 +1,6 @@
+/* theme-config.css */
+.radix-themes {
+  --default-font-family: "Rubik", "Roboto", sans-serif;
+  --default-font-weight: 400;
+  --default-font-size: 18px;
+}

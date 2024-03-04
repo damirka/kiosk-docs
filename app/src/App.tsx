@@ -1,17 +1,9 @@
 import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
-import { isValidSuiObjectId } from "@mysten/sui.js/utils";
 import { Box, Container, Flex, Heading } from "@radix-ui/themes";
-import { useState } from "react";
-// import { Counter } from "./Counter";
-import { CreatePolicy } from "./CreatePolicy";
 import { Policies } from "./Policies";
 
 function App() {
   const currentAccount = useCurrentAccount();
-  const [counterId, setCounter] = useState(() => {
-    const hash = window.location.hash.slice(1);
-    return isValidSuiObjectId(hash) ? hash : null;
-  });
 
   return (
     <>
@@ -25,7 +17,7 @@ function App() {
         }}
       >
         <Box>
-          <Heading>dApp Starter Template</Heading>
+          <Heading>Kiosk Marketplace Setup Assistant</Heading>
         </Box>
 
         <Box>
@@ -40,16 +32,8 @@ function App() {
           style={{ background: "var(--gray-a2)", minHeight: 500 }}
         >
           {currentAccount ? (
-            <>
-              <Policies />
-              <CreatePolicy
-                onCreated={(id) => {
-                  window.location.hash = id;
-                  setCounter(id);
-                }}
-              />
-            </>
-            ) : (
+            <Policies />
+          ) : (
             <Heading>Please connect your wallet</Heading>
           )}
         </Container>

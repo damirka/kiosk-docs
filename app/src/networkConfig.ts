@@ -15,7 +15,6 @@ const { networkConfig, useNetworkVariable, useNetworkVariables } =
       variables: {
         // counterPackageId: TESTNET_COUNTER_PACKAGE_ID,
       },
-
     },
     // mainnet: {
     //   url: getFullnodeUrl("mainnet"),

@@ -4,14 +4,30 @@
 // Button to delete a Policy, takes the policyId parameter and fetches
 // the object from the network. Then runs the delete transaction.
 
-import { useCurrentAccount, useSignAndExecuteTransactionBlock, useSuiClientQuery } from "@mysten/dapp-kit";
+import {
+  useCurrentAccount,
+  useSignAndExecuteTransactionBlock,
+  useSuiClientQuery,
+} from "@mysten/dapp-kit";
 import { SharedObjectRef } from "@mysten/sui.js/bcs";
-import { SuiObjectData, SuiObjectRef, SuiTransactionBlockResponse } from "@mysten/sui.js/client";
+import {
+  SuiObjectData,
+  SuiObjectRef,
+  SuiTransactionBlockResponse,
+} from "@mysten/sui.js/client";
 import { TransactionBlock } from "@mysten/sui.js/transactions";
 import { normalizeStructTag, parseStructTag } from "@mysten/sui.js/utils";
 import { Button } from "@radix-ui/themes";
 
-export function DeletePolicy({ policyId, capRef, onDelete }: { policyId: string, capRef: SuiObjectRef, onDelete?: (tx: SuiTransactionBlockResponse) => void }) {
+export function DeletePolicy({
+  policyId,
+  capRef,
+  onDelete,
+}: {
+  policyId: string;
+  capRef: SuiObjectRef;
+  onDelete?: (tx: SuiTransactionBlockResponse) => void;
+}) {
   const account = useCurrentAccount();
   const { mutate: signAndExecute } = useSignAndExecuteTransactionBlock();
   const { data, isPending, error } = useSuiClientQuery("getObject", {
@@ -44,32 +60,36 @@ export function DeletePolicy({ policyId, capRef, onDelete }: { policyId: string,
 
   function deletePolicy() {
     const txb = new TransactionBlock();
-    const refArg = 'mutable' in policyObjectRef!
-      ? txb.sharedObjectRef(policyObjectRef!)
-      : txb.objectRef(policyObjectRef!);
+    const refArg =
+      "mutable" in policyObjectRef!
+        ? txb.sharedObjectRef(policyObjectRef!)
+        : txb.objectRef(policyObjectRef!);
 
     const proceeds = txb.moveCall({
-      target: '0x2::transfer_policy::destroy_and_withdraw',
+      target: "0x2::transfer_policy::destroy_and_withdraw",
       typeArguments: [normalizeStructTag(itemType)],
-      arguments: [
-        refArg,
-        txb.objectRef(capRef),
-      ]
+      arguments: [refArg, txb.objectRef(capRef)],
     });
 
     txb.transferObjects([proceeds], txb.pure(account?.address));
 
-    signAndExecute({
-      transactionBlock: txb,
-      options: {
-        showEffects: true,
-        showObjectChanges: true,
-      },
-    },
+    signAndExecute(
       {
-        onSuccess: (tx) => { onDelete && onDelete(tx) },
-        onError: (err) => { console.error(err) }
-      });
+        transactionBlock: txb,
+        options: {
+          showEffects: true,
+          showObjectChanges: true,
+        },
+      },
+      {
+        onSuccess: (tx) => {
+          onDelete && onDelete(tx);
+        },
+        onError: (err) => {
+          console.error(err);
+        },
+      },
+    );
   }
 }
 
@@ -79,13 +99,15 @@ export function DeletePolicy({ policyId, capRef, onDelete }: { policyId: string,
  * @param data
  * @returns
  */
-function getPolicyRef(data: SuiObjectData): SuiObjectRef | SharedObjectRef | null {
+function getPolicyRef(
+  data: SuiObjectData,
+): SuiObjectRef | SharedObjectRef | null {
   if (!data.owner || typeof data.owner != "object") {
     throw new Error("Owner not fetched or the object is 'Immutable'");
   }
 
   // We allow deleting Shared policies;
-  if ('Shared' in data.owner) {
+  if ("Shared" in data.owner) {
     return {
       objectId: data.objectId,
       mutable: true,
@@ -94,11 +116,11 @@ function getPolicyRef(data: SuiObjectData): SuiObjectRef | SharedObjectRef | nul
   }
 
   // We also allow deleting Owned policies;
-  if ('AddressOwner' in data.owner) {
+  if ("AddressOwner" in data.owner) {
     return {
       objectId: data.objectId,
       version: data.version,
-      digest: data.digest
+      digest: data.digest,
     };
   }
 
