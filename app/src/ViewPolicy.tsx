@@ -2,21 +2,33 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useSuiClientQuery } from "@mysten/dapp-kit";
-import { SuiObjectData, SuiObjectRef } from "@mysten/sui.js/client";
-import { Text, Flex, Heading } from "@radix-ui/themes";
+import {
+  SuiObjectData,
+  SuiObjectRef,
+  SuiTransactionBlockResponse,
+} from "@mysten/sui.js/client";
+import { Text, Flex, Heading, Link } from "@radix-ui/themes";
 import { RuleSet } from "./RuleSet";
+import { useState } from "react";
 
 type ViewPolicyProps = {
   id: string;
   marketType: string;
   capRef: SuiObjectRef;
+  onDelete?: (tx: SuiTransactionBlockResponse) => void;
 };
 
 /**
  * Display a policy, allow viewing and editing.
  */
-export function ViewPolicy({ id, capRef, marketType }: ViewPolicyProps) {
-  const { data, isPending, error } = useSuiClientQuery("getObject", {
+export function ViewPolicy({
+  id,
+  capRef,
+  marketType,
+  onDelete,
+}: ViewPolicyProps) {
+  const [lastTx, setLastTx] = useState<SuiTransactionBlockResponse | null>(null);
+  const { data, isPending, error, refetch } = useSuiClientQuery("getObject", {
     id,
     options: {
       showContent: true,
@@ -32,15 +44,28 @@ export function ViewPolicy({ id, capRef, marketType }: ViewPolicyProps) {
 
   return (
     <>
-      <Heading size="3">Policy {id}</Heading>
+      <p>Policy Overview</p>
       <Flex gap="4">
-        <Text>Owner: {details?.owner}</Text>
-        <Text>Balance: {details?.balance}</Text>
-        <Text>Rules:</Text>
         <ul>
-          {details?.rules.map((rule, index) => (
-            <li key={`${rule}-${index}`}>{JSON.stringify(rule)}</li>
-          ))}
+          <li>
+            <Text size="3">
+              ID:{" "}
+              <Link
+                href={`https://suiexplorer.com/object/${id}?network=devnet`}
+              >
+                {id}
+              </Link>
+            </Text>
+          </li>
+          <li>
+            <Text size="3">Rules: {details?.rules.length}</Text>
+          </li>
+          <li>
+            <Text size="3">Balance: {details?.balance} SUI</Text>
+          </li>
+          <li>
+            <Text size="3">Owner: {details?.owner}</Text>
+          </li>
         </ul>
       </Flex>
       <RuleSet
@@ -48,7 +73,21 @@ export function ViewPolicy({ id, capRef, marketType }: ViewPolicyProps) {
         policyId={id}
         capRef={capRef}
         marketType={marketType}
+        onRulesChange={(tx) => {
+          refetch();
+          setLastTx(tx);
+        }}
+        onPolicyDelete={(tx) => {
+          onDelete && onDelete(tx);
+          setLastTx(tx);
+        }}
+        onTestRun={(tx) => {
+          setLastTx(tx);
+        }}
       />
+      <Text size="3" hidden={!lastTx}>
+        <Link href={`https://suiexplorer.com/txblock/${lastTx?.digest}?network=devnet`}>Last Transaction in Sui Explorer</Link>
+      </Text>
     </>
   );
 }

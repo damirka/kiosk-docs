@@ -11,6 +11,9 @@ dependencies:
   '@mysten/kiosk':
     specifier: ^0.8.3
     version: 0.8.3
+  '@mysten/move-binary-format-wasm':
+    specifier: link:../move-wasm
+    version: link:../move-wasm
   '@mysten/sui.js':
     specifier: 0.50.1
     version: 0.50.1
@@ -67,6 +70,9 @@ devDependencies:
   vite:
     specifier: ^4.4.4
     version: 4.5.2
+  vite-plugin-wasm:
+    specifier: ^3.3.0
+    version: 3.3.0(vite@4.5.2)
 
 packages:
 
@@ -3011,6 +3017,14 @@ packages:
   /valibot@0.25.0:
     resolution: {integrity: sha512-cmD0ca15oyAbT75iYLNW6uU6doAeIwYfOshpXka/E1Bx4frzbkrgb7gvkI7K0YK/DVOksei4FfxWfRoBP3NFTg==}
     dev: false
+
+  /vite-plugin-wasm@3.3.0(vite@4.5.2):
+    resolution: {integrity: sha512-tVhz6w+W9MVsOCHzxo6SSMSswCeIw4HTrXEi6qL3IRzATl83jl09JVO1djBqPSwfjgnpVHNLYcaMbaDX5WB/pg==}
+    peerDependencies:
+      vite: ^2 || ^3 || ^4 || ^5
+    dependencies:
+      vite: 4.5.2
+    dev: true
 
   /vite@4.5.2:
     resolution: {integrity: sha512-tBCZBNSBbHQkaGyhGCDUGqeo2ph8Fstyp6FMSvTtsXeZSPpSMGlviAOav2hxVTqFcx8Hj/twtWKsMJXNY0xI8w==}

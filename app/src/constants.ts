@@ -3,4 +3,4 @@
 
 // fill in once published from `apps/kiosk`
 export const DEVNET_KIOSK_PACKAGE_ID =
-  "d43077190ad94ee1b6a193c2e7bc580d72ce8fc8450d18580adbfb660d673279";
+  "c9ff1c8ecc897880b09f4735fbfe6dee89eecda46c8dca8c134eb51e5b9b31a0";

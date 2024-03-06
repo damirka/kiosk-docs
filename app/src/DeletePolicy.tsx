@@ -21,9 +21,11 @@ import { Button } from "@radix-ui/themes";
 
 export function DeletePolicy({
   policyId,
+  text,
   capRef,
   onDelete,
 }: {
+  text: string;
   policyId: string;
   capRef: SuiObjectRef;
   onDelete?: (tx: SuiTransactionBlockResponse) => void;
@@ -54,7 +56,7 @@ export function DeletePolicy({
         deletePolicy();
       }}
     >
-      Delete
+      {text}
     </Button>
   );
 

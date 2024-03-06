@@ -2,13 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
-import { SuiObjectData } from "@mysten/sui.js/client";
+import { SuiObjectData, SuiObjectRef } from "@mysten/sui.js/client";
 import {
   normalizeStructTag,
   normalizeSuiAddress,
   parseStructTag,
 } from "@mysten/sui.js/utils";
-import { Button, Container, Heading, Text } from "@radix-ui/themes";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Grid,
+  Heading,
+  Link,
+  Section,
+  Text,
+} from "@radix-ui/themes";
 import { DeletePolicy } from "./DeletePolicy";
 import { useState } from "react";
 import { ViewPolicy } from "./ViewPolicy";
@@ -17,7 +27,11 @@ import { CreatePolicy } from "./CreatePolicy";
 // Display policies that the account owns, allow viewing them + deleting.
 export function Policies() {
   const currentAccount = useCurrentAccount();
-  const [policyId, setPolicyId] = useState<string | null>(null);
+
+  // TODO: make it better!
+  const [[policyId, marketType, capRef], setPolicyParams] = useState<
+    [string, string, SuiObjectRef] | null[]
+  >([null, null, null]);
 
   const { data, isPending, error, refetch } = useSuiClientQuery(
     "getOwnedObjects",
@@ -47,46 +61,56 @@ export function Policies() {
 
   return (
     <>
-      <Heading size="5">My Transfer Policies</Heading>
-      <CreatePolicy
-        onCreated={(_id) => {
-          refetch();
-        }}
-      />
-      {markets.map(
-        (m) =>
-          m && (
-            <div key={m.market}>
-              <Heading size="4">Market: {m.market}</Heading>
-              <Button
-                onClick={() => {
-                  setPolicyId(m.policyId);
-                  // [
-                  // m.policyId,
-                  // m.marketType,
-                  // m.objectRef
-                  // ]
+      <Heading>My Marketplaces</Heading>
+      <ul>
+        {markets.map(
+          (m) =>
+            m && (
+              <li>
+                <Text as="label" size="3">
+                  <Flex gap="2">
+                    Market:{" "}
+                    <Link
+                      onClick={(e) => {
+                        setPolicyParams([
+                          m.policyId,
+                          m.marketType,
+                          m.objectRef,
+                        ]);
+                      }}
+                    >
+                      {m.market}
+                    </Link>
+                  </Flex>
+                </Text>
+              </li>
+            ),
+        )}
+        <li>
+          <Text as="label" size="3">
+            <Flex gap="2">
+              [<CreatePolicy
+                onCreated={(_id) => {
+                  refetch();
                 }}
-              >
-                View
-              </Button>
-              <DeletePolicy
-                policyId={m.policyId}
-                capRef={m.objectRef}
-                onDelete={() => refetch()}
-              />
-            </div>
-          ),
-      )}
-      <Container>
-        {policyId && (
+              />]
+            </Flex>
+          </Text>
+        </li>
+      </ul>
+      <Section>
+        {policyId && marketType && capRef && (
           <ViewPolicy
             id={policyId}
-            // marketType={marketType}
-            // capRef={capRef}
+            marketType={marketType}
+            capRef={capRef}
+            onDelete={() => {
+              refetch();
+              setPolicyParams([null, null, null]);
+            }}
           />
         )}
-      </Container>
+      </Section>
     </>
   );
 }
