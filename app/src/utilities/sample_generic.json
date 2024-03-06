@@ -1,0 +1,65 @@
+{
+    "visibility": "Public",
+    "isEntry": false,
+    "typeParameters": [
+      {
+        "abilities": []
+      }
+    ],
+    "parameters": [
+      {
+        "Reference": {
+          "Struct": {
+            "address": "0x2",
+            "module": "kiosk",
+            "name": "Kiosk",
+            "typeArguments": []
+          }
+        }
+      },
+      {
+        "Reference": {
+          "Struct": {
+            "address": "0x2",
+            "module": "transfer_policy",
+            "name": "TransferPolicy",
+            "typeArguments": [
+              {
+                "TypeParameter": 0
+              }
+            ]
+          }
+        }
+      },
+      {
+        "MutableReference": {
+          "Struct": {
+            "address": "0x2",
+            "module": "transfer_policy",
+            "name": "TransferRequest",
+            "typeArguments": [
+              {
+                "TypeParameter": 0
+              }
+            ]
+          }
+        }
+      },
+      {
+        "Reference": {
+          "TypeParameter": 0
+        }
+      },
+      {
+        "MutableReference": {
+          "Struct": {
+            "address": "0x2",
+            "module": "tx_context",
+            "name": "TxContext",
+            "typeArguments": []
+          }
+        }
+      }
+    ],
+    "return": []
+  }

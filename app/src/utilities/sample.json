@@ -1,0 +1,76 @@
+{
+  "visibility": "Public",
+  "isEntry": false,
+  "typeParameters": [],
+  "parameters": [
+    {
+      "Reference": {
+        "Struct": {
+          "address": "0x2",
+          "module": "kiosk",
+          "name": "Kiosk",
+          "typeArguments": []
+        }
+      }
+    },
+    {
+      "Reference": {
+        "Struct": {
+          "address": "0x2",
+          "module": "transfer_policy",
+          "name": "TransferPolicy",
+          "typeArguments": [
+            {
+              "Struct": {
+                "address": "0x894286d6f7614241509b5c06f7fcb00718560963f260fc5eed8d666d0d892644",
+                "module": "suifrens",
+                "name": "Capy",
+                "typeArguments": []
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "MutableReference": {
+        "Struct": {
+          "address": "0x2",
+          "module": "transfer_policy",
+          "name": "TransferRequest",
+          "typeArguments": [
+            {
+              "Struct": {
+                "address": "0x894286d6f7614241509b5c06f7fcb00718560963f260fc5eed8d666d0d892644",
+                "module": "suifrens",
+                "name": "Capy",
+                "typeArguments": []
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "Reference": {
+        "Struct": {
+          "address": "0x894286d6f7614241509b5c06f7fcb00718560963f260fc5eed8d666d0d892644",
+          "module": "suifrens",
+          "name": "Capy",
+          "typeArguments": []
+        }
+      }
+    },
+    {
+      "MutableReference": {
+        "Struct": {
+          "address": "0x2",
+          "module": "tx_context",
+          "name": "TxContext",
+          "typeArguments": []
+        }
+      }
+    }
+  ],
+  "return": []
+}
