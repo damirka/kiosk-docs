@@ -14,14 +14,14 @@ The Fixed Price Trading module provides the following functions:
 - `delist` - remove an active listing.
 - `purchase` - purchase an item.
 
-All of the functions are almost identical to the default Kiosk functions, with only additional `Market` type parameter. 
+All of the functions are almost identical to the default Kiosk functions, with only additional `Market` type parameter.
 
 ## Events
 
 ItemListed - when an item is listed for sale. The sender in this event is the seller.
 
 ```move
-struct ItemListed<phantom T, phantom Market> has copy, drop {
+struct ItemListed<phantom Market, phantom T> has copy, drop {
     kiosk_id: ID,
     item_id: ID,
     price: u64,
@@ -32,7 +32,7 @@ struct ItemListed<phantom T, phantom Market> has copy, drop {
 ItemDelisted - when an active listing is removed. The sender in this event is the seller.
 
 ```move
-struct ItemDelisted<phantom T, phantom Market> has copy, drop {
+struct ItemDelisted<phantom Market, phantom T> has copy, drop {
     kiosk_id: ID,
     item_id: ID,
     is_personal: bool,
@@ -42,7 +42,7 @@ struct ItemDelisted<phantom T, phantom Market> has copy, drop {
 ItemPurchased - when an item is purchased. The sender in this event is the buyer.
 
 ```move
-struct ItemPurchased<phantom T, phantom Market> has copy, drop {
+struct ItemPurchased<phantom Market, phantom T> has copy, drop {
     kiosk_id: ID,
     item_id: ID,
     /// The seller address if the Kiosk is personal.
