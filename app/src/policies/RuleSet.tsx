@@ -1,19 +1,30 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-import { Button, Checkbox, Flex, Link, Section, Text } from "@radix-ui/themes";
-import { kioskClient } from "./kioskClient";
+import {
+  Button,
+  Checkbox,
+  Flex,
+  Link,
+  Section,
+  Text,
+  TextField,
+} from "@radix-ui/themes";
+import { kioskClient } from "../kioskClient";
 import {
   useSignAndExecuteTransactionBlock,
   useSuiClient,
 } from "@mysten/dapp-kit";
-import { SuiObjectRef, SuiTransactionBlockResponse } from "@mysten/sui.js/client";
+import {
+  SuiObjectRef,
+  SuiTransactionBlockResponse,
+} from "@mysten/sui.js/client";
 import { TransferPolicyTransaction } from "@mysten/kiosk";
 import { TransactionBlock } from "@mysten/sui.js/transactions";
-import { DEVNET_KIOSK_PACKAGE_ID as KIOSK_PKG } from "./constants";
+import { DEVNET_KIOSK_PACKAGE_ID as KIOSK_PKG } from "../constants";
 import { normalizeSuiAddress, parseStructTag } from "@mysten/sui.js/utils";
 import { useEffect, useState } from "react";
-import { AutoResolverParams, detectSignature } from "./utilities/detector";
+import { AutoResolverParams, detectSignature } from "../utilities/detector";
 import { DeletePolicy } from "./DeletePolicy";
 
 /**
@@ -148,12 +159,31 @@ export function RuleSet({
             <Text as="label" size="3">
               <Flex gap="2">
                 <Checkbox
+                  defaultChecked={test}
+                  onCheckedChange={() => setTest(!test)}
+                />{" "}
+                Royalty Rule - sets a royalty fee for the creator of the item
+              </Flex>
+            </Text>
+            <Text>
+              <Flex gap="2">
+                <TextField.Root size="1">
+                  <TextField.Slot>Royalty %</TextField.Slot>
+                  <TextField.Input placeholder="1" type="number" />
+                </TextField.Root>
+              </Flex>
+            </Text>
+          </li>
+          <li>
+            <Text as="label" size="3">
+              <Flex gap="2">
+                <Checkbox
                   size="2"
                   defaultChecked={test}
                   onCheckedChange={() => setTest(!test)}
                 />{" "}
-                [Test] Generic Rule - just a rule that can be auto-detected in a test
-                scenario
+                [Test] Generic Rule - just a rule that can be auto-detected in a
+                test scenario
               </Flex>
             </Text>
           </li>
@@ -181,7 +211,9 @@ export function RuleSet({
             text="Delete Policy"
             policyId={policyId}
             capRef={capRef}
-            onDelete={(tx) => { onPolicyDelete && onPolicyDelete(tx); }}
+            onDelete={(tx) => {
+              onPolicyDelete && onPolicyDelete(tx);
+            }}
           />
         </Flex>
       </Section>

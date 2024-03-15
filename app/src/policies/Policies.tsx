@@ -8,18 +8,7 @@ import {
   normalizeSuiAddress,
   parseStructTag,
 } from "@mysten/sui.js/utils";
-import {
-  Box,
-  Button,
-  Container,
-  Flex,
-  Grid,
-  Heading,
-  Link,
-  Section,
-  Text,
-} from "@radix-ui/themes";
-import { DeletePolicy } from "./DeletePolicy";
+import { Flex, Heading, Link, Section, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { ViewPolicy } from "./ViewPolicy";
 import { CreatePolicy } from "./CreatePolicy";
@@ -61,8 +50,8 @@ export function Policies() {
 
   return (
     <>
-      <Heading>My Marketplaces</Heading>
-      <ul>
+      <Heading size="6" className="mt-4 pb-2">My Marketplaces</Heading>
+      <ul className="mt-4 block">
         {markets.map(
           (m) =>
             m && (
@@ -89,11 +78,13 @@ export function Policies() {
         <li>
           <Text as="label" size="3">
             <Flex gap="2">
-              [<CreatePolicy
+              [
+              <CreatePolicy
                 onCreated={(_id) => {
                   refetch();
                 }}
-              />]
+              />
+              ]
             </Flex>
           </Text>
         </li>

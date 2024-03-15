@@ -7,7 +7,7 @@ import {
   SuiObjectRef,
   SuiTransactionBlockResponse,
 } from "@mysten/sui.js/client";
-import { Text, Flex, Heading, Link } from "@radix-ui/themes";
+import { Text, Flex, Link } from "@radix-ui/themes";
 import { RuleSet } from "./RuleSet";
 import { useState } from "react";
 
