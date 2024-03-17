@@ -7,7 +7,7 @@ import {
   useSignAndExecuteTransactionBlock,
   useSuiClient,
 } from "@mysten/dapp-kit";
-import { DEVNET_KIOSK_PACKAGE_ID } from "./constants";
+import { DEVNET_KIOSK_PACKAGE_ID } from "../constants";
 import { SuiObjectChange } from "@mysten/sui.js/client";
 
 export function CreateKiosk({

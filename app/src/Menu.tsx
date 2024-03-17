@@ -18,10 +18,16 @@ export function Menu() {
             Marketplace Policies
           </NavLink>
           <NavLink to="/marketplace">
-            Marketplace Interface
+            Marketplace UI
           </NavLink>
           <NavLink to="/kiosk">
             Kiosk
+          </NavLink>
+          <NavLink to="/launchpad">
+            Launchpad
+          </NavLink>
+          <NavLink to="/display">
+            Display
           </NavLink>
         </Flex>
       </Navigation.List>

@@ -8,7 +8,7 @@ import {
   normalizeSuiAddress,
   parseStructTag,
 } from "@mysten/sui.js/utils";
-import { Flex, Heading, Link, Section, Text } from "@radix-ui/themes";
+import { Box, Flex, Grid, Heading, Link, Section, Text } from "@radix-ui/themes";
 import { useState } from "react";
 import { ViewPolicy } from "./ViewPolicy";
 import { CreatePolicy } from "./CreatePolicy";
@@ -50,16 +50,18 @@ export function Policies() {
 
   return (
     <>
-      <Heading size="6" className="mt-4 pb-2">My Marketplaces</Heading>
-      <ul className="mt-4 block">
+      <Heading size="6" className="mt-4 pb-6">My Policies</Heading>
+      <Flex gap="9">
+        <Box>
+      <ul className="block">
         {markets.map(
           (m) =>
             m && (
-              <li>
+              <li key={m.policyId} className="block pr-2 mb-2 p-4 border-gray-700 border w-40 center">
                 <Text as="label" size="3">
                   <Flex gap="2">
-                    Market:{" "}
                     <Link
+                      className=""
                       onClick={(e) => {
                         setPolicyParams([
                           m.policyId,
@@ -76,7 +78,7 @@ export function Policies() {
             ),
         )}
         <li>
-          <Text as="label" size="3">
+          <Text as="label" size="3" className="p-0 mt-5 block">
             <Flex gap="2">
               [
               <CreatePolicy
@@ -89,7 +91,8 @@ export function Policies() {
           </Text>
         </li>
       </ul>
-      <Section>
+      </Box>
+      <Box>
         {policyId && marketType && capRef && (
           <ViewPolicy
             id={policyId}
@@ -101,7 +104,8 @@ export function Policies() {
             }}
           />
         )}
-      </Section>
+      </Box>
+    </Flex>
     </>
   );
 }

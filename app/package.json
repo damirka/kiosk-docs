@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mysten/bcs": "^0.11.1",
     "@mysten/dapp-kit": "0.12.2",
     "@mysten/kiosk": "^0.8.3",
     "@mysten/move-bytecode-template": "^0.1.0",

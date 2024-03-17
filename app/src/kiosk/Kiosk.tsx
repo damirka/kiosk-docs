@@ -1,32 +1,39 @@
 // Copyright (c) Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit";
-import { DEVNET_KIOSK_PACKAGE_ID } from "./constants";
+import {
+  useCurrentAccount,
+  useSuiClient,
+  useSuiClientQuery,
+} from "@mysten/dapp-kit";
+import { DEVNET_KIOSK_PACKAGE_ID } from "../constants";
 import { Heading, Text } from "@radix-ui/themes";
 import { normalizeSuiAddress } from "@mysten/sui.js/utils";
 import { CreateKiosk } from "./CreateKiosk";
 import { MintAndLock } from "./MintAndLock";
+import { kioskClient } from "../kioskClient";
+import { useEffect, useState } from "react";
+import { KioskData } from "@mysten/kiosk";
 
 const PKG = normalizeSuiAddress(DEVNET_KIOSK_PACKAGE_ID);
 
 export function Kiosk() {
   const currentAccount = useCurrentAccount();
-  const { data, isPending, error, refetch } = useSuiClientQuery(
-    "getOwnedObjects",
-    {
-      options: {
-        showContent: true,
-      },
-      owner: currentAccount!.address,
-      filter: {
-        MatchAny: [
-          { StructType: `${PKG}::personal_kiosk::PersonalKioskCap` },
-          { StructType: `0x2::kiosk::KioskOwnerCap` },
-        ],
-      },
-    },
-  );
+  const client = kioskClient(useSuiClient());
+  const [kiosks, setKiosks] = useState<KioskData[]>([]);
+
+  useEffect(() => {
+    client
+      .getOwnedKiosks({ address: currentAccount!.address })
+      .then((res) =>
+        Promise.all(
+          res.kioskIds.map<Promise<KioskData>>((id) =>
+            client.getKiosk({ id, options: { withKioskFields: true } }),
+          ),
+        ),
+      )
+      .then((kiosks) => setKiosks(kiosks));
+  });
 
   if (isPending) return <Text>Loading...</Text>;
   if (error) return <Text>Error: {error.message}</Text>;

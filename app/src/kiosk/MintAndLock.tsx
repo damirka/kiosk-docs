@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Button } from "@radix-ui/themes";
-import { DEVNET_KIOSK_PACKAGE_ID, CAPY_POLICY_ID } from "./constants";
+import { DEVNET_KIOSK_PACKAGE_ID, CAPY_POLICY_ID } from "../constants";
 import {
   useSignAndExecuteTransactionBlock,
   useSuiClient,

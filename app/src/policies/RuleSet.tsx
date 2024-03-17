@@ -81,7 +81,6 @@ export function RuleSet({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("fetching rules", rules);
         const resolvers = await Promise.all(
           rules.map(async (rule) => {
             const ruleType = parseStructTag(rule);

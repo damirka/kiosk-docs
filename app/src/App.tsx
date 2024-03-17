@@ -3,9 +3,11 @@ import { Box, Container, Flex, Heading } from "@radix-ui/themes";
 import { Policies } from "./policies/Policies";
 import { Home } from "./Home";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Kiosk } from "./Kiosk";
+import { Kiosk } from "./kiosk/Kiosk";
 import { Marketplace } from "./Marketplace";
 import { Menu } from "./Menu";
+import { Launchpad } from "./launchpad/Launchpad";
+import { Display } from "./display/Display";
 
 function App() {
   const currentAccount = useCurrentAccount();
@@ -22,7 +24,7 @@ function App() {
         }}
       >
         <Box>
-          <Heading>Kiosk Marketplace Setup Assistant</Heading>
+          <Heading>Kiosk Docs Companion Application</Heading>
         </Box>
 
         <Box>
@@ -43,6 +45,8 @@ function App() {
               <Route path="/kiosk" Component={Kiosk} />
               <Route path="/policies" Component={Policies} />
               <Route path="/marketplace" Component={Marketplace} />
+              <Route path="/launchpad" Component={Launchpad} />
+              <Route path="/display" Component={Display} />
             </Routes>
           ) : (
             <Heading>Please connect your wallet</Heading>

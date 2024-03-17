@@ -45,6 +45,10 @@ export function Marketplace() {
     }
   }, [kiosks?.kioskIds]);
 
+  if (kiosks === null) {
+    return <Text>Loading...</Text>;
+  }
+
   return (
     <div>
       <Heading size="6" className="mt-4 pb-2">
